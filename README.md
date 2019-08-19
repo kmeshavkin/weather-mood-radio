@@ -1,3 +1,16 @@
+# Legal Info
+Streaming Sounds
+Note if you are going to stream from our API you need to attribute properly. Make sure you've read our [Terms](https://developers.soundcloud.com/docs/api/terms-of-use) and [Attribution Guidelines](https://developers.soundcloud.com/docs/api/buttons-logos) to make sure you treat our creators content correctly. When using a custom player you must:
+
+* Credit the uploader as the creator of the sound
+* Credit SoundCloud as the source by including one of the logos found [here](https://developers.soundcloud.com/docs/api/buttons-logos)
+* Link to the SoundCloud URL containing the work
+* If the sound is private link to the profile of the creator
+
+Will make an (i) icon with all the info in the player
+
+# Default
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
