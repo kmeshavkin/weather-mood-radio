@@ -1,3 +1,11 @@
+# TO-DO
+* Add usual music player elements (sound, previous/next - history + trackId required)
+* Make state more readable
+* Implement TAG_BLACKLIST?
+* Somehow get clientId even when it was changed
+* Make possible to select from more than first 200 songs
+* Possibly find how to search only by title?  
+
 # Legal Info
 Streaming Sounds
 Note if you are going to stream from our API you need to attribute properly. Make sure you've read our [Terms](https://developers.soundcloud.com/docs/api/terms-of-use) and [Attribution Guidelines](https://developers.soundcloud.com/docs/api/buttons-logos) to make sure you treat our creators content correctly. When using a custom player you must:
@@ -7,7 +15,7 @@ Note if you are going to stream from our API you need to attribute properly. Mak
 * Link to the SoundCloud URL containing the work
 * If the sound is private link to the profile of the creator
 
-Will make an (i) icon with all the info in the player
+Will make an (i) icon with all the info in the player (+ check licensing and "all rights reserved" + fair use)
 
 # Default
 
