@@ -3,7 +3,7 @@
         "browser": true,
         "es6": true
     },
-    "extends": "airbnb",
+    "extends": ["airbnb", "plugin:prettier/recommended"],
     "globals": {
         "Atomics": "readonly",
         "SharedArrayBuffer": "readonly"
@@ -17,11 +17,14 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "prettier"
     ],
     "rules": {
         "require-jsdoc": 0,
-        "max-len": 0,
-        "no-console": 0
+        "no-plusplus": 0,
+        "no-console": 0,
+        "react/prop-types": 0,
+        "prettier/prettier": "error"
     }
 }
