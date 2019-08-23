@@ -1,9 +1,8 @@
-import React from 'react';
-import Grid from '@material-ui/core/Grid';
-import Slider from '@material-ui/core/Slider';
-import VolumeDown from '@material-ui/icons/VolumeDown';
-import VolumeUp from '@material-ui/icons/VolumeUp';
-import { VolumeWrapper } from './Volume.styled';
+import React from "react";
+import Grid from "@material-ui/core/Grid";
+import VolumeDown from "@material-ui/icons/VolumeDown";
+import VolumeUp from "@material-ui/icons/VolumeUp";
+import { StyledSlider } from "./Volume.styled";
 
 const Volume = ({ changeVolume, volume }) => {
   const handleChange = (e, value) => {
@@ -11,19 +10,21 @@ const Volume = ({ changeVolume, volume }) => {
   };
 
   return (
-    <VolumeWrapper>
-      <Grid container spacing={2}>
-        <Grid item>
-          <VolumeDown />
-        </Grid>
-        <Grid item xs>
-          <Slider value={volume} onChange={handleChange} />
-        </Grid>
-        <Grid item>
-          <VolumeUp />
-        </Grid>
+    <Grid container item direction="column" spacing={1}>
+      <Grid item>
+        <VolumeUp />
       </Grid>
-    </VolumeWrapper>
+      <Grid item>
+        <StyledSlider
+          orientation="vertical"
+          value={volume}
+          onChange={handleChange}
+        />
+      </Grid>
+      <Grid item>
+        <VolumeDown />
+      </Grid>
+    </Grid>
   );
 };
 

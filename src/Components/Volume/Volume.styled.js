@@ -1,5 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
+import Slider from "@material-ui/core/Slider";
 
-export const VolumeWrapper = styled.div`
-  width: 200px;
+export const StyledSlider = styled(Slider)`
+  min-height: 100px;
 `;

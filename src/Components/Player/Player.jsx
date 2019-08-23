@@ -154,16 +154,28 @@ class Player extends React.PureComponent {
 
     return (
       <ContentWrapper>
-        <Grid container direction="column" alignItems="center" spacing={2}>
-          <Grid item>
-            <PlayControls
-              playAllowed={playAllowed}
-              playing={playing}
-              onPlayPause={this.onPlayPause}
-              nextTrack={this.nextTrack}
-              prevTrack={this.prevTrack}
-            />
-          </Grid>
+        <Grid container justify="center" alignItems="center" spacing={2}>
+          <div>
+            <Grid
+              container
+              item
+              direction="column"
+              alignItems="center"
+              spacing={1}
+            >
+              <Grid item>TrackName</Grid>
+              <Grid item>Author</Grid>
+              <Grid item>
+                <PlayControls
+                  playAllowed={playAllowed}
+                  playing={playing}
+                  onPlayPause={this.onPlayPause}
+                  nextTrack={this.nextTrack}
+                  prevTrack={this.prevTrack}
+                />
+              </Grid>
+            </Grid>
+          </div>
           <Grid item>
             <Volume
               volume={volume}
