@@ -88,6 +88,7 @@ class Player extends React.PureComponent {
     // https://developers.soundcloud.com/docs/api/sdks#javascript
     // https://developers.soundcloud.com/docs/api/guide#playing
     const { volume } = this.state;
+    const { trackInfo } = this.props;
 
     return (
       <ContentWrapper>
@@ -101,10 +102,12 @@ class Player extends React.PureComponent {
               spacing={1}
             >
               <Grid item>
-                <Typography>TrackName</Typography>
+                <Typography>{trackInfo ? trackInfo.title : ""}</Typography>
               </Grid>
               <Grid item>
-                <Typography>Author</Typography>
+                <Typography>
+                  {trackInfo ? trackInfo.user.username : ""}
+                </Typography>
               </Grid>
               <Grid item>
                 <PlayControls playSong={this.playSong} />
@@ -125,7 +128,8 @@ class Player extends React.PureComponent {
 }
 
 const mapStateToProps = state => ({
-  track: state.track
+  track: state.track,
+  trackInfo: state.trackInfo
 });
 
 const mapDispatchToProps = dispatch => ({
