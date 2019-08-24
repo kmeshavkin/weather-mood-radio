@@ -2,29 +2,25 @@ import React from "react";
 import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
 import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@material-ui/icons";
-import { Slider } from "@material-ui/core";
 import { connect } from "react-redux";
 import { changeTrack as changeTrackAction } from "../../store/actions";
+import PlaySlider from "./PlaySlider";
 
-const PlayControls = ({
-  track,
-  trackInfo,
-  playHistory: [...playHistory],
-  currentTrackIndex,
-  playAllowed,
-  playSong,
-  changeTrack
-}) => {
-  const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
-
-  const onPlayPause = () => {
+class PlayControls extends React.PureComponent {
+  onPlayPause = () => {
+    const { track } = this.props;
     if (track.isPlaying()) track.pause();
     else track.play();
-    forceUpdate();
+    this.forceUpdate();
   };
 
-  const prevTrack = () => {
+  prevTrack = () => {
+    const {
+      playHistory: [...playHistory],
+      currentTrackIndex,
+      playSong,
+      changeTrack
+    } = this.props;
     if (currentTrackIndex > 0) {
       playSong(playHistory[currentTrackIndex - 1]);
       changeTrack(playHistory, currentTrackIndex - 1);
@@ -32,7 +28,14 @@ const PlayControls = ({
     console.log("Previous Track", playHistory, currentTrackIndex - 1);
   };
 
-  const nextTrack = () => {
+  nextTrack = () => {
+    const {
+      playHistory: [...playHistory],
+      currentTrackIndex,
+      trackInfo,
+      changeTrack,
+      playSong
+    } = this.props;
     if (currentTrackIndex < playHistory.length) {
       playSong(playHistory[currentTrackIndex + 1]);
     } else {
@@ -44,48 +47,47 @@ const PlayControls = ({
     console.log("Next Track", playHistory, currentTrackIndex + 1);
   };
 
-  return (
-    <Grid container item direction="column" spacing={1}>
-      <Grid container item spacing={1}>
-        <Grid item>
-          <Fab
-            onClick={prevTrack}
-            disabled={!playAllowed}
-            size="medium"
-            aria-label="previous"
-          >
-            <SkipPrevious />
-          </Fab>
+  render() {
+    const { track, playAllowed } = this.props;
+    return (
+      <Grid container item direction="column" spacing={1}>
+        <Grid container item spacing={1}>
+          <Grid item>
+            <Fab
+              onClick={this.prevTrack}
+              disabled={!playAllowed}
+              size="medium"
+              aria-label="previous"
+            >
+              <SkipPrevious />
+            </Fab>
+          </Grid>
+          <Grid item>
+            <Fab
+              onClick={this.onPlayPause}
+              disabled={!playAllowed}
+              size="medium"
+              aria-label="play"
+            >
+              {track && track.isPlaying() ? <Pause /> : <PlayArrow />}
+            </Fab>
+          </Grid>
+          <Grid item>
+            <Fab
+              onClick={this.nextTrack}
+              disabled={!playAllowed}
+              size="medium"
+              aria-label="next"
+            >
+              <SkipNext />
+            </Fab>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Fab
-            onClick={onPlayPause}
-            disabled={!playAllowed}
-            size="medium"
-            aria-label="play"
-          >
-            {track && track.isPlaying() ? <Pause /> : <PlayArrow />}
-          </Fab>
-        </Grid>
-        <Grid item>
-          <Fab
-            onClick={nextTrack}
-            disabled={!playAllowed}
-            size="medium"
-            aria-label="next"
-          >
-            <SkipNext />
-          </Fab>
-        </Grid>
+        <PlaySlider />
       </Grid>
-      <Grid item>
-        {/* Current Time */}
-        <Slider value={0} onChange={() => {}} />
-        {/* Song Length */}
-      </Grid>
-    </Grid>
-  );
-};
+    );
+  }
+}
 
 const mapStateToProps = state => ({
   track: state.track,

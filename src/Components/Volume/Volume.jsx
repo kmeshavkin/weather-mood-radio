@@ -10,7 +10,7 @@ const Volume = ({ changeVolume, volume }) => {
   };
 
   return (
-    <Grid container item direction="column" spacing={1}>
+    <Grid container item direction="column">
       <Grid item>
         <VolumeUp />
       </Grid>
@@ -19,6 +19,8 @@ const Volume = ({ changeVolume, volume }) => {
           orientation="vertical"
           value={volume}
           onChange={handleChange}
+          step={0.01}
+          max={1}
         />
       </Grid>
       <Grid item>

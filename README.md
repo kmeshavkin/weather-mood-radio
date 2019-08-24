@@ -1,17 +1,21 @@
 # TO-DO
-* Player should do "nextTrack" when music ended!
 * Add JSDocs?
 * Implement TAG_BLACKLIST?
 * Somehow get clientId even when it was changed
 * Make possible to select from more than first 200 songs
 * Possibly find how to search only by title?
+* Compilations?
 
-# Used stuff
+# Known bugs
+* Volume slider is not fully stretched out
+
+# Features (highlights)
+* Music Player made from scratch
 * Javascript
 * React
 * Redux
 * API communication (soundcloud)
-* Material-UI
+* Material-UI (UI kit + Grid)
 
 # Legal Info
 Streaming Sounds

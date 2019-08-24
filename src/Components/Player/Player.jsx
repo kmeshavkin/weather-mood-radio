@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import soundcloud from "soundcloud";
 import Grid from "@material-ui/core/Grid";
+import { Typography } from "@material-ui/core";
 import { CLIENT_ID } from "../../privateKeys";
 import {
   DEFAULT_VOLUME,
@@ -29,6 +30,11 @@ class Player extends React.PureComponent {
       client_id: CLIENT_ID
     });
     this.playSong();
+
+    // -Test stuff- //
+    window.playSong = this.playSong;
+    window.soundcloud = soundcloud;
+    // --- //
   }
 
   getTrack = (searchTerm, trackId) => {
@@ -57,10 +63,13 @@ class Player extends React.PureComponent {
     const { newTrack } = this.props;
     try {
       const trackInfo = await this.getTrack("rainy", trackId);
-      console.log("trackInfo: ", trackInfo);
       const track = await soundcloud.stream(`/tracks/${trackInfo.id}`);
+      // -Test stuff- //
+      console.log("trackInfo: ", trackInfo);
+      window.track = track;
+      // --- //
       await track.play();
-      track.setVolume(volume / 100);
+      track.setVolume(volume);
       newTrack(track, trackInfo);
       console.log("Playback started!");
     } catch (e) {
@@ -71,7 +80,7 @@ class Player extends React.PureComponent {
 
   changeVolume = volume => {
     const { track } = this.props;
-    if (track) track.setVolume(volume / 100);
+    if (track) track.setVolume(volume);
     this.setState({ volume });
   };
 
@@ -91,8 +100,12 @@ class Player extends React.PureComponent {
               alignItems="center"
               spacing={1}
             >
-              <Grid item>TrackName</Grid>
-              <Grid item>Author</Grid>
+              <Grid item>
+                <Typography>TrackName</Typography>
+              </Grid>
+              <Grid item>
+                <Typography>Author</Typography>
+              </Grid>
               <Grid item>
                 <PlayControls playSong={this.playSong} />
               </Grid>
