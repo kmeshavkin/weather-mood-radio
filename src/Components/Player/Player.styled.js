@@ -1,5 +1,35 @@
 import styled from "styled-components";
+import { Card, CardMedia, Typography, Grid } from "@material-ui/core";
 
-export const ContentWrapper = styled.div`
-  margin: 1em;
+export const StyledCard = styled(Card)`
+  display: flex;
+  width: fit-content;
+  margin: 1em auto;
+`;
+
+export const StyledCardMedia = styled(CardMedia)`
+  width: 150px;
+`;
+
+export const StyledTitleGrid = styled(Grid)`
+  width: 250px;
+  overflow: hidden;
+`;
+
+export const StyledTypography = styled(Typography)`
+  white-space: nowrap;
+
+  animation: slide 7.5s linear infinite;
+
+  @keyframes slide {
+    0% {
+      transform: translate(0em);
+    }
+    50% {
+      transform: translate(0em);
+    }
+    100% {
+      transform: translate(0em);
+    }
+  }
 `;

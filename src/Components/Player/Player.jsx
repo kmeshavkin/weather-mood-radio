@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import soundcloud from "soundcloud";
 import Grid from "@material-ui/core/Grid";
-import { Typography } from "@material-ui/core";
+import { CardContent } from "@material-ui/core";
 import { CLIENT_ID } from "../../privateKeys";
 import {
   DEFAULT_VOLUME,
@@ -13,8 +13,17 @@ import {
 import { getRandom } from "../../utils/functions";
 import PlayControls from "../PlayControls/PlayControls";
 import Volume from "../Volume/Volume";
-import { ContentWrapper } from "./Player.styled";
-import { newTrack as newTrackAction } from "../../store/actions";
+import {
+  StyledCard,
+  StyledCardMedia,
+  StyledTypography,
+  StyledTitleGrid
+} from "./Player.styled";
+import {
+  newTrack as newTrackAction,
+  changeTrack as changeTrackAction
+} from "../../store/actions";
+import recordImg from "./record.svg";
 
 class Player extends React.PureComponent {
   constructor() {
@@ -64,6 +73,7 @@ class Player extends React.PureComponent {
     try {
       const trackInfo = await this.getTrack("rainy", trackId);
       const track = await soundcloud.stream(`/tracks/${trackInfo.id}`);
+      track.on("finish", () => this.nextTrack());
       // -Test stuff- //
       console.log("trackInfo: ", trackInfo);
       window.track = track;
@@ -78,6 +88,37 @@ class Player extends React.PureComponent {
     }
   };
 
+  prevTrack = () => {
+    const {
+      playHistory: [...playHistory],
+      currentTrackIndex,
+      changeTrack
+    } = this.props;
+    if (currentTrackIndex > 0) {
+      this.playSong(playHistory[currentTrackIndex - 1]);
+      changeTrack(playHistory, currentTrackIndex - 1);
+    }
+    console.log("Previous Track", playHistory, currentTrackIndex - 1);
+  };
+
+  nextTrack = () => {
+    const {
+      playHistory: [...playHistory],
+      currentTrackIndex,
+      trackInfo,
+      changeTrack
+    } = this.props;
+    if (currentTrackIndex < playHistory.length) {
+      this.playSong(playHistory[currentTrackIndex + 1]);
+    } else {
+      playHistory.push(trackInfo.id);
+      this.playSong();
+    }
+
+    changeTrack(playHistory, currentTrackIndex + 1);
+    console.log("Next Track", playHistory, currentTrackIndex + 1);
+  };
+
   changeVolume = volume => {
     const { track } = this.props;
     if (track) track.setVolume(volume);
@@ -89,52 +130,64 @@ class Player extends React.PureComponent {
     // https://developers.soundcloud.com/docs/api/guide#playing
     const { volume } = this.state;
     const { trackInfo } = this.props;
-
     return (
-      <ContentWrapper>
-        <Grid container justify="center" alignItems="center" spacing={2}>
-          <div>
-            <Grid
-              container
-              item
-              direction="column"
-              alignItems="center"
-              spacing={1}
-            >
-              <Grid item>
-                <Typography>{trackInfo ? trackInfo.title : ""}</Typography>
+      <StyledCard>
+        <StyledCardMedia
+          image={
+            trackInfo && trackInfo.artwork_url
+              ? trackInfo.artwork_url
+              : recordImg
+          }
+          title="Cover image"
+        />
+        <CardContent>
+          <Grid container justify="center" alignItems="center" spacing={2}>
+            <div>
+              <Grid container item direction="column" alignItems="center">
+                <StyledTitleGrid item>
+                  <StyledTypography align="center" component="h5" variant="h5">
+                    {trackInfo ? trackInfo.title : ""}
+                  </StyledTypography>
+                  <StyledTypography
+                    align="center"
+                    variant="subtitle1"
+                    color="textSecondary"
+                  >
+                    {trackInfo ? trackInfo.user.username : ""}
+                  </StyledTypography>
+                </StyledTitleGrid>
+                <PlayControls
+                  nextTrack={this.nextTrack}
+                  prevTrack={this.prevTrack}
+                />
               </Grid>
-              <Grid item>
-                <Typography>
-                  {trackInfo ? trackInfo.user.username : ""}
-                </Typography>
-              </Grid>
-              <Grid item>
-                <PlayControls playSong={this.playSong} />
-              </Grid>
+            </div>
+            <Grid item>
+              <Volume
+                volume={volume}
+                changeVolume={this.changeVolume}
+                aria-label="volume"
+              />
             </Grid>
-          </div>
-          <Grid item>
-            <Volume
-              volume={volume}
-              changeVolume={this.changeVolume}
-              aria-label="volume"
-            />
           </Grid>
-        </Grid>
-      </ContentWrapper>
+        </CardContent>
+      </StyledCard>
     );
   }
 }
 
 const mapStateToProps = state => ({
   track: state.track,
-  trackInfo: state.trackInfo
+  trackInfo: state.trackInfo,
+  playHistory: state.playHistory,
+  currentTrackIndex: state.currentTrackIndex
 });
 
 const mapDispatchToProps = dispatch => ({
   newTrack: (history, trackIndex) =>
-    dispatch(newTrackAction(history, trackIndex))
+    dispatch(newTrackAction(history, trackIndex)),
+  changeTrack: (track, trackInfo) =>
+    dispatch(changeTrackAction(track, trackInfo))
 });
 
 export default connect(

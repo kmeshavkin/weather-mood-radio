@@ -8,6 +8,9 @@
 
 # Known bugs
 * Volume slider is not fully stretched out
+* Track slider does not switch immediately after next song starts
+* When holding track slider, it jumps back every second
+* Title or artist can be too long, need to create animation for it
 
 # Features (highlights)
 * Music Player made from scratch

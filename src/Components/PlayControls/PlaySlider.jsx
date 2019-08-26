@@ -10,12 +10,13 @@ class PlaySlider extends React.PureComponent {
     super();
     this.state = {
       currentTime: 0,
-      sliderPosition: 0
+      sliderPosition: 0,
+      updateSlider: null
     };
   }
 
   componentDidMount() {
-    this.updateSlider = setInterval(() => {
+    const updateSlider = setInterval(() => {
       const { track } = this.props;
       if (track) {
         this.setState({
@@ -25,10 +26,12 @@ class PlaySlider extends React.PureComponent {
         });
       }
     }, 1000);
+    this.setState({ updateSlider });
   }
 
   componentWillUnmount() {
-    clearInterval(this.updateSlider);
+    const { updateSlider } = this.state;
+    clearInterval(updateSlider);
   }
 
   rewind = (e, value) => {
