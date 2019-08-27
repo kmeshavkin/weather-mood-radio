@@ -1,6 +1,6 @@
-import React from "react";
-import { connect } from "react-redux";
-import soundcloud from "soundcloud";
+import React from 'react';
+import { connect } from 'react-redux';
+import soundcloud from 'soundcloud';
 import {
   CardContent,
   Grid,
@@ -8,33 +8,33 @@ import {
   Popover,
   Typography,
   Link
-} from "@material-ui/core";
-import { Info } from "@material-ui/icons";
-import { CLIENT_ID } from "../../privateKeys";
+} from '@material-ui/core';
+import { Info } from '@material-ui/icons';
+import { CLIENT_ID } from '../../privateKeys';
 import {
   DEFAULT_VOLUME,
   GENRES,
   PAGE_SIZE,
   SYNONYMS
-} from "../../utils/constants";
-import { getRandom } from "../../utils/functions";
-import PlayControls from "../PlayControls/PlayControls";
-import Volume from "../Volume/Volume";
+} from '../../utils/constants';
+import { getRandom } from '../../utils/functions';
+import PlayControls from '../PlayControls/PlayControls';
+import Volume from '../Volume/Volume';
 import {
   StyledCard,
   StyledCardMedia,
   StyledTypography,
   StyledTitleGrid,
   StyledImage
-} from "./Player.styled";
+} from './Player.styled';
 import {
   newTrack as newTrackAction,
   changeTrack as changeTrackAction
-} from "../../store/actions";
-import recordSvg from "../../resources/record.svg";
-import reactSvg from "../../resources/react.svg";
-import reduxSvg from "../../resources/redux.svg";
-import soundcloudImg from "../../resources/soundcloud.png";
+} from '../../store/actions';
+import recordSvg from '../../resources/record.svg';
+import reactSvg from '../../resources/react.svg';
+import reduxSvg from '../../resources/redux.svg';
+import soundcloudImg from '../../resources/soundcloud.png';
 
 class Player extends React.PureComponent {
   constructor() {
@@ -62,13 +62,13 @@ class Player extends React.PureComponent {
     try {
       if (trackId) {
         return soundcloud
-          .get("/tracks", {
+          .get('/tracks', {
             ids: trackId
           })
           .then(track => track[0]);
       }
       return soundcloud
-        .get("/tracks", {
+        .get('/tracks', {
           q: getRandom(SYNONYMS[searchTerm]),
           genres: GENRES,
           limit: PAGE_SIZE
@@ -83,19 +83,19 @@ class Player extends React.PureComponent {
     const { volume } = this.state;
     const { newTrack } = this.props;
     try {
-      const trackInfo = await this.getTrack("rainy", trackId);
+      const trackInfo = await this.getTrack('rainy', trackId);
       const track = await soundcloud.stream(`/tracks/${trackInfo.id}`);
-      track.on("finish", () => this.nextTrack());
+      track.on('finish', () => this.nextTrack());
       // -Test stuff- //
-      console.log("trackInfo: ", trackInfo);
+      console.log('trackInfo: ', trackInfo);
       window.track = track;
       // --- //
       await track.play();
       track.setVolume(volume);
       newTrack(track, trackInfo);
-      console.log("Playback started!");
+      console.log('Playback started!');
     } catch (e) {
-      console.error("Playback rejected.", e);
+      console.error('Playback rejected.', e);
       this.playSong();
     }
   };
@@ -110,7 +110,7 @@ class Player extends React.PureComponent {
       this.playSong(playHistory[currentTrackIndex - 1]);
       changeTrack(playHistory, currentTrackIndex - 1);
     }
-    console.log("Previous Track", playHistory, currentTrackIndex - 1);
+    console.log('Previous Track', playHistory, currentTrackIndex - 1);
   };
 
   nextTrack = () => {
@@ -128,7 +128,7 @@ class Player extends React.PureComponent {
     }
 
     changeTrack(playHistory, currentTrackIndex + 1);
-    console.log("Next Track", playHistory, currentTrackIndex + 1);
+    console.log('Next Track', playHistory, currentTrackIndex + 1);
   };
 
   changeVolume = volume => {
@@ -164,14 +164,14 @@ class Player extends React.PureComponent {
               <Grid container item direction="column" alignItems="center">
                 <StyledTitleGrid item>
                   <StyledTypography align="center" component="h5" variant="h5">
-                    {trackInfo ? trackInfo.title : ""}
+                    {trackInfo ? trackInfo.title : ''}
                   </StyledTypography>
                   <StyledTypography
                     align="center"
                     variant="subtitle1"
                     color="textSecondary"
                   >
-                    {trackInfo ? trackInfo.user.username : ""}
+                    {trackInfo ? trackInfo.user.username : ''}
                   </StyledTypography>
                 </StyledTitleGrid>
                 <PlayControls
@@ -197,12 +197,12 @@ class Player extends React.PureComponent {
                     anchorEl={anchorEl}
                     onClose={() => this.setState({ anchorEl: null })}
                     anchorOrigin={{
-                      vertical: "center",
-                      horizontal: "center"
+                      vertical: 'center',
+                      horizontal: 'center'
                     }}
                     transformOrigin={{
-                      vertical: "top",
-                      horizontal: "right"
+                      vertical: 'top',
+                      horizontal: 'right'
                     }}
                   >
                     <Typography>Powered by:</Typography>
@@ -214,7 +214,7 @@ class Player extends React.PureComponent {
                       src={soundcloudImg}
                     />
                     <Link
-                      href={trackInfo ? trackInfo.permalink_url : "#"}
+                      href={trackInfo ? trackInfo.permalink_url : '#'}
                       target="_blank"
                       rel="noopener"
                     >

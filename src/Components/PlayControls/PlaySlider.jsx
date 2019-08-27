@@ -1,9 +1,9 @@
-import React from "react";
-import { connect } from "react-redux";
-import { Slider, Grid } from "@material-ui/core";
-import { REWIND_SLIDER_MAX } from "../../utils/constants";
-import { StyledGrid, StyledTypography } from "./PlaySlider.styled";
-import { formatNumber } from "../../utils/functions";
+import React from 'react';
+import { connect } from 'react-redux';
+import { Slider, Grid } from '@material-ui/core';
+import { REWIND_SLIDER_MAX } from '../../utils/constants';
+import { StyledGrid, StyledTypography } from './PlaySlider.styled';
+import { formatNumber } from '../../utils/functions';
 
 class PlaySlider extends React.PureComponent {
   constructor() {

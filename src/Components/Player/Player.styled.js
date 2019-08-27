@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Card, CardMedia, Typography, Grid } from "@material-ui/core";
+import styled from 'styled-components';
+import { Card, CardMedia, Typography, Grid } from '@material-ui/core';
 
 export const StyledCard = styled(Card)`
   display: flex;

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Grid, Typography } from "@material-ui/core";
+import styled from 'styled-components';
+import { Grid, Typography } from '@material-ui/core';
 
 export const StyledGrid = styled(Grid)`
   display: flex;

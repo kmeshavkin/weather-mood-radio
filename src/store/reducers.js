@@ -8,14 +8,14 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case "CHANGE_TRACK":
+    case 'CHANGE_TRACK':
       return {
         ...state,
         playHistory: action.history,
         currentTrackIndex: action.trackIndex,
         playAllowed: false
       };
-    case "NEW_TRACK":
+    case 'NEW_TRACK':
       return {
         ...state,
         track: action.track,

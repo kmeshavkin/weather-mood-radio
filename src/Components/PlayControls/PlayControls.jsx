@@ -1,9 +1,9 @@
-import React from "react";
-import Fab from "@material-ui/core/Fab";
-import Grid from "@material-ui/core/Grid";
-import { PlayArrow, Pause, SkipPrevious, SkipNext } from "@material-ui/icons";
-import { connect } from "react-redux";
-import PlaySlider from "./PlaySlider";
+import React from 'react';
+import Fab from '@material-ui/core/Fab';
+import Grid from '@material-ui/core/Grid';
+import { PlayArrow, Pause, SkipPrevious, SkipNext } from '@material-ui/icons';
+import { connect } from 'react-redux';
+import PlaySlider from './PlaySlider';
 
 class PlayControls extends React.PureComponent {
   onPlayPause = () => {

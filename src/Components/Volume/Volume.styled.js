@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import Slider from "@material-ui/core/Slider";
+import styled from 'styled-components';
+import Slider from '@material-ui/core/Slider';
 
 export const StyledSlider = styled(Slider)`
   min-height: 50px;

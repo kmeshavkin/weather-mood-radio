@@ -1,8 +1,8 @@
-import React from "react";
-import Grid from "@material-ui/core/Grid";
-import VolumeDown from "@material-ui/icons/VolumeDown";
-import VolumeUp from "@material-ui/icons/VolumeUp";
-import { StyledSlider } from "./Volume.styled";
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
+import VolumeDown from '@material-ui/icons/VolumeDown';
+import VolumeUp from '@material-ui/icons/VolumeUp';
+import { StyledSlider } from './Volume.styled';
 
 const Volume = ({ changeVolume, volume }) => {
   const handleChange = (e, value) => {
