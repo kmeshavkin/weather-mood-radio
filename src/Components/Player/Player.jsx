@@ -1,8 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
 import soundcloud from "soundcloud";
-import Grid from "@material-ui/core/Grid";
-import { CardContent } from "@material-ui/core";
+import {
+  CardContent,
+  Grid,
+  IconButton,
+  Popover,
+  Typography,
+  Link
+} from "@material-ui/core";
+import { Info } from "@material-ui/icons";
 import { CLIENT_ID } from "../../privateKeys";
 import {
   DEFAULT_VOLUME,
@@ -17,20 +24,25 @@ import {
   StyledCard,
   StyledCardMedia,
   StyledTypography,
-  StyledTitleGrid
+  StyledTitleGrid,
+  StyledImage
 } from "./Player.styled";
 import {
   newTrack as newTrackAction,
   changeTrack as changeTrackAction
 } from "../../store/actions";
-import recordImg from "./record.svg";
+import recordSvg from "../../resources/record.svg";
+import reactSvg from "../../resources/react.svg";
+import reduxSvg from "../../resources/redux.svg";
+import soundcloudImg from "../../resources/soundcloud.png";
 
 class Player extends React.PureComponent {
   constructor() {
     super();
 
     this.state = {
-      volume: DEFAULT_VOLUME
+      volume: DEFAULT_VOLUME,
+      anchorEl: null
     };
   }
 
@@ -128,7 +140,7 @@ class Player extends React.PureComponent {
   render() {
     // https://developers.soundcloud.com/docs/api/sdks#javascript
     // https://developers.soundcloud.com/docs/api/guide#playing
-    const { volume } = this.state;
+    const { volume, anchorEl } = this.state;
     const { trackInfo } = this.props;
     return (
       <StyledCard>
@@ -136,12 +148,18 @@ class Player extends React.PureComponent {
           image={
             trackInfo && trackInfo.artwork_url
               ? trackInfo.artwork_url
-              : recordImg
+              : recordSvg
           }
           title="Cover image"
         />
         <CardContent>
-          <Grid container justify="center" alignItems="center" spacing={2}>
+          <Grid
+            container
+            justify="center"
+            direction="row"
+            alignItems="center"
+            spacing={2}
+          >
             <div>
               <Grid container item direction="column" alignItems="center">
                 <StyledTitleGrid item>
@@ -162,13 +180,57 @@ class Player extends React.PureComponent {
                 />
               </Grid>
             </div>
-            <Grid item>
-              <Volume
-                volume={volume}
-                changeVolume={this.changeVolume}
-                aria-label="volume"
-              />
-            </Grid>
+            <div>
+              <Grid container item direction="column" justify="center">
+                <Grid item>
+                  <IconButton
+                    onClick={event =>
+                      this.setState({ anchorEl: event.currentTarget })
+                    }
+                    aria-label="info"
+                    size="small"
+                  >
+                    <Info fontSize="small" />
+                  </IconButton>
+                  <Popover
+                    open={Boolean(anchorEl)}
+                    anchorEl={anchorEl}
+                    onClose={() => this.setState({ anchorEl: null })}
+                    anchorOrigin={{
+                      vertical: "center",
+                      horizontal: "center"
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "right"
+                    }}
+                  >
+                    <Typography>Powered by:</Typography>
+                    <StyledImage height={30} alt="react" src={reactSvg} />
+                    <StyledImage height={30} alt="redux" src={reduxSvg} />
+                    <StyledImage
+                      height={16}
+                      alt="soundcloud"
+                      src={soundcloudImg}
+                    />
+                    <Link
+                      href={trackInfo ? trackInfo.permalink_url : "#"}
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Link to song
+                    </Link>
+                  </Popover>
+                </Grid>
+                <Grid item>
+                  <Volume
+                    volume={volume}
+                    changeVolume={this.changeVolume}
+                    aria-label="volume"
+                  />
+                </Grid>
+              </Grid>
+            </div>
           </Grid>
         </CardContent>
       </StyledCard>

@@ -11,14 +11,16 @@ class PlaySlider extends React.PureComponent {
     this.state = {
       currentTime: 0,
       sliderPosition: 0,
+      holding: false,
       updateSlider: null
     };
   }
 
   componentDidMount() {
     const updateSlider = setInterval(() => {
+      const { holding } = this.state;
       const { track } = this.props;
-      if (track) {
+      if (track && !holding) {
         this.setState({
           sliderPosition:
             (track.currentTime() / track.getDuration()) * REWIND_SLIDER_MAX,
@@ -58,6 +60,8 @@ class PlaySlider extends React.PureComponent {
           <Slider
             value={sliderPosition}
             max={REWIND_SLIDER_MAX}
+            onMouseDown={() => this.setState({ holding: true })}
+            onMouseUp={() => this.setState({ holding: false })}
             onChange={this.rewind}
             onChangeCommitted={(e, value) =>
               track &&

@@ -4,7 +4,7 @@ import { Card, CardMedia, Typography, Grid } from "@material-ui/core";
 export const StyledCard = styled(Card)`
   display: flex;
   width: fit-content;
-  margin: 1em auto;
+  margin: 0 auto;
 `;
 
 export const StyledCardMedia = styled(CardMedia)`
@@ -14,6 +14,10 @@ export const StyledCardMedia = styled(CardMedia)`
 export const StyledTitleGrid = styled(Grid)`
   width: 250px;
   overflow: hidden;
+`;
+
+export const StyledImage = styled.img`
+  height: ${({ height }) => height}px;
 `;
 
 export const StyledTypography = styled(Typography)`
