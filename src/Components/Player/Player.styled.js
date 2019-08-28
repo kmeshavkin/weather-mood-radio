@@ -16,10 +16,6 @@ export const StyledTitleGrid = styled(Grid)`
   overflow: hidden;
 `;
 
-export const StyledImage = styled.img`
-  height: ${({ height }) => height}px;
-`;
-
 export const StyledTypography = styled(Typography)`
   white-space: nowrap;
 

@@ -1,48 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import soundcloud from 'soundcloud';
-import {
-  CardContent,
-  Grid,
-  IconButton,
-  Popover,
-  Typography,
-  Link
-} from '@material-ui/core';
-import { Info } from '@material-ui/icons';
-import { CLIENT_ID } from '../../privateKeys';
-import {
-  DEFAULT_VOLUME,
-  GENRES,
-  PAGE_SIZE,
-  SYNONYMS
-} from '../../utils/constants';
+import { CardContent, Grid } from '@material-ui/core';
+import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
+import { DEFAULT_VOLUME, GENRES, PAGE_SIZE, SYNONYMS } from '../../utils/constants';
 import { getRandom } from '../../utils/functions';
+import { CLIENT_ID } from '../../privateKeys';
 import PlayControls from '../PlayControls/PlayControls';
 import Volume from '../Volume/Volume';
-import {
-  StyledCard,
-  StyledCardMedia,
-  StyledTypography,
-  StyledTitleGrid,
-  StyledImage
-} from './Player.styled';
-import {
-  newTrack as newTrackAction,
-  changeTrack as changeTrackAction
-} from '../../store/actions';
+import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid } from './Player.styled';
 import recordSvg from '../../resources/record.svg';
-import reactSvg from '../../resources/react.svg';
-import reduxSvg from '../../resources/redux.svg';
-import soundcloudImg from '../../resources/soundcloud.png';
+import InfoButton from '../InfoButton/InfoButton';
 
 class Player extends React.PureComponent {
   constructor() {
     super();
 
     this.state = {
-      volume: DEFAULT_VOLUME,
-      anchorEl: null
+      volume: DEFAULT_VOLUME
     };
   }
 
@@ -61,11 +36,7 @@ class Player extends React.PureComponent {
   getTrack = (searchTerm, trackId) => {
     try {
       if (trackId) {
-        return soundcloud
-          .get('/tracks', {
-            ids: trackId
-          })
-          .then(track => track[0]);
+        return soundcloud.get('/tracks', { ids: trackId }).then(track => track[0]);
       }
       return soundcloud
         .get('/tracks', {
@@ -126,7 +97,6 @@ class Player extends React.PureComponent {
       playHistory.push(trackInfo.id);
       this.playSong();
     }
-
     changeTrack(playHistory, currentTrackIndex + 1);
     console.log('Next Track', playHistory, currentTrackIndex + 1);
   };
@@ -138,96 +108,36 @@ class Player extends React.PureComponent {
   };
 
   render() {
-    // https://developers.soundcloud.com/docs/api/sdks#javascript
-    // https://developers.soundcloud.com/docs/api/guide#playing
-    const { volume, anchorEl } = this.state;
+    const { volume } = this.state;
     const { trackInfo } = this.props;
     return (
       <StyledCard>
         <StyledCardMedia
-          image={
-            trackInfo && trackInfo.artwork_url
-              ? trackInfo.artwork_url
-              : recordSvg
-          }
+          image={trackInfo && trackInfo.artwork_url ? trackInfo.artwork_url : recordSvg}
           title="Cover image"
         />
         <CardContent>
-          <Grid
-            container
-            justify="center"
-            direction="row"
-            alignItems="center"
-            spacing={2}
-          >
+          <Grid container justify="center" direction="row" alignItems="center" spacing={2}>
             <div>
               <Grid container item direction="column" alignItems="center">
                 <StyledTitleGrid item>
                   <StyledTypography align="center" component="h5" variant="h5">
                     {trackInfo ? trackInfo.title : ''}
                   </StyledTypography>
-                  <StyledTypography
-                    align="center"
-                    variant="subtitle1"
-                    color="textSecondary"
-                  >
+                  <StyledTypography align="center" variant="subtitle1" color="textSecondary">
                     {trackInfo ? trackInfo.user.username : ''}
                   </StyledTypography>
                 </StyledTitleGrid>
-                <PlayControls
-                  nextTrack={this.nextTrack}
-                  prevTrack={this.prevTrack}
-                />
+                <PlayControls nextTrack={this.nextTrack} prevTrack={this.prevTrack} />
               </Grid>
             </div>
             <div>
               <Grid container item direction="column" justify="center">
                 <Grid item>
-                  <IconButton
-                    onClick={event =>
-                      this.setState({ anchorEl: event.currentTarget })
-                    }
-                    aria-label="info"
-                    size="small"
-                  >
-                    <Info fontSize="small" />
-                  </IconButton>
-                  <Popover
-                    open={Boolean(anchorEl)}
-                    anchorEl={anchorEl}
-                    onClose={() => this.setState({ anchorEl: null })}
-                    anchorOrigin={{
-                      vertical: 'center',
-                      horizontal: 'center'
-                    }}
-                    transformOrigin={{
-                      vertical: 'top',
-                      horizontal: 'right'
-                    }}
-                  >
-                    <Typography>Powered by:</Typography>
-                    <StyledImage height={30} alt="react" src={reactSvg} />
-                    <StyledImage height={30} alt="redux" src={reduxSvg} />
-                    <StyledImage
-                      height={16}
-                      alt="soundcloud"
-                      src={soundcloudImg}
-                    />
-                    <Link
-                      href={trackInfo ? trackInfo.permalink_url : '#'}
-                      target="_blank"
-                      rel="noopener"
-                    >
-                      Link to song
-                    </Link>
-                  </Popover>
+                  <InfoButton trackInfo={trackInfo} />
                 </Grid>
                 <Grid item>
-                  <Volume
-                    volume={volume}
-                    changeVolume={this.changeVolume}
-                    aria-label="volume"
-                  />
+                  <Volume volume={volume} changeVolume={this.changeVolume} aria-label="volume" />
                 </Grid>
               </Grid>
             </div>
@@ -246,10 +156,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  newTrack: (history, trackIndex) =>
-    dispatch(newTrackAction(history, trackIndex)),
-  changeTrack: (track, trackInfo) =>
-    dispatch(changeTrackAction(track, trackInfo))
+  newTrack: (history, trackIndex) => dispatch(newTrackAction(history, trackIndex)),
+  changeTrack: (track, trackInfo) => dispatch(changeTrackAction(track, trackInfo))
 });
 
 export default connect(

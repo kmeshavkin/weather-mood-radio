@@ -1,5 +1,4 @@
 # TO-DO
-* Refactor Player.jsx, became too long
 * Style Popover properly
 * Add JSDocs?
 * Implement TAG_BLACKLIST?
@@ -9,6 +8,8 @@
 * Compilations?
 
 # Known bugs
+* Fix CORS!
+* Track sometimes won't start playing until window is clicked
 * Volume slider is not fully stretched out
 * Track slider does not switch immediately after next song starts
 * Title or artist can be too long, need to create animation for it

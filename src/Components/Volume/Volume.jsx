@@ -15,13 +15,7 @@ const Volume = ({ changeVolume, volume }) => {
         <VolumeUp />
       </Grid>
       <Grid item>
-        <StyledSlider
-          orientation="vertical"
-          value={volume}
-          onChange={handleChange}
-          step={0.01}
-          max={1}
-        />
+        <StyledSlider orientation="vertical" value={volume} onChange={handleChange} step={0.01} max={1} />
       </Grid>
       <Grid item>
         <VolumeDown />

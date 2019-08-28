@@ -22,8 +22,7 @@ class PlaySlider extends React.PureComponent {
       const { track } = this.props;
       if (track && !holding) {
         this.setState({
-          sliderPosition:
-            (track.currentTime() / track.getDuration()) * REWIND_SLIDER_MAX,
+          sliderPosition: (track.currentTime() / track.getDuration()) * REWIND_SLIDER_MAX,
           currentTime: Math.ceil(track.currentTime() / 1000)
         });
       }
@@ -40,9 +39,7 @@ class PlaySlider extends React.PureComponent {
     const { track } = this.props;
     this.setState({
       sliderPosition: value,
-      currentTime: track
-        ? Math.round(((value / REWIND_SLIDER_MAX) * track.getDuration()) / 1000)
-        : 0
+      currentTime: track ? Math.round(((value / REWIND_SLIDER_MAX) * track.getDuration()) / 1000) : 0
     });
   };
 
@@ -52,9 +49,7 @@ class PlaySlider extends React.PureComponent {
     return (
       <Grid container item direction="row" alignItems="center" spacing={1}>
         <StyledGrid item>
-          <StyledTypography variant="caption">
-            {formatNumber(currentTime)}
-          </StyledTypography>
+          <StyledTypography variant="caption">{formatNumber(currentTime)}</StyledTypography>
         </StyledGrid>
         <StyledGrid item xs>
           <Slider
@@ -63,10 +58,7 @@ class PlaySlider extends React.PureComponent {
             onMouseDown={() => this.setState({ holding: true })}
             onMouseUp={() => this.setState({ holding: false })}
             onChange={this.rewind}
-            onChangeCommitted={(e, value) =>
-              track &&
-              track.seek((value / REWIND_SLIDER_MAX) * track.getDuration())
-            }
+            onChangeCommitted={(e, value) => track && track.seek((value / REWIND_SLIDER_MAX) * track.getDuration())}
           />
         </StyledGrid>
         <StyledGrid item>
