@@ -22,15 +22,18 @@ class Player extends React.PureComponent {
   }
 
   componentDidMount() {
-    soundcloud.initialize({
-      client_id: CLIENT_ID
-    });
-    this.playSong();
+    const { playbackStarted } = this.props;
+    if (playbackStarted) {
+      soundcloud.initialize({
+        client_id: CLIENT_ID
+      });
+      this.playSong();
 
-    // -Test stuff- //
-    window.playSong = this.playSong;
-    window.soundcloud = soundcloud;
-    // --- //
+      // -Test stuff- //
+      window.playSong = this.playSong;
+      window.soundcloud = soundcloud;
+      // --- //
+    }
   }
 
   getTrack = (searchTerm, trackId) => {
@@ -67,7 +70,7 @@ class Player extends React.PureComponent {
       console.log('Playback started!');
     } catch (e) {
       console.error('Playback rejected.', e);
-      this.playSong();
+      // this.playSong();
     }
   };
 

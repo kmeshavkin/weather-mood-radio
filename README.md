@@ -1,5 +1,4 @@
 # TO-DO
-* Style Popover properly
 * Add JSDocs?
 * Implement TAG_BLACKLIST?
 * Somehow get clientId even when it was changed
