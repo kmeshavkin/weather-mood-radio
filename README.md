@@ -1,4 +1,6 @@
 # TO-DO
+* Move some assisting functions to functions (and weather to different component?)
+* Make so app doesn't wait for weather retrieval
 * Add JSDocs?
 * Implement TAG_BLACKLIST?
 * Somehow get clientId even when it was changed

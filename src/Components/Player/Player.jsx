@@ -5,7 +5,7 @@ import { CardContent, Grid } from '@material-ui/core';
 import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
 import { DEFAULT_VOLUME, GENRES, PAGE_SIZE, SYNONYMS } from '../../utils/constants';
 import { getRandom } from '../../utils/functions';
-import { CLIENT_ID } from '../../privateKeys';
+import { CLIENT_ID, DARK_SKY_KEY } from '../../privateKeys';
 import PlayControls from '../PlayControls/PlayControls';
 import Volume from '../Volume/Volume';
 import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid } from './Player.styled';
@@ -21,7 +21,9 @@ class Player extends React.PureComponent {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    const weather = await this.getWeather();
+    console.log('weather: ', weather);
     const { playbackStarted } = this.props;
     if (playbackStarted) {
       soundcloud.initialize({
@@ -35,6 +37,24 @@ class Player extends React.PureComponent {
       // --- //
     }
   }
+
+  async getWeather() {
+    if (navigator.geolocation) {
+      const position = await this.getPosition();
+      const weatherPromise = await fetch(
+        `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${DARK_SKY_KEY}/${position.coords.latitude},${position.coords.longitude}?exclude=hourly,daily,flags`
+      );
+      const weather = await weatherPromise.json();
+      return weather.currently;
+    }
+    return new Error("Couldn't retrieve weather or user coordinates");
+  }
+
+  getPosition = () => {
+    return new Promise((resolve, reject) => {
+      navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
+  };
 
   getTrack = (searchTerm, trackId) => {
     try {
