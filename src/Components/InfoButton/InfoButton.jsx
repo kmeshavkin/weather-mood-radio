@@ -5,6 +5,7 @@ import reactSvg from '../../resources/react.svg';
 import reduxSvg from '../../resources/redux.svg';
 import soundcloudImg from '../../resources/soundcloud.png';
 import { StyledImage, StyledGrid } from './InfoButton.styled';
+import { trackInfoType, playAllowedType } from '../../utils/sharedPropTypes';
 
 class InfoButton extends React.PureComponent {
   constructor() {
@@ -16,7 +17,7 @@ class InfoButton extends React.PureComponent {
 
   render() {
     const { anchorEl } = this.state;
-    const { trackInfo } = this.props;
+    const { trackInfo, playAllowed } = this.props;
     return (
       <>
         <IconButton onClick={event => this.setState({ anchorEl: event.currentTarget })} aria-label="info" size="small">
@@ -42,9 +43,13 @@ class InfoButton extends React.PureComponent {
             </Grid>
             <br />
             <Grid item>
-              <Link href={trackInfo ? trackInfo.permalink_url : '#'} target="_blank" rel="noopener">
-                <Typography>Go to soundcloud</Typography>
-              </Link>
+              {playAllowed ? (
+                <Link href={trackInfo ? trackInfo.permalink_url : '#'} target="_blank" rel="noopener">
+                  <Typography>Go to song (soundcloud)</Typography>
+                </Link>
+              ) : (
+                ''
+              )}
             </Grid>
           </StyledGrid>
         </Popover>
@@ -54,3 +59,12 @@ class InfoButton extends React.PureComponent {
 }
 
 export default InfoButton;
+
+InfoButton.defaultProps = {
+  trackInfo: undefined
+};
+
+InfoButton.propTypes = {
+  trackInfo: trackInfoType,
+  playAllowed: playAllowedType.isRequired
+};

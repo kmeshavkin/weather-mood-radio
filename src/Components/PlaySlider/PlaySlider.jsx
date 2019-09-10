@@ -4,6 +4,7 @@ import { Slider, Grid } from '@material-ui/core';
 import { REWIND_SLIDER_MAX } from '../../utils/constants';
 import { StyledGrid, StyledTypography } from './PlaySlider.styled';
 import { formatNumber } from '../../utils/functions';
+import { trackType } from '../../utils/sharedPropTypes';
 
 class PlaySlider extends React.PureComponent {
   constructor() {
@@ -76,3 +77,11 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(PlaySlider);
+
+PlaySlider.defaultProps = {
+  track: undefined
+};
+
+PlaySlider.propTypes = {
+  track: trackType
+};

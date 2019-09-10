@@ -1,7 +1,7 @@
 # TO-DO
 * Move some assisting functions to functions (and weather to different component?)
 * Make so app doesn't wait for weather retrieval
-* Add JSDocs?
+* Find if all PropTypes need isRequired?
 * Implement TAG_BLACKLIST?
 * Somehow get clientId even when it was changed
 * Make possible to select from more than first 200 songs
@@ -9,7 +9,6 @@
 * Compilations?
 
 # Known bugs
-* Fix CORS!
 * Track sometimes won't start playing until window is clicked
 * Volume slider is not fully stretched out
 * Track slider does not switch immediately after next song starts

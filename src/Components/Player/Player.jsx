@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import soundcloud from 'soundcloud';
 import { CardContent, Grid } from '@material-ui/core';
 import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
@@ -11,6 +12,15 @@ import Volume from '../Volume/Volume';
 import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid } from './Player.styled';
 import recordSvg from '../../resources/record.svg';
 import InfoButton from '../InfoButton/InfoButton';
+import {
+  trackType,
+  trackInfoType,
+  playHistoryType,
+  currentTrackIndexType,
+  newTrackType,
+  changeTrackType,
+  playAllowedType
+} from '../../utils/sharedPropTypes';
 
 class Player extends React.PureComponent {
   constructor() {
@@ -132,7 +142,7 @@ class Player extends React.PureComponent {
 
   render() {
     const { volume } = this.state;
-    const { trackInfo } = this.props;
+    const { trackInfo, playAllowed } = this.props;
     return (
       <StyledCard>
         <StyledCardMedia
@@ -157,7 +167,7 @@ class Player extends React.PureComponent {
             <div>
               <Grid container item direction="column" justify="center">
                 <Grid item>
-                  <InfoButton trackInfo={trackInfo} />
+                  <InfoButton playAllowed={playAllowed} trackInfo={trackInfo} />
                 </Grid>
                 <Grid item>
                   <Volume volume={volume} changeVolume={this.changeVolume} aria-label="volume" />
@@ -175,7 +185,8 @@ const mapStateToProps = state => ({
   track: state.track,
   trackInfo: state.trackInfo,
   playHistory: state.playHistory,
-  currentTrackIndex: state.currentTrackIndex
+  currentTrackIndex: state.currentTrackIndex,
+  playAllowed: state.playAllowed
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -187,3 +198,20 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(Player);
+
+Player.defaultProps = {
+  trackInfo: undefined,
+  track: undefined
+};
+
+Player.propTypes = {
+  // If song playback should be started or not (used for initial start)
+  playbackStarted: PropTypes.bool.isRequired,
+  newTrack: newTrackType.isRequired,
+  changeTrack: changeTrackType.isRequired,
+  playHistory: playHistoryType.isRequired,
+  currentTrackIndex: currentTrackIndexType.isRequired,
+  trackInfo: trackInfoType,
+  track: trackType,
+  playAllowed: playAllowedType.isRequired
+};

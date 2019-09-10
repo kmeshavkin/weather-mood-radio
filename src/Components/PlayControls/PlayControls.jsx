@@ -1,9 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
 import { PlayArrow, Pause, SkipPrevious, SkipNext } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import PlaySlider from '../PlaySlider/PlaySlider';
+import { trackType, playAllowedType } from '../../utils/sharedPropTypes';
 
 class PlayControls extends React.PureComponent {
   onPlayPause = () => {
@@ -46,3 +48,16 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps)(PlayControls);
+
+PlayControls.defaultProps = {
+  track: undefined
+};
+
+PlayControls.propTypes = {
+  track: trackType,
+  playAllowed: playAllowedType.isRequired,
+  // Callback, which when called calls previous track to play
+  prevTrack: PropTypes.func.isRequired,
+  // Callback, which when called calls next track to play
+  nextTrack: PropTypes.func.isRequired
+};
