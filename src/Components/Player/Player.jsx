@@ -6,7 +6,7 @@ import { CardContent, Grid } from '@material-ui/core';
 import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
 import { DEFAULT_VOLUME, GENRES, PAGE_SIZE, SYNONYMS } from '../../utils/constants';
 import { getRandom } from '../../utils/functions';
-import { CLIENT_ID, DARK_SKY_KEY } from '../../privateKeys';
+import { CLIENT_ID } from '../../privateKeys';
 import PlayControls from '../PlayControls/PlayControls';
 import Volume from '../Volume/Volume';
 import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid } from './Player.styled';
@@ -32,8 +32,6 @@ class Player extends React.PureComponent {
   }
 
   async componentDidMount() {
-    const weather = await this.getWeather();
-    console.log('weather: ', weather);
     const { playbackStarted } = this.props;
     if (playbackStarted) {
       soundcloud.initialize({
@@ -48,32 +46,16 @@ class Player extends React.PureComponent {
     }
   }
 
-  async getWeather() {
-    if (navigator.geolocation) {
-      const position = await this.getPosition();
-      const weatherPromise = await fetch(
-        `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${DARK_SKY_KEY}/${position.coords.latitude},${position.coords.longitude}?exclude=hourly,daily,flags`
-      );
-      const weather = await weatherPromise.json();
-      return weather.currently;
-    }
-    return new Error("Couldn't retrieve weather or user coordinates");
-  }
-
-  getPosition = () => {
-    return new Promise((resolve, reject) => {
-      navigator.geolocation.getCurrentPosition(resolve, reject);
-    });
-  };
-
   getTrack = (searchTerm, trackId) => {
     try {
       if (trackId) {
         return soundcloud.get('/tracks', { ids: trackId }).then(track => track[0]);
       }
+      const query = SYNONYMS[searchTerm] ? getRandom(SYNONYMS[searchTerm]) : searchTerm;
+      console.log('query: ', query);
       return soundcloud
         .get('/tracks', {
-          q: getRandom(SYNONYMS[searchTerm]),
+          q: query,
           genres: GENRES,
           limit: PAGE_SIZE
         })
@@ -85,9 +67,9 @@ class Player extends React.PureComponent {
 
   playSong = async trackId => {
     const { volume } = this.state;
-    const { newTrack } = this.props;
+    const { newTrack, weather } = this.props;
     try {
-      const trackInfo = await this.getTrack('rainy', trackId);
+      const trackInfo = await this.getTrack(weather.icon, trackId);
       const track = await soundcloud.stream(`/tracks/${trackInfo.id}`);
       track.on('finish', () => this.nextTrack());
       // -Test stuff- //
@@ -201,7 +183,8 @@ export default connect(
 
 Player.defaultProps = {
   trackInfo: undefined,
-  track: undefined
+  track: undefined,
+  weather: undefined
 };
 
 Player.propTypes = {
@@ -213,5 +196,10 @@ Player.propTypes = {
   currentTrackIndex: currentTrackIndexType.isRequired,
   trackInfo: trackInfoType,
   track: trackType,
-  playAllowed: playAllowedType.isRequired
+  playAllowed: playAllowedType.isRequired,
+  // Current weather object from darksky.net
+  weather: PropTypes.shape({
+    // Icon property used to determine weather (suggestion from docs)
+    icon: PropTypes.string.isRequired
+  })
 };

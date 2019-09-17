@@ -1,4 +1,5 @@
 # TO-DO
+* Set up github pages
 * Move some assisting functions to functions (and weather to different component?)
 * Make so app doesn't wait for weather retrieval
 * Find if all PropTypes need isRequired?

@@ -8,7 +8,7 @@ export const REWIND_SLIDER_MAX = 200;
 export const GENRES = 'lofi hip-hop,lo-fi hip-hop,lofi,lo fi,chillhop';
 // Synonyms for the one category to randomly pick from
 export const SYNONYMS = {
-  rainy: ['rain', 'rainy', 'raining']
+  rain: ['rain', 'rainy', 'raining']
 };
 // Tags to blacklist (to include purely lofi hip-hop)
 export const TAG_BLACKLIST = ['rap', 'rock', 'garage?', 'indie', 'podcast', 'pop?'];
