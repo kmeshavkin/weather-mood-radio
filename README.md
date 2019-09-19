@@ -14,6 +14,7 @@
 * Volume slider is not fully stretched out
 * Track slider does not switch immediately after next song starts
 * Title or artist can be too long, need to create animation for it
+* Player becomes slightly bigger when playback starts
 
 # Features (highlights)
 * Music Player made from scratch

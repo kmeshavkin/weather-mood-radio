@@ -8,14 +8,24 @@ import PlaySlider from '../PlaySlider/PlaySlider';
 import { trackType, playAllowedType } from '../../utils/sharedPropTypes';
 
 class PlayControls extends React.PureComponent {
+  constructor() {
+    super();
+    this.state = {
+      playbackStarted: false
+    };
+  }
+
   onPlayPause = () => {
-    const { track } = this.props;
-    if (track.isPlaying()) track.pause();
+    const { playbackStarted } = this.state;
+    const { track, startPlayback } = this.props;
+    if (!playbackStarted) this.setState({ playbackStarted: true }, () => startPlayback());
+    else if (track.isPlaying()) track.pause();
     else track.play();
     this.forceUpdate();
   };
 
   render() {
+    const { playbackStarted } = this.state;
     const { track, playAllowed, prevTrack, nextTrack } = this.props;
     return (
       <Grid container item direction="column" spacing={1}>
@@ -26,7 +36,7 @@ class PlayControls extends React.PureComponent {
             </Fab>
           </Grid>
           <Grid item>
-            <Fab onClick={this.onPlayPause} disabled={!playAllowed} size="medium" aria-label="play">
+            <Fab onClick={this.onPlayPause} disabled={playbackStarted && !playAllowed} size="medium" aria-label="play">
               {track && track.isPlaying() ? <Pause /> : <PlayArrow />}
             </Fab>
           </Grid>
@@ -56,6 +66,8 @@ PlayControls.defaultProps = {
 PlayControls.propTypes = {
   track: trackType,
   playAllowed: playAllowedType.isRequired,
+  // Callback, used to start playback when player first opened
+  startPlayback: PropTypes.func.isRequired,
   // Callback, which when called calls previous track to play
   prevTrack: PropTypes.func.isRequired,
   // Callback, which when called calls next track to play

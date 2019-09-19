@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
 import soundcloud from 'soundcloud';
 import { CardContent, Grid } from '@material-ui/core';
 import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
@@ -12,6 +11,7 @@ import Volume from '../Volume/Volume';
 import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid } from './Player.styled';
 import recordSvg from '../../resources/record.svg';
 import InfoButton from '../InfoButton/InfoButton';
+import getWeather from '../../utils/getWeather';
 import {
   trackType,
   trackInfoType,
@@ -31,20 +31,24 @@ class Player extends React.PureComponent {
     };
   }
 
-  async componentDidMount() {
-    const { playbackStarted } = this.props;
-    if (playbackStarted) {
-      soundcloud.initialize({
-        client_id: CLIENT_ID
-      });
-      this.playSong();
-
-      // -Test stuff- //
-      window.playSong = this.playSong;
-      window.soundcloud = soundcloud;
-      // --- //
-    }
+  componentDidMount() {
+    getWeather().then(weather => {
+      console.log('weather: ', weather);
+      this.setState({ weather });
+    });
   }
+
+  startPlayback = () => {
+    soundcloud.initialize({
+      client_id: CLIENT_ID
+    });
+    this.playSong();
+
+    // -Test stuff- //
+    window.playSong = this.playSong;
+    window.soundcloud = soundcloud;
+    // --- //
+  };
 
   getTrack = (searchTerm, trackId) => {
     try {
@@ -66,8 +70,8 @@ class Player extends React.PureComponent {
   };
 
   playSong = async trackId => {
-    const { volume } = this.state;
-    const { newTrack, weather } = this.props;
+    const { volume, weather } = this.state;
+    const { newTrack } = this.props;
     try {
       const trackInfo = await this.getTrack(weather.icon, trackId);
       const track = await soundcloud.stream(`/tracks/${trackInfo.id}`);
@@ -143,7 +147,11 @@ class Player extends React.PureComponent {
                     {trackInfo ? trackInfo.user.username : ''}
                   </StyledTypography>
                 </StyledTitleGrid>
-                <PlayControls nextTrack={this.nextTrack} prevTrack={this.prevTrack} />
+                <PlayControls
+                  startPlayback={this.startPlayback}
+                  nextTrack={this.nextTrack}
+                  prevTrack={this.prevTrack}
+                />
               </Grid>
             </div>
             <div>
@@ -183,23 +191,16 @@ export default connect(
 
 Player.defaultProps = {
   trackInfo: undefined,
-  track: undefined,
-  weather: undefined
+  track: undefined
 };
 
 Player.propTypes = {
   // If song playback should be started or not (used for initial start)
-  playbackStarted: PropTypes.bool.isRequired,
   newTrack: newTrackType.isRequired,
   changeTrack: changeTrackType.isRequired,
   playHistory: playHistoryType.isRequired,
   currentTrackIndex: currentTrackIndexType.isRequired,
   trackInfo: trackInfoType,
   track: trackType,
-  playAllowed: playAllowedType.isRequired,
-  // Current weather object from darksky.net
-  weather: PropTypes.shape({
-    // Icon property used to determine weather (suggestion from docs)
-    icon: PropTypes.string.isRequired
-  })
+  playAllowed: playAllowedType.isRequired
 };

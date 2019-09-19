@@ -28,7 +28,7 @@ export const trackType = PropTypes.shape({
 // Track info object with data about track retrieved from Soundcloud
 export const trackInfoType = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  artwork_url: PropTypes.string.isRequired,
+  artwork_url: PropTypes.string,
   title: PropTypes.string.isRequired,
   user: PropTypes.shape({ username: PropTypes.string.isRequired }),
   permalink_url: PropTypes.string.isRequired
