@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Fab from '@material-ui/core/Fab';
-import Grid from '@material-ui/core/Grid';
+import { Fab, Grid } from '@material-ui/core';
 import { PlayArrow, Pause, SkipPrevious, SkipNext } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import PlaySlider from '../PlaySlider/PlaySlider';
 import { trackType, playAllowedType } from '../../utils/sharedPropTypes';
+import { CircularProgressStyled, GridWrapper } from './PlayControls.styled';
 
 class PlayControls extends React.PureComponent {
   constructor() {
@@ -35,11 +35,12 @@ class PlayControls extends React.PureComponent {
               <SkipPrevious />
             </Fab>
           </Grid>
-          <Grid item>
+          <GridWrapper item>
             <Fab onClick={this.onPlayPause} disabled={playbackStarted && !playAllowed} size="medium" aria-label="play">
               {track && track.isPlaying() ? <Pause /> : <PlayArrow />}
             </Fab>
-          </Grid>
+            {playbackStarted && !playAllowed && <CircularProgressStyled size={60} />}
+          </GridWrapper>
           <Grid item>
             <Fab onClick={nextTrack} disabled={!playAllowed} size="medium" aria-label="next">
               <SkipNext />

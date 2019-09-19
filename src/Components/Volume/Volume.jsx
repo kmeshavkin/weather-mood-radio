@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
-import VolumeDown from '@material-ui/icons/VolumeDown';
-import VolumeUp from '@material-ui/icons/VolumeUp';
+import { Grid } from '@material-ui/core';
+import { VolumeUp, VolumeDown } from '@material-ui/icons';
 import { StyledSlider } from './Volume.styled';
 import { DEFAULT_VOLUME } from '../../utils/constants';
 
