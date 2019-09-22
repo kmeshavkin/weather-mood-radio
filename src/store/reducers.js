@@ -3,7 +3,8 @@ const initialState = {
   currentTrackIndex: 0,
   track: undefined,
   trackInfo: undefined,
-  playAllowed: false
+  playAllowed: false,
+  weather: ''
 };
 
 export default (state = initialState, action) => {

@@ -14,6 +14,13 @@ export const newTrackType = PropTypes.func;
  */
 export const changeTrackType = PropTypes.func;
 
+/**
+ * Dispatches updated user weather state in redux
+ * @param {String} weather Current weather, usually retrieved from darksky.net
+ * Currently supported weather types: clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, or partly-cloudy-night, hail, thunderstorm, tornado
+ */
+export const changeWeatherType = PropTypes.func;
+
 // Track object from Soundcloud with various functions related to playback control
 export const trackType = PropTypes.shape({
   setVolume: PropTypes.func.isRequired,
@@ -42,3 +49,6 @@ export const currentTrackIndexType = PropTypes.number;
 
 // Shows if new song request is currently processing, so if it's allowed to perform play actions or not
 export const playAllowedType = PropTypes.bool;
+
+// Current weather
+export const weatherType = PropTypes.string;

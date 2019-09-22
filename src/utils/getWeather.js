@@ -17,7 +17,6 @@ function getPosition() {
 async function getWeather() {
   if (navigator.geolocation) {
     const position = await getPosition();
-    // clear-day, clear-night, rain, snow, sleet, wind, fog, cloudy, partly-cloudy-day, or partly-cloudy-night, hail, thunderstorm, tornado
     const weatherPromise = await fetch(
       `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${DARK_SKY_KEY}/${position.coords.latitude},${position.coords.longitude}?exclude=hourly,daily,flags`
     );

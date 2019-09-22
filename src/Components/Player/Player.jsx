@@ -11,7 +11,6 @@ import Volume from '../Volume/Volume';
 import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid } from './Player.styled';
 import recordSvg from '../../resources/record.svg';
 import InfoButton from '../InfoButton/InfoButton';
-import getWeather from '../../utils/getWeather';
 import {
   trackType,
   trackInfoType,
@@ -19,7 +18,8 @@ import {
   currentTrackIndexType,
   newTrackType,
   changeTrackType,
-  playAllowedType
+  playAllowedType,
+  weatherType
 } from '../../utils/sharedPropTypes';
 
 class Player extends React.PureComponent {
@@ -29,13 +29,6 @@ class Player extends React.PureComponent {
     this.state = {
       volume: DEFAULT_VOLUME
     };
-  }
-
-  componentDidMount() {
-    getWeather().then(weather => {
-      console.log('weather: ', weather);
-      this.setState({ weather });
-    });
   }
 
   startPlayback = () => {
@@ -70,10 +63,10 @@ class Player extends React.PureComponent {
   };
 
   playSong = async trackId => {
-    const { volume, weather } = this.state;
-    const { newTrack } = this.props;
+    const { volume } = this.state;
+    const { newTrack, weather } = this.props;
     try {
-      const trackInfo = await this.getTrack(weather.icon, trackId);
+      const trackInfo = await this.getTrack(weather, trackId);
       const track = await soundcloud.stream(`/tracks/${trackInfo.id}`);
       track.on('finish', () => this.nextTrack());
       // -Test stuff- //
@@ -191,16 +184,19 @@ export default connect(
 
 Player.defaultProps = {
   trackInfo: undefined,
-  track: undefined
+  track: undefined,
+  playHistory: [],
+  currentTrackIndex: 0
 };
 
 Player.propTypes = {
   // If song playback should be started or not (used for initial start)
   newTrack: newTrackType.isRequired,
   changeTrack: changeTrackType.isRequired,
-  playHistory: playHistoryType.isRequired,
-  currentTrackIndex: currentTrackIndexType.isRequired,
+  playHistory: playHistoryType,
+  currentTrackIndex: currentTrackIndexType,
   trackInfo: trackInfoType,
   track: trackType,
-  playAllowed: playAllowedType.isRequired
+  playAllowed: playAllowedType.isRequired,
+  weather: weatherType.isRequired
 };
