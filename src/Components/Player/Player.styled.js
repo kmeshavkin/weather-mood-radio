@@ -5,14 +5,26 @@ export const StyledCard = styled(Card)`
   display: flex;
   width: fit-content;
   margin: 0 auto;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 12px;
 `;
 
 export const StyledCardMedia = styled(CardMedia)`
   width: 150px;
+  min-height: 150px;
+  ${({ stretch }) =>
+    !stretch
+      ? `
+  height: 150px;
+  align-self: center;
+  `
+      : ''}
 `;
 
 export const StyledTitleGrid = styled(Grid)`
   width: 250px;
+  height: 60px;
   overflow: hidden;
 `;
 

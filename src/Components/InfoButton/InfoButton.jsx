@@ -41,11 +41,10 @@ class InfoButton extends React.PureComponent {
             <Grid item>
               <StyledImage height={16} alt="soundcloud" src={soundcloudImg} />
             </Grid>
-            <br />
             <Grid item>
               {playAllowed ? (
                 <Link href={trackInfo ? trackInfo.permalink_url : '#'} target="_blank" rel="noopener">
-                  <Typography>Go to song (soundcloud)</Typography>
+                  <Typography>Visit song page (soundcolud)</Typography>
                 </Link>
               ) : (
                 ''

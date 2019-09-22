@@ -122,14 +122,16 @@ class Player extends React.PureComponent {
   render() {
     const { volume } = this.state;
     const { trackInfo, playAllowed } = this.props;
+    const isBGAvailable = trackInfo && trackInfo.artwork_url;
     return (
       <StyledCard>
         <StyledCardMedia
-          image={trackInfo && trackInfo.artwork_url ? trackInfo.artwork_url : recordSvg}
+          stretch={isBGAvailable}
+          image={isBGAvailable ? trackInfo.artwork_url : recordSvg}
           title="Cover image"
         />
         <CardContent>
-          <Grid container justify="center" direction="row" alignItems="center" spacing={2}>
+          <Grid container justify="center" direction="row" alignItems="center" wrap="nowrap" spacing={2}>
             <div>
               <Grid container item direction="column" alignItems="center">
                 <StyledTitleGrid item>

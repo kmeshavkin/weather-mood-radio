@@ -22,4 +22,4 @@
 * React
 * Redux
 * API communication (soundcloud)
-* Material-UI (UI kit + Grid)
+* Material-UI (UI kit)
