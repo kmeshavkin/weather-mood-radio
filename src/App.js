@@ -11,7 +11,7 @@ class App extends React.PureComponent {
   constructor() {
     super();
 
-    this.state = { weather: '' };
+    this.state = { weather: undefined };
   }
 
   componentDidMount() {
@@ -29,7 +29,7 @@ class App extends React.PureComponent {
           <Player weather={weather} />
         </PlayerGridStyled>
         <StatusBar style={{ margin: 'auto' }} item>
-          <TextField disabled label="Weather" value={weather} margin="normal" variant="outlined" />
+          <TextField disabled label="Weather" value={weather || 'pending...'} margin="normal" variant="outlined" />
         </StatusBar>
       </Grid>
     );

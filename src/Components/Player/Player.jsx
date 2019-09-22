@@ -48,7 +48,7 @@ class Player extends React.PureComponent {
       if (trackId) {
         return soundcloud.get('/tracks', { ids: trackId }).then(track => track[0]);
       }
-      const query = SYNONYMS[searchTerm] ? getRandom(SYNONYMS[searchTerm]) : searchTerm;
+      const query = searchTerm && SYNONYMS[searchTerm] ? getRandom(SYNONYMS[searchTerm]) : 'lo-fi';
       console.log('query: ', query);
       return soundcloud
         .get('/tracks', {
@@ -186,7 +186,8 @@ Player.defaultProps = {
   trackInfo: undefined,
   track: undefined,
   playHistory: [],
-  currentTrackIndex: 0
+  currentTrackIndex: 0,
+  weather: undefined
 };
 
 Player.propTypes = {
@@ -198,5 +199,5 @@ Player.propTypes = {
   trackInfo: trackInfoType,
   track: trackType,
   playAllowed: playAllowedType.isRequired,
-  weather: weatherType.isRequired
+  weather: weatherType
 };
