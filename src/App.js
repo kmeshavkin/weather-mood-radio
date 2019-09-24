@@ -3,7 +3,7 @@ import React from 'react';
 import './App.css';
 import { Grid, TextField } from '@material-ui/core';
 import Player from './Components/Player/Player';
-import { PlayerGridStyled, StatusBar } from './App.styled';
+import { PlayerGridStyled } from './App.styled';
 import getWeather from './utils/getWeather';
 import { WEATHER_NAMES } from './utils/constants';
 
@@ -28,9 +28,9 @@ class App extends React.PureComponent {
         <PlayerGridStyled item>
           <Player weather={weather} />
         </PlayerGridStyled>
-        <StatusBar style={{ margin: 'auto' }} item>
+        <Grid style={{ margin: 'auto' }} item>
           <TextField disabled label="Weather" value={weather || 'pending...'} margin="normal" variant="outlined" />
-        </StatusBar>
+        </Grid>
       </Grid>
     );
   }

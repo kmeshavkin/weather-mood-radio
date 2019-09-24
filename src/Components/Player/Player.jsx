@@ -8,7 +8,7 @@ import { getRandom } from '../../utils/functions';
 import { CLIENT_ID } from '../../privateKeys';
 import PlayControls from '../PlayControls/PlayControls';
 import Volume from '../Volume/Volume';
-import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid } from './Player.styled';
+import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid, PlayerWrapper } from './Player.styled';
 import recordSvg from '../../resources/record.svg';
 import InfoButton from '../InfoButton/InfoButton';
 import {
@@ -130,9 +130,9 @@ class Player extends React.PureComponent {
           image={isBGAvailable ? trackInfo.artwork_url : recordSvg}
           title="Cover image"
         />
-        <CardContent>
+        <CardContent style={{ paddingBottom: '16px' }}>
           <Grid container justify="center" direction="row" alignItems="center" wrap="nowrap" spacing={2}>
-            <div>
+            <PlayerWrapper>
               <Grid container item direction="column" alignItems="center">
                 <StyledTitleGrid item>
                   <StyledTypography align="center" component="h5" variant="h5">
@@ -148,7 +148,7 @@ class Player extends React.PureComponent {
                   prevTrack={this.prevTrack}
                 />
               </Grid>
-            </div>
+            </PlayerWrapper>
             <div>
               <Grid container item direction="column" justify="center">
                 <Grid item>
