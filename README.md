@@ -1,4 +1,5 @@
 # TO-DO
+* Check for songs that already in history (to not repeat)
 * Check if "to convert in ms" needed in getMood.js
 * Add seasons
 * Add more complicated system for mood (in App.js)

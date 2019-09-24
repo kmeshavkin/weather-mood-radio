@@ -16,13 +16,15 @@ class App extends React.PureComponent {
   }
 
   componentDidMount() {
-    getWeather().then(weatherData => {
-      const weather = WEATHER_NAMES[weatherData.icon];
-      console.log('weather: ', weatherData, weather);
-      const dayTime = getDayTime(weatherData.sunriseTime, weatherData.sunsetTime);
-      const mood = weather === 'clear' ? dayTime : getRandom(SYNONYMS[weather]);
-      this.setState({ weather, mood, dayTime });
-    });
+    getWeather()
+      .then(weatherData => {
+        const weather = WEATHER_NAMES[weatherData.icon];
+        console.log('weather: ', weatherData, weather);
+        const dayTime = getDayTime(weatherData.sunriseTime, weatherData.sunsetTime);
+        const mood = weather === 'clear' ? dayTime : getRandom(SYNONYMS[weather]);
+        this.setState({ weather, mood, dayTime });
+      })
+      .catch(() => console.warn("Couldn't retrieve weather!"));
   }
 
   render() {

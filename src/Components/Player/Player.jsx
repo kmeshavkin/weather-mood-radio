@@ -87,10 +87,12 @@ class Player extends React.PureComponent {
     const {
       playHistory: [...playHistory],
       currentTrackIndex,
+      trackInfo,
       changeTrack
     } = this.props;
     if (currentTrackIndex > 0) {
       this.playSong(playHistory[currentTrackIndex - 1]);
+      if (currentTrackIndex === playHistory.length) playHistory.push(trackInfo.id);
       changeTrack(playHistory, currentTrackIndex - 1);
     }
     console.log('Previous Track', playHistory, currentTrackIndex - 1);
