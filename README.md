@@ -1,4 +1,7 @@
 # TO-DO
+* Check if "to convert in ms" needed in getMood.js
+* Add seasons
+* Add more complicated system for mood (in App.js)
 * Make weather requests periodically (currently makes request only on mount)
 * Implement TAG_BLACKLIST?
 * Make possible to select from more than first 200 songs

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card, CardMedia, Typography, Grid, CardContent } from '@material-ui/core';
+import { Card, CardMedia, Typography, Grid } from '@material-ui/core';
 
 export const StyledCard = styled(Card)`
   display: flex;
@@ -7,7 +7,6 @@ export const StyledCard = styled(Card)`
   margin: 0 auto;
   flex-wrap: wrap;
   justify-content: center;
-  margin: 0 12px;
 `;
 
 export const StyledCardMedia = styled(CardMedia)`

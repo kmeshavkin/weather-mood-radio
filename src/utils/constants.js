@@ -8,8 +8,8 @@ export const REWIND_SLIDER_MAX = 200;
 export const GENRES = 'lofi hip-hop,lo-fi hip-hop,lofi,lo fi,chillhop';
 // Convert weather from darksky.net to more convenient name
 export const WEATHER_NAMES = {
-  'clear-day': 'sunny',
-  'clear-night': 'night',
+  'clear-day': 'clear',
+  'clear-night': 'clear',
   rain: 'rain',
   snow: 'snow',
   sleet: 'rain',
@@ -17,7 +17,7 @@ export const WEATHER_NAMES = {
   fog: 'fog',
   cloudy: 'cloudy',
   'partly-cloudy-day': 'cloudy',
-  'partly-cloudy-night': 'night',
+  'partly-cloudy-night': 'clear',
   hail: 'rain',
   thunderstorm: 'rain',
   tornado: 'wind'
@@ -25,9 +25,7 @@ export const WEATHER_NAMES = {
 
 // Synonyms for the one category to randomly pick from
 export const SYNONYMS = {
-  sunny: ['sunny'],
   rain: ['rain', 'rainy', 'raining'],
-  night: ['night'],
   snow: ['snow', 'snowy', 'cold'],
   wind: ['wind', 'windy'], // breeze?
   fog: ['fog'],

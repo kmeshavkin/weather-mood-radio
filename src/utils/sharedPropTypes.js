@@ -49,6 +49,3 @@ export const currentTrackIndexType = PropTypes.number;
 
 // Shows if new song request is currently processing, so if it's allowed to perform play actions or not
 export const playAllowedType = PropTypes.bool;
-
-// Current weather
-export const weatherType = PropTypes.string;

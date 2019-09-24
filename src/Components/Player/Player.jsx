@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import soundcloud from 'soundcloud';
 import { CardContent, Grid } from '@material-ui/core';
 import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
-import { DEFAULT_VOLUME, GENRES, PAGE_SIZE, SYNONYMS } from '../../utils/constants';
+import { DEFAULT_VOLUME, GENRES, PAGE_SIZE } from '../../utils/constants';
 import { getRandom } from '../../utils/functions';
 import { CLIENT_ID } from '../../privateKeys';
 import PlayControls from '../PlayControls/PlayControls';
@@ -18,8 +19,7 @@ import {
   currentTrackIndexType,
   newTrackType,
   changeTrackType,
-  playAllowedType,
-  weatherType
+  playAllowedType
 } from '../../utils/sharedPropTypes';
 
 class Player extends React.PureComponent {
@@ -48,7 +48,7 @@ class Player extends React.PureComponent {
       if (trackId) {
         return soundcloud.get('/tracks', { ids: trackId }).then(track => track[0]);
       }
-      const query = searchTerm && SYNONYMS[searchTerm] ? getRandom(SYNONYMS[searchTerm]) : 'lo-fi';
+      const query = searchTerm || 'lo-fi';
       console.log('query: ', query);
       return soundcloud
         .get('/tracks', {
@@ -64,9 +64,9 @@ class Player extends React.PureComponent {
 
   playSong = async trackId => {
     const { volume } = this.state;
-    const { newTrack, weather } = this.props;
+    const { newTrack, mood } = this.props;
     try {
-      const trackInfo = await this.getTrack(weather, trackId);
+      const trackInfo = await this.getTrack(mood, trackId);
       const track = await soundcloud.stream(`/tracks/${trackInfo.id}`);
       track.on('finish', () => this.nextTrack());
       // -Test stuff- //
@@ -189,7 +189,7 @@ Player.defaultProps = {
   track: undefined,
   playHistory: [],
   currentTrackIndex: 0,
-  weather: undefined
+  mood: undefined
 };
 
 Player.propTypes = {
@@ -201,5 +201,6 @@ Player.propTypes = {
   trackInfo: trackInfoType,
   track: trackType,
   playAllowed: playAllowedType.isRequired,
-  weather: weatherType
+  // Current mood, set in App.js
+  mood: PropTypes.string
 };

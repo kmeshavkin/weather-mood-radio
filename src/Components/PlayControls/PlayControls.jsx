@@ -5,7 +5,7 @@ import { PlayArrow, Pause, SkipPrevious, SkipNext } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import PlaySlider from '../PlaySlider/PlaySlider';
 import { trackType, playAllowedType } from '../../utils/sharedPropTypes';
-import { CircularProgressStyled, GridWrapper } from './PlayControls.styled';
+import { StyledCircularProgress, GridWrapper } from './PlayControls.styled';
 
 class PlayControls extends React.PureComponent {
   constructor() {
@@ -39,7 +39,7 @@ class PlayControls extends React.PureComponent {
             <Fab onClick={this.onPlayPause} disabled={playbackStarted && !playAllowed} size="medium" aria-label="play">
               {track && track.isPlaying() ? <Pause /> : <PlayArrow />}
             </Fab>
-            {playbackStarted && !playAllowed && <CircularProgressStyled size={60} />}
+            {playbackStarted && !playAllowed && <StyledCircularProgress size={60} />}
           </GridWrapper>
           <Grid item>
             <Fab onClick={nextTrack} disabled={!playAllowed} size="medium" aria-label="next">
