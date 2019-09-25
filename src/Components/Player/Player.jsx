@@ -5,7 +5,7 @@ import soundcloud from 'soundcloud';
 import { CardContent, Grid } from '@material-ui/core';
 import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
 import { DEFAULT_VOLUME, GENRES, PAGE_SIZE } from '../../utils/constants';
-import { getRandom } from '../../utils/functions';
+import { getRandom, getTextWidth } from '../../utils/functions';
 import { CLIENT_ID } from '../../privateKeys';
 import PlayControls from '../PlayControls/PlayControls';
 import Volume from '../Volume/Volume';
@@ -125,6 +125,8 @@ class Player extends React.PureComponent {
     const { volume } = this.state;
     const { trackInfo, playAllowed } = this.props;
     const isBGAvailable = trackInfo && trackInfo.artwork_url;
+    const titleWidth = getTextWidth(trackInfo ? trackInfo.title : 0, '1.5rem');
+    const usernameWidth = getTextWidth(trackInfo ? trackInfo.user.username : 0, '1rem');
     return (
       <StyledCard>
         <StyledCardMedia
@@ -136,11 +138,11 @@ class Player extends React.PureComponent {
           <Grid container justify="center" direction="row" alignItems="center" wrap="nowrap" spacing={2}>
             <PlayerWrapper>
               <Grid container item direction="column" alignItems="center">
-                <StyledTitleGrid item>
-                  <StyledTypography align="center" component="h5" variant="h5">
+                <StyledTitleGrid item applyGradient={titleWidth > 250 || usernameWidth > 250}>
+                  <StyledTypography top="true" width={titleWidth} align="center" component="h5" variant="h5">
                     {trackInfo ? trackInfo.title : ''}
                   </StyledTypography>
-                  <StyledTypography align="center" variant="subtitle1" color="textSecondary">
+                  <StyledTypography width={usernameWidth} align="center" variant="subtitle1" color="textSecondary">
                     {trackInfo ? trackInfo.user.username : ''}
                   </StyledTypography>
                 </StyledTitleGrid>

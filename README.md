@@ -9,10 +9,9 @@
 * Possibly find how to search only by title?
 
 # Known bugs
+* Fix summary (shown when links are shared, Discord for example)
 * Volume slider is not fully stretched out
 * Track slider does not switch immediately after next song starts
-* Title or artist can be too long, need to create animation for it
-* Player becomes slightly bigger when playback starts
 * Margins are too tight (especially between Title+Description and Play Controls)
 
 # Features (highlights)

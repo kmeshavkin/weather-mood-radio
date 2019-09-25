@@ -29,23 +29,45 @@ export const PlayerWrapper = styled.div`
 export const StyledTitleGrid = styled(Grid)`
   width: 250px;
   height: 60px;
-  overflow: hidden;
+  position relative;
+
+  ${({ applyGradient }) =>
+    applyGradient &&
+    `
+    overflow: hidden;
+    &:after {
+    content:'';
+    width:100%;
+    height:100%;    
+    position:absolute;
+    left:0;
+    top:0;
+    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,0) 5%, rgba(255,255,255,0) 95%, rgba(255,255,255,1) 100%);
+  `}
+  
+}
 `;
 
 export const StyledTypography = styled(Typography)`
+  position: absolute;
   white-space: nowrap;
+  
+  ${({ top }) => (top ? 'top' : 'bottom')}: 0;
 
-  animation: slide 7.5s linear infinite;
 
-  @keyframes slide {
-    0% {
-      transform: translate(0em);
-    }
-    50% {
-      transform: translate(0em);
-    }
-    100% {
-      transform: translate(0em);
-    }
+  ${({ width }) => {
+    const slideTime = (width - 250) * 0.2;
+    return !width || width < 250
+      ? `
+        width: 250px;
+      `
+      : `
+        animation: slide infinite linear ${slideTime}s;
+        @keyframes slide {
+          0%, 5%, 100% { transform: translate(10px); }
+          50%, 55% { transform: translate(-${width - 240}px); }
+        }
+      `;
+  }}
   }
 `;

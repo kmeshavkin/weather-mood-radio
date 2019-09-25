@@ -17,7 +17,7 @@ export const WEATHER_NAMES = {
   fog: 'fog',
   cloudy: 'cloudy',
   'partly-cloudy-day': 'cloudy',
-  'partly-cloudy-night': 'clear',
+  'partly-cloudy-night': 'cloudy',
   hail: 'rain',
   thunderstorm: 'rain',
   tornado: 'wind'
