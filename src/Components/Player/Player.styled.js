@@ -30,6 +30,7 @@ export const StyledTitleGrid = styled(Grid)`
   width: 250px;
   height: 60px;
   position relative;
+  margin-bottom: 6px;
 
   ${({ applyGradient }) =>
     applyGradient &&
