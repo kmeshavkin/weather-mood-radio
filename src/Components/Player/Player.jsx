@@ -138,7 +138,7 @@ class Player extends React.PureComponent {
           <Grid container justify="center" direction="row" alignItems="center" wrap="nowrap" spacing={2}>
             <PlayerWrapper>
               <Grid container item direction="column" alignItems="center">
-                <StyledTitleGrid item applyGradient={titleWidth > 250 || usernameWidth > 250}>
+                <StyledTitleGrid item applygradient={(titleWidth > 250 || usernameWidth > 250).toString()}>
                   <StyledTypography top="true" width={titleWidth} align="center" component="h5" variant="h5">
                     {trackInfo ? trackInfo.title : ''}
                   </StyledTypography>

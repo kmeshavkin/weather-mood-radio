@@ -32,8 +32,8 @@ export const StyledTitleGrid = styled(Grid)`
   position relative;
   margin-bottom: 6px;
 
-  ${({ applyGradient }) =>
-    applyGradient &&
+  ${({ applygradient }) =>
+    applygradient === 'true' &&
     `
     overflow: hidden;
     &:after {
@@ -65,8 +65,8 @@ export const StyledTypography = styled(Typography)`
       : `
         animation: slide infinite linear ${slideTime}s;
         @keyframes slide {
-          0%, 5%, 100% { transform: translate(10px); }
-          50%, 55% { transform: translate(-${width - 240}px); }
+          0%, 10%, 100% { transform: translate(10px); }
+          50%, 60% { transform: translate(-${width - 240}px); }
         }
       `;
   }}

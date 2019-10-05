@@ -1,6 +1,4 @@
 # TO-DO
-* Check if "to convert in ms" needed in getMood.js
-* Add seasons
 * Add more complicated system for mood (in App.js)
 * Make weather requests periodically (currently makes request only on mount)
 * Add some info, code and examples (?) to the second page (smooth scroll down)

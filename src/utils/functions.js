@@ -32,3 +32,12 @@ export function getTextWidth(text, fontSize) {
   const metrics = context.measureText(text);
   return metrics.width;
 }
+
+/**
+ * Capitalizes first letter of provided string
+ * @param {*} str String to modify
+ * @returns {String | undefined} Input string with first letter capitalized
+ */
+export function capitalizeFirst(str) {
+  return str ? str.charAt(0).toUpperCase() + str.slice(1) : undefined;
+}

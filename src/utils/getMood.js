@@ -6,7 +6,7 @@ const hourInMS = 1000 * 60 * 60;
  * Get user geoposition
  * @returns {Object} User geoposition
  */
-function getPosition() {
+export function getPosition() {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
   });
@@ -14,11 +14,11 @@ function getPosition() {
 
 /**
  * Receives current weather from darksky.net
+ * @param {Object} position Current position
  * @returns {Object | Error} Object with weather data (icon (current weather), sunriseTime and sunsetTime) or error
  */
-export async function getWeather() {
+export async function getWeather(position) {
   if (navigator.geolocation) {
-    const position = await getPosition();
     const weatherPromise = await fetch(
       `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${DARK_SKY_KEY}/${position.coords.latitude},${position.coords.longitude}`
     );
@@ -32,8 +32,20 @@ export async function getWeather() {
   return new Error("Couldn't retrieve weather or user coordinates");
 }
 
+/**
+ * Takes latitude and current month and returns season
+ * @param {Object} position Current position
+ * @returns {String} Current season
+ */
+export function getSeason(position) {
+  const seasonIndex = Math.floor(((new Date().getMonth() % 11) + 1) / 3);
+  return position.coords.latitude > 0
+    ? ['winter', 'spring', 'summer', 'autumn'][seasonIndex]
+    : ['summer', 'autumn', 'winter', 'spring'][seasonIndex];
+}
+
 export function getDayTime(sunriseTime, sunsetTime) {
-  const currentDate = new Date() - 0; // - 0 to convert in ms
+  const currentDate = new Date().getTime();
   const sunriseDate = sunriseTime;
   const sunsetDate = sunsetTime;
   if (currentDate - (sunriseDate - hourInMS) < 0) return 'night';
