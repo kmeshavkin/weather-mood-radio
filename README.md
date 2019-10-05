@@ -6,7 +6,6 @@
 * Add some info, code and examples (?) to the second page (smooth scroll down)
 
 # Known bugs
-* Fix summary (shown when links are shared, Discord for example)
 * Check for songs that already in history (to not repeat)
 * Track slider does not switch immediately after next song starts
 
