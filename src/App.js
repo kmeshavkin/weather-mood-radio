@@ -4,7 +4,7 @@ import './App.css';
 import { Grid, TextField } from '@material-ui/core';
 import Player from './Components/Player/Player';
 import { getPosition, getSeason, getWeather, getDayTime } from './utils/getMood';
-import { WEATHER_NAMES, SYNONYMS } from './utils/constants';
+import { WEATHER_NAMES, SYNONYMS, MOOD_MATRIX } from './utils/constants';
 import { StyledMoodGrid } from './App.styled';
 import { getRandom, capitalizeFirst } from './utils/functions';
 
@@ -21,9 +21,10 @@ class App extends React.PureComponent {
       const season = getSeason(position);
       const weatherData = await getWeather(position);
       const weather = WEATHER_NAMES[weatherData.icon];
+      const weatherSynonym = SYNONYMS[weather] || weather;
       console.log('weather: ', weatherData, weather);
       const dayTime = getDayTime(weatherData.sunriseTime, weatherData.sunsetTime);
-      const mood = weather === 'clear' ? dayTime : getRandom(SYNONYMS[weather]);
+      const mood = MOOD_MATRIX[dayTime][weather].replace(weather, getRandom(weatherSynonym)).replace('SEASON', season);
       this.setState({ season, weather, mood, dayTime });
       setTimeout(callWeatherPeriodically, 300000);
     };

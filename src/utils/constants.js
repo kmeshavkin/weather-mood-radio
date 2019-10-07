@@ -13,23 +13,61 @@ export const WEATHER_NAMES = {
   rain: 'rain',
   snow: 'snow',
   sleet: 'rain',
-  wind: 'wind',
+  wind: 'windy',
   fog: 'fog',
   cloudy: 'cloudy',
   'partly-cloudy-day': 'cloudy',
   'partly-cloudy-night': 'cloudy',
   hail: 'rain',
   thunderstorm: 'rain',
-  tornado: 'wind'
+  tornado: 'windy'
 };
 
 // Synonyms for the one category to randomly pick from
 export const SYNONYMS = {
-  rain: ['rain', 'rainy', 'raining'],
-  snow: ['snow', 'snowy', 'cold'],
-  wind: ['wind', 'windy'], // breeze?
-  fog: ['fog'],
+  rain: ['rainy', 'raining'],
+  snow: ['snowy', 'snowing', 'cold'],
+  fog: ['fog', 'foggy'],
   cloudy: ['cloudy', 'hazy']
 };
-// Tags to blacklist (to include purely lofi hip-hop)
-export const TAG_BLACKLIST = ['rap', 'rock', 'garage?', 'indie', 'podcast', 'pop?'];
+
+// Matrix mapped below, S is current season
+//          rain  snow  wind  fog   cloudy  clear
+// night    r+n   s+n   S+n   S+n   S+n     S+n
+// morning  r+m   s     S     f+m   c+m     S+m
+// day      r+S   s+S   w+S   f+S   c+S     S
+// evening  r+e   s     S     f+S   c+e     S+e
+export const MOOD_MATRIX = {
+  night: {
+    rain: 'rain night',
+    snow: 'snow night',
+    wind: 'SEASON night',
+    fog: 'SEASON night',
+    cloudy: 'SEASON night',
+    clear: 'SEASON night'
+  },
+  morning: {
+    rain: 'rain morning',
+    snow: 'snow',
+    wind: 'SEASON',
+    fog: 'fog morning',
+    cloudy: 'cloudy morning',
+    clear: 'SEASON morning'
+  },
+  day: {
+    rain: 'rain SEASON',
+    snow: 'snow SEASON',
+    wind: 'wind SEASON',
+    fog: 'fog SEASON',
+    cloudy: 'cloudy SEASON',
+    clear: 'SEASON'
+  },
+  evening: {
+    rain: 'rain evening',
+    snow: 'snow',
+    wind: 'SEASON',
+    fog: 'fog SEASON',
+    cloudy: 'cloudy evening',
+    clear: 'SEASON evening'
+  }
+};
