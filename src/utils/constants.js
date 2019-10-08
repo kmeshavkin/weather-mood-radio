@@ -6,21 +6,48 @@ export const DEFAULT_VOLUME = 0.3;
 export const REWIND_SLIDER_MAX = 200;
 // Genres to randonly pick from
 export const GENRES = 'lofi hip-hop,lo-fi hip-hop,lofi,lo fi,chillhop';
-// Convert weather from darksky.net to more convenient name
-export const WEATHER_NAMES = {
-  'clear-day': 'clear',
-  'clear-night': 'clear',
+
+// Weather names as constants
+export const WEATHER = {
+  clear: 'clear',
   rain: 'rain',
   snow: 'snow',
-  sleet: 'rain',
-  wind: 'windy',
+  windy: 'windy',
   fog: 'fog',
-  cloudy: 'cloudy',
-  'partly-cloudy-day': 'cloudy',
-  'partly-cloudy-night': 'cloudy',
-  hail: 'rain',
-  thunderstorm: 'rain',
-  tornado: 'windy'
+  cloudy: 'cloudy'
+};
+
+// Seasons names as constants
+export const SEASONS = {
+  winter: 'winter',
+  spring: 'spring',
+  summer: 'summer',
+  autumn: 'autumn'
+};
+
+// Day time names as constants
+export const DAY_TIME = {
+  night: 'night',
+  morning: 'morning',
+  day: 'day',
+  evening: 'evening'
+};
+
+// Convert weather from darksky.net to more convenient name
+export const API_TO_WEATHER = {
+  'clear-day': WEATHER.clear,
+  'clear-night': WEATHER.clear,
+  rain: WEATHER.rain,
+  snow: WEATHER.snow,
+  sleet: WEATHER.rain,
+  wind: WEATHER.windy,
+  fog: WEATHER.fog,
+  cloudy: WEATHER.cloudy,
+  'partly-cloudy-day': WEATHER.cloudy,
+  'partly-cloudy-night': WEATHER.cloudy,
+  hail: WEATHER.rain,
+  thunderstorm: WEATHER.rain,
+  tornado: WEATHER.windy
 };
 
 // Synonyms for the one category to randomly pick from
@@ -38,36 +65,36 @@ export const SYNONYMS = {
 // day      r+S   s+S   w+S   f+S   c+S     S
 // evening  r+e   s     S     f+S   c+e     S+e
 export const MOOD_MATRIX = {
-  night: {
-    rain: 'rain night',
-    snow: 'snow night',
-    wind: 'SEASON night',
-    fog: 'SEASON night',
-    cloudy: 'SEASON night',
-    clear: 'SEASON night'
+  [DAY_TIME.night]: {
+    [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.night]}`,
+    [WEATHER.snow]: `${WEATHER.snow} ${[DAY_TIME.night]}`,
+    [WEATHER.wind]: `SEASON ${[DAY_TIME.night]}`,
+    [WEATHER.fog]: `SEASON ${[DAY_TIME.night]}`,
+    [WEATHER.cloudy]: `SEASON ${[DAY_TIME.night]}`,
+    [WEATHER.clear]: `SEASON ${[DAY_TIME.night]}`
   },
-  morning: {
-    rain: 'rain morning',
-    snow: 'snow',
-    wind: 'SEASON',
-    fog: 'fog morning',
-    cloudy: 'cloudy morning',
-    clear: 'SEASON morning'
+  [DAY_TIME.morning]: {
+    [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.morning]}`,
+    [WEATHER.snow]: `${WEATHER.snow}`,
+    [WEATHER.wind]: `SEASON`,
+    [WEATHER.fog]: `${WEATHER.fog} ${[DAY_TIME.morning]}`,
+    [WEATHER.cloudy]: `${WEATHER.cloudy} ${[DAY_TIME.morning]}`,
+    [WEATHER.clear]: `SEASON ${[DAY_TIME.morning]}`
   },
-  day: {
-    rain: 'rain SEASON',
-    snow: 'snow SEASON',
-    wind: 'wind SEASON',
-    fog: 'fog SEASON',
-    cloudy: 'cloudy SEASON',
-    clear: 'SEASON'
+  [DAY_TIME.day]: {
+    [WEATHER.rain]: `${WEATHER.rain} SEASON`,
+    [WEATHER.snow]: `${WEATHER.snow} SEASON`,
+    [WEATHER.wind]: `${WEATHER.wind} SEASON`,
+    [WEATHER.fog]: `${WEATHER.fog} SEASON`,
+    [WEATHER.cloudy]: `${WEATHER.cloudy} SEASON`,
+    [WEATHER.clear]: `SEASON`
   },
-  evening: {
-    rain: 'rain evening',
-    snow: 'snow',
-    wind: 'SEASON',
-    fog: 'fog SEASON',
-    cloudy: 'cloudy evening',
-    clear: 'SEASON evening'
+  [DAY_TIME.evening]: {
+    [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.evening]}`,
+    [WEATHER.snow]: `${WEATHER.snow}`,
+    [WEATHER.wind]: `SEASON`,
+    [WEATHER.fog]: `${WEATHER.fog} SEASON`,
+    [WEATHER.cloudy]: `${WEATHER.cloudy} ${[DAY_TIME.evening]}`,
+    [WEATHER.clear]: `SEASON ${[DAY_TIME.evening]}`
   }
 };

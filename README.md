@@ -1,6 +1,8 @@
 # TO-DO
-* Add some info (including mood matrix), code and examples (?) to the second page (smooth scroll down)
-* Add checkbox to unlock mood selection
+* Add some info (including mood matrix), code and examples (?) to the second page (smooth scroll down) + request to approve coordinates
+* Change soundcloud link to icon and display on top-right
+* Move "Powered by soundcloud" (somewhere on top)[https://developers.soundcloud.com/docs/api/buttons-logos], it should be link leading to website
+* Add "Powered by darksky" (somewhere on top)[https://darksky.net/dev/docs/terms#attribution], it should be link leading to website
 
 # Known bugs
 * Check for songs that already in history (to not repeat)

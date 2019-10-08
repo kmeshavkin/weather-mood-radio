@@ -1,4 +1,5 @@
 import { DARK_SKY_KEY } from '../privateKeys';
+import { SEASONS, DAY_TIME } from './constants';
 
 const hourInMS = 1000 * 60 * 60;
 
@@ -40,17 +41,17 @@ export async function getWeather(position) {
 export function getSeason(position) {
   const seasonIndex = Math.floor(((new Date().getMonth() % 11) + 1) / 3);
   return position.coords.latitude > 0
-    ? ['winter', 'spring', 'summer', 'autumn'][seasonIndex]
-    : ['summer', 'autumn', 'winter', 'spring'][seasonIndex];
+    ? [SEASONS.winter, SEASONS.spring, SEASONS.summer, SEASONS.autumn][seasonIndex]
+    : [SEASONS.summer, SEASONS.autumn, SEASONS.winter, SEASONS.spring][seasonIndex];
 }
 
 export function getDayTime(sunriseTime, sunsetTime) {
   const currentDate = new Date().getTime();
   const sunriseDate = sunriseTime;
   const sunsetDate = sunsetTime;
-  if (currentDate - (sunriseDate - hourInMS) < 0) return 'night';
-  if (currentDate - (sunriseDate + hourInMS * 3) < 0) return 'morning';
-  if (currentDate - (sunsetDate - hourInMS * 3) < 0) return 'day';
-  if (currentDate - (sunsetDate + hourInMS) < 0) return 'evening';
-  return 'night';
+  if (currentDate - (sunriseDate - hourInMS) < 0) return DAY_TIME.night;
+  if (currentDate - (sunriseDate + hourInMS * 3) < 0) return DAY_TIME.morning;
+  if (currentDate - (sunsetDate - hourInMS * 3) < 0) return DAY_TIME.day;
+  if (currentDate - (sunsetDate + hourInMS) < 0) return DAY_TIME.evening;
+  return DAY_TIME.night;
 }
