@@ -8,25 +8,16 @@ import { trackType, playAllowedType } from '../../utils/sharedPropTypes';
 import { StyledCircularProgress, GridWrapper } from './PlayControls.styled';
 
 class PlayControls extends React.PureComponent {
-  constructor() {
-    super();
-    this.state = {
-      playbackStarted: false
-    };
-  }
-
   onPlayPause = () => {
-    const { playbackStarted } = this.state;
-    const { track, startPlayback } = this.props;
-    if (!playbackStarted) this.setState({ playbackStarted: true }, () => startPlayback());
+    const { track, startPlayback, playbackStarted } = this.props;
+    if (!playbackStarted) startPlayback();
     else if (track.isPlaying()) track.pause();
     else track.play();
     this.forceUpdate();
   };
 
   render() {
-    const { playbackStarted } = this.state;
-    const { track, playAllowed, prevTrack, nextTrack } = this.props;
+    const { track, playAllowed, prevTrack, nextTrack, playbackStarted } = this.props;
     return (
       <Grid container item direction="column" spacing={1}>
         <Grid container justify="center" item spacing={1}>
@@ -69,6 +60,8 @@ PlayControls.propTypes = {
   playAllowed: playAllowedType.isRequired,
   // Callback, used to start playback when player first opened
   startPlayback: PropTypes.func.isRequired,
+  // If user started playback for the first time or not
+  playbackStarted: PropTypes.bool.isRequired,
   // Callback, which when called calls previous track to play
   prevTrack: PropTypes.func.isRequired,
   // Callback, which when called calls next track to play

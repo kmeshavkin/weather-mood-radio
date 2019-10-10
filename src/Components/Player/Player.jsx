@@ -27,7 +27,8 @@ class Player extends React.PureComponent {
     super();
 
     this.state = {
-      volume: DEFAULT_VOLUME
+      volume: DEFAULT_VOLUME,
+      playbackStarted: false
     };
   }
 
@@ -36,6 +37,7 @@ class Player extends React.PureComponent {
       client_id: CLIENT_ID
     });
     this.playSong();
+    this.setState({ playbackStarted: true });
 
     // -Test stuff- //
     window.playSong = this.playSong;
@@ -122,7 +124,7 @@ class Player extends React.PureComponent {
   };
 
   render() {
-    const { volume } = this.state;
+    const { volume, playbackStarted } = this.state;
     const { trackInfo, playAllowed } = this.props;
     const isBGAvailable = trackInfo && trackInfo.artwork_url;
     const titleWidth = getTextWidth(trackInfo ? trackInfo.title : 0, '1.5rem');
@@ -148,6 +150,7 @@ class Player extends React.PureComponent {
                 </StyledTitleGrid>
                 <PlayControls
                   startPlayback={this.startPlayback}
+                  playbackStarted={playbackStarted}
                   nextTrack={this.nextTrack}
                   prevTrack={this.prevTrack}
                 />
