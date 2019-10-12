@@ -1,9 +1,8 @@
 # TO-DO
 * Add some info (including mood matrix), code and examples (?) to the second page (smooth scroll down) + request to approve coordinates
 * Change soundcloud link to icon and display on top-right
-* Move "Powered by soundcloud" (somewhere on top)[https://developers.soundcloud.com/docs/api/buttons-logos]
-* Move "Powered by darksky" (somewhere on top)[https://darksky.net/dev/docs/terms#attribution]
-* better info panel styling?
+* Better info panel styling?
+* Move [https://developers.soundcloud.com/docs/api/buttons-logos]("Powered by soundcloud") and ("Powered by darksky")[https://darksky.net/dev/docs/terms#attribution] somewhere on top
 
 # Known bugs
 * Check for songs that already in history (to not repeat)
