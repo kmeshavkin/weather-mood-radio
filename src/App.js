@@ -5,7 +5,15 @@ import { Grid, MenuItem, Checkbox, FormControlLabel } from '@material-ui/core';
 import Player from './Components/Player/Player';
 import { getPosition, getSeason, getWeather, getDayTime } from './utils/getMood';
 import { API_TO_WEATHER, SYNONYMS, MOOD_MATRIX, WEATHER, DAY_TIME, SEASONS } from './utils/constants';
-import { StyledMoodGrid, StyledCheckboxGrid, StyledTextField } from './App.styled';
+import {
+  StyledMoodGrid,
+  StyledCheckboxGrid,
+  StyledTextField,
+  PageWrapper,
+  PageGrid,
+  ArrowIconButton,
+  StyledArrowDownward
+} from './App.styled';
 import { getRandom, capitalizeFirst } from './utils/functions';
 
 class App extends React.PureComponent {
@@ -16,7 +24,8 @@ class App extends React.PureComponent {
       season: undefined,
       weather: undefined,
       dayTime: undefined,
-      customMood: false
+      customMood: false,
+      topPage: true
     };
   }
 
@@ -63,7 +72,7 @@ class App extends React.PureComponent {
   };
 
   render() {
-    const { weather, dayTime, season, customMood } = this.state;
+    const { weather, dayTime, season, customMood, topPage } = this.state;
     // textFields used to map all textFields easier as every new textField adds ton of similar code
     const textFields = [
       {
@@ -86,39 +95,47 @@ class App extends React.PureComponent {
       }
     ];
     return (
-      <Grid container direction="column" alignItems="center">
-        <StyledCheckboxGrid item>
-          <FormControlLabel
-            control={<Checkbox checked={customMood} onChange={this.setCustomMood} />}
-            label="Custom Mood"
-            labelPlacement="start"
-          />
-        </StyledCheckboxGrid>
-        <Grid item>
-          <Player mood={this.calculateMood(season, weather, dayTime)} />
-        </Grid>
-        <StyledMoodGrid item container justify="space-evenly" spacing={1}>
-          {textFields.map(textField => (
-            <Grid key={textField.stateName} item>
-              <StyledTextField
-                select={customMood}
-                disabled={!customMood}
-                label={textField.label}
-                value={capitalizeFirst(textField.value) || 'pending...'}
-                onChange={e => this.setState({ [textField.stateName]: e.target.value.toLowerCase() })}
-                margin="normal"
-                variant="outlined"
-              >
-                {Object.values(textField.constants).map(option => (
-                  <MenuItem key={option} value={capitalizeFirst(option)}>
-                    {capitalizeFirst(option)}
-                  </MenuItem>
-                ))}
-              </StyledTextField>
+      <>
+        <PageWrapper>
+          <PageGrid container direction="column" alignItems="center" position={topPage ? 0 : -1}>
+            <StyledCheckboxGrid item>
+              <FormControlLabel
+                control={<Checkbox checked={customMood} onChange={this.setCustomMood} />}
+                label="Custom Mood"
+                labelPlacement="start"
+              />
+            </StyledCheckboxGrid>
+            <Grid item>
+              <Player mood={this.calculateMood(season, weather, dayTime)} />
             </Grid>
-          ))}
-        </StyledMoodGrid>
-      </Grid>
+            <StyledMoodGrid item container justify="space-evenly" spacing={1}>
+              {textFields.map(textField => (
+                <Grid key={textField.stateName} item>
+                  <StyledTextField
+                    select={customMood}
+                    disabled={!customMood}
+                    label={textField.label}
+                    value={capitalizeFirst(textField.value) || 'pending...'}
+                    onChange={e => this.setState({ [textField.stateName]: e.target.value.toLowerCase() })}
+                    margin="normal"
+                    variant="outlined"
+                  >
+                    {Object.values(textField.constants).map(option => (
+                      <MenuItem key={option} value={capitalizeFirst(option)}>
+                        {capitalizeFirst(option)}
+                      </MenuItem>
+                    ))}
+                  </StyledTextField>
+                </Grid>
+              ))}
+            </StyledMoodGrid>
+          </PageGrid>
+          <PageGrid position={topPage ? 1 : 0} style={{ backgroundColor: 'cyan' }} />
+        </PageWrapper>
+        <ArrowIconButton style={{ position: 'fixed' }} onClick={() => this.setState({ topPage: !topPage })}>
+          <StyledArrowDownward rotate={topPage ? 0 : 1} />
+        </ArrowIconButton>
+      </>
     );
   }
 }
