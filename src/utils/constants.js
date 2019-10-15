@@ -4,7 +4,7 @@ export const PAGE_SIZE = 200;
 export const DEFAULT_VOLUME = 0.3;
 // How much segments in rewind slider
 export const REWIND_SLIDER_MAX = 200;
-// Genres to randonly pick from
+// Genres to randomly pick from
 export const GENRES = 'lofi hip-hop,lo-fi hip-hop,lofi,lo fi,chillhop';
 
 // Weather names as constants
@@ -68,7 +68,7 @@ export const MOOD_MATRIX = {
   [DAY_TIME.night]: {
     [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.night]}`,
     [WEATHER.snow]: `${WEATHER.snow} ${[DAY_TIME.night]}`,
-    [WEATHER.wind]: `SEASON ${[DAY_TIME.night]}`,
+    [WEATHER.windy]: `SEASON ${[DAY_TIME.night]}`,
     [WEATHER.fog]: `SEASON ${[DAY_TIME.night]}`,
     [WEATHER.cloudy]: `SEASON ${[DAY_TIME.night]}`,
     [WEATHER.clear]: `SEASON ${[DAY_TIME.night]}`
@@ -76,7 +76,7 @@ export const MOOD_MATRIX = {
   [DAY_TIME.morning]: {
     [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.morning]}`,
     [WEATHER.snow]: `${WEATHER.snow}`,
-    [WEATHER.wind]: `SEASON`,
+    [WEATHER.windy]: `SEASON`,
     [WEATHER.fog]: `${WEATHER.fog} ${[DAY_TIME.morning]}`,
     [WEATHER.cloudy]: `${WEATHER.cloudy} ${[DAY_TIME.morning]}`,
     [WEATHER.clear]: `SEASON ${[DAY_TIME.morning]}`
@@ -84,7 +84,7 @@ export const MOOD_MATRIX = {
   [DAY_TIME.day]: {
     [WEATHER.rain]: `${WEATHER.rain} SEASON`,
     [WEATHER.snow]: `${WEATHER.snow} SEASON`,
-    [WEATHER.wind]: `${WEATHER.wind} SEASON`,
+    [WEATHER.windy]: `${WEATHER.windy} SEASON`,
     [WEATHER.fog]: `${WEATHER.fog} SEASON`,
     [WEATHER.cloudy]: `${WEATHER.cloudy} SEASON`,
     [WEATHER.clear]: `SEASON`
@@ -92,7 +92,7 @@ export const MOOD_MATRIX = {
   [DAY_TIME.evening]: {
     [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.evening]}`,
     [WEATHER.snow]: `${WEATHER.snow}`,
-    [WEATHER.wind]: `SEASON`,
+    [WEATHER.windy]: `SEASON`,
     [WEATHER.fog]: `${WEATHER.fog} SEASON`,
     [WEATHER.cloudy]: `${WEATHER.cloudy} ${[DAY_TIME.evening]}`,
     [WEATHER.clear]: `SEASON ${[DAY_TIME.evening]}`

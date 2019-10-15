@@ -38,14 +38,10 @@ class Player extends React.PureComponent {
     });
     this.playSong();
     this.setState({ playbackStarted: true });
-
-    // -Test stuff- //
-    window.playSong = this.playSong;
-    window.soundcloud = soundcloud;
-    // --- //
   };
 
   getTrack = (searchTerm, trackId) => {
+    const { playHistory } = this.props;
     try {
       if (trackId) {
         return soundcloud.get('/tracks', { ids: trackId }).then(track => track[0]);
@@ -58,7 +54,7 @@ class Player extends React.PureComponent {
           genres: GENRES,
           limit: PAGE_SIZE
         })
-        .then(trackList => getRandom(trackList));
+        .then(trackList => getRandom(trackList.filter(x => !playHistory.includes(x.id))));
     } catch (e) {
       return new Promise(() => Promise.reject(e));
     }
@@ -73,7 +69,6 @@ class Player extends React.PureComponent {
       track.on('finish', () => this.nextTrack());
       // -Test stuff- //
       console.log('trackInfo: ', trackInfo);
-      window.track = track;
       // --- //
       await track.play();
       track.setVolume(volume);

@@ -64,6 +64,27 @@ class App extends React.PureComponent {
 
   render() {
     const { weather, dayTime, season, customMood } = this.state;
+    // textFields used to map all textFields easier as every new textField adds ton of similar code
+    const textFields = [
+      {
+        label: 'Weather',
+        value: weather,
+        stateName: 'weather',
+        constants: WEATHER
+      },
+      {
+        label: 'Day time',
+        value: dayTime,
+        stateName: 'dayTime',
+        constants: DAY_TIME
+      },
+      {
+        label: 'Season',
+        value: season,
+        stateName: 'season',
+        constants: SEASONS
+      }
+    ];
     return (
       <Grid container direction="column" alignItems="center">
         <StyledCheckboxGrid item>
@@ -77,57 +98,25 @@ class App extends React.PureComponent {
           <Player mood={this.calculateMood(season, weather, dayTime)} />
         </Grid>
         <StyledMoodGrid item container justify="space-evenly" spacing={1}>
-          <Grid item>
-            <StyledTextField
-              select={customMood}
-              disabled={!customMood}
-              label="Weather"
-              value={capitalizeFirst(weather) || 'pending...'}
-              onChange={e => this.setState({ weather: e.target.value.toLowerCase() })}
-              margin="normal"
-              variant="outlined"
-            >
-              {Object.values(WEATHER).map(option => (
-                <MenuItem key={option} value={capitalizeFirst(option)}>
-                  {capitalizeFirst(option)}
-                </MenuItem>
-              ))}
-            </StyledTextField>
-          </Grid>
-          <Grid item>
-            <StyledTextField
-              select={customMood}
-              disabled={!customMood}
-              label="Day time"
-              value={capitalizeFirst(dayTime) || 'pending...'}
-              onChange={e => this.setState({ dayTime: e.target.value.toLowerCase() })}
-              margin="normal"
-              variant="outlined"
-            >
-              {Object.values(DAY_TIME).map(option => (
-                <MenuItem key={option} value={capitalizeFirst(option)}>
-                  {capitalizeFirst(option)}
-                </MenuItem>
-              ))}
-            </StyledTextField>
-          </Grid>
-          <Grid item>
-            <StyledTextField
-              select={customMood}
-              disabled={!customMood}
-              label="Season"
-              value={capitalizeFirst(season) || 'pending...'}
-              onChange={e => this.setState({ season: e.target.value.toLowerCase() })}
-              margin="normal"
-              variant="outlined"
-            >
-              {Object.values(SEASONS).map(option => (
-                <MenuItem key={option} value={capitalizeFirst(option)}>
-                  {capitalizeFirst(option)}
-                </MenuItem>
-              ))}
-            </StyledTextField>
-          </Grid>
+          {textFields.map(textField => (
+            <Grid key={textField.stateName} item>
+              <StyledTextField
+                select={customMood}
+                disabled={!customMood}
+                label={textField.label}
+                value={capitalizeFirst(textField.value) || 'pending...'}
+                onChange={e => this.setState({ [textField.stateName]: e.target.value.toLowerCase() })}
+                margin="normal"
+                variant="outlined"
+              >
+                {Object.values(textField.constants).map(option => (
+                  <MenuItem key={option} value={capitalizeFirst(option)}>
+                    {capitalizeFirst(option)}
+                  </MenuItem>
+                ))}
+              </StyledTextField>
+            </Grid>
+          ))}
         </StyledMoodGrid>
       </Grid>
     );

@@ -16,7 +16,7 @@ export function getPosition() {
 /**
  * Receives current weather from darksky.net
  * @param {Object} position Current position
- * @returns {Object | Error} Object with weather data (icon (current weather), sunriseTime and sunsetTime) or error
+ * @returns {Promise<Object | Error>} Object with weather data (icon (current weather), sunriseTime and sunsetTime) or error
  */
 export async function getWeather(position) {
   if (navigator.geolocation) {
