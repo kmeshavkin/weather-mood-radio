@@ -1,4 +1,6 @@
 # TO-DO
+* Show resulting query to user
+* Save play history in local storage
 * Add some info (including mood matrix), code and examples (?) to the second page (smooth scroll down) + request to approve coordinates
 * Display resulting mood (on the top or the bottom page?)
 * Change soundcloud link to icon and display on top-right
@@ -9,8 +11,11 @@
 # Known bugs
 * Track slider does not switch immediately after next song starts
 
-# Features (highlights)
+# Features
 * Music Radio made from scratch (APIs + UI kit)
 * Javascript + React + Redux
 * API (soundcloud, darksky.net)
 * Material-UI
+
+# Project highlights
+* Play history
