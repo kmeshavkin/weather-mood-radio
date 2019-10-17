@@ -10,7 +10,7 @@ const hourInMS = 1000 * 60 * 60;
 export function getPosition() {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
+  }).catch(e => console.log('test', e));
 }
 
 /**
@@ -19,18 +19,16 @@ export function getPosition() {
  * @returns {Promise<Object | Error>} Object with weather data (icon (current weather), sunriseTime and sunsetTime) or error
  */
 export async function getWeather(position) {
-  if (navigator.geolocation) {
-    const weatherPromise = await fetch(
-      `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${DARK_SKY_KEY}/${position.coords.latitude},${position.coords.longitude}`
-    );
-    const weather = await weatherPromise.json();
-    return {
-      icon: weather.currently.icon,
-      sunriseTime: weather.daily.data[0].sunriseTime * 1000, // * 1000 because API returns UNIX timestamp
-      sunsetTime: weather.daily.data[0].sunsetTime * 1000
-    };
-  }
-  return new Error("Couldn't retrieve weather or user coordinates");
+  if (!position) return undefined;
+  const weatherPromise = await fetch(
+    `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${DARK_SKY_KEY}/${position.coords.latitude},${position.coords.longitude}`
+  );
+  const weather = await weatherPromise.json();
+  return {
+    icon: weather.currently.icon,
+    sunriseTime: weather.daily.data[0].sunriseTime * 1000, // * 1000 because API returns UNIX timestamp
+    sunsetTime: weather.daily.data[0].sunsetTime * 1000
+  };
 }
 
 /**
@@ -39,6 +37,7 @@ export async function getWeather(position) {
  * @returns {String} Current season
  */
 export function getSeason(position) {
+  if (!position) return undefined;
   const seasonIndex = Math.floor(((new Date().getMonth() % 11) + 1) / 3);
   return position.coords.latitude > 0
     ? [SEASONS.winter, SEASONS.spring, SEASONS.summer, SEASONS.autumn][seasonIndex]

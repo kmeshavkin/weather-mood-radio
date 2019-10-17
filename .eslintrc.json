@@ -24,6 +24,7 @@
         "no-plusplus": 0,
         "no-console": 0,
         "prettier/prettier": "error",
-        "react/jsx-curly-newline": 0
+        "react/jsx-curly-newline": 0,
+        "react/jsx-wrap-multilines": 0
     }
 }

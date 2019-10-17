@@ -15,6 +15,7 @@ import {
   StyledArrowDownward
 } from './App.styled';
 import { getRandom, capitalizeFirst } from './utils/functions';
+import CustomSnackbar from './Components/Snackbar/Snackbar';
 
 class App extends React.PureComponent {
   constructor() {
@@ -25,7 +26,8 @@ class App extends React.PureComponent {
       weather: undefined,
       dayTime: undefined,
       customMood: false,
-      topPage: true
+      topPage: true,
+      isSnackbarOpen: false
     };
   }
 
@@ -48,10 +50,10 @@ class App extends React.PureComponent {
     const position = await getPosition();
     const season = getSeason(position);
     const weatherData = await getWeather(position);
-    const weather = API_TO_WEATHER[weatherData.icon];
+    const weather = weatherData ? API_TO_WEATHER[weatherData.icon] : undefined;
     console.log('weather: ', weatherData, weather);
-    const dayTime = getDayTime(weatherData.sunriseTime, weatherData.sunsetTime);
-    this.setState({ season, weather, dayTime });
+    const dayTime = weatherData ? getDayTime(weatherData.sunriseTime, weatherData.sunsetTime) : undefined;
+    this.setState({ season, weather, dayTime, isSnackbarOpen: !weatherData });
   };
 
   calculateMood = (season = '', weather, dayTime = DAY_TIME.day) => {
@@ -72,7 +74,7 @@ class App extends React.PureComponent {
   };
 
   render() {
-    const { weather, dayTime, season, customMood, topPage } = this.state;
+    const { weather, dayTime, season, customMood, topPage, isSnackbarOpen } = this.state;
     // textFields used to map all textFields easier as every new textField adds ton of similar code
     const textFields = [
       {
@@ -132,9 +134,17 @@ class App extends React.PureComponent {
           </PageGrid>
           <PageGrid position={topPage ? 1 : 0} style={{ backgroundColor: 'cyan' }} />
         </PageWrapper>
-        <ArrowIconButton style={{ position: 'fixed' }} onClick={() => this.setState({ topPage: !topPage })}>
+        <ArrowIconButton onClick={() => this.setState({ topPage: !topPage })}>
           <StyledArrowDownward rotate={topPage ? 0 : 1} />
         </ArrowIconButton>
+        <CustomSnackbar
+          open={isSnackbarOpen}
+          onClose={() => this.setState({ isSnackbarOpen: false })}
+          message={`Please allow this app to get your geolocation, it will automatically detect appropriate mood for current weather,
+                    day time and season. Otherwise you can switch to Custom Mood mode to pick appropriate parameters instead.`}
+          variant="warning"
+          duration={20000}
+        />
       </>
     );
   }

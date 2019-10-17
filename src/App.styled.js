@@ -32,6 +32,7 @@ export const PageGrid = styled(Grid)`
 export const ArrowIconButton = styled(IconButton)`
   top: 94vh;
   right: 6px;
+  position: fixed !important;
 `;
 
 export const StyledArrowDownward = styled(ArrowDownward)`

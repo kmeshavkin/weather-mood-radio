@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Card, CardMedia, Typography, Grid } from '@material-ui/core';
+import { Card, CardMedia, Typography, Grid, CardContent } from '@material-ui/core';
 
 export const StyledCard = styled(Card)`
   display: flex;
@@ -19,6 +19,10 @@ export const StyledCardMedia = styled(CardMedia)`
   align-self: center;
   `
       : ''}
+`;
+
+export const StyledCardContent = styled(CardContent)`
+  padding-bottom: 16px !important;
 `;
 
 export const PlayerWrapper = styled.div`

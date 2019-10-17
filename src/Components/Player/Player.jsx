@@ -2,14 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import soundcloud from 'soundcloud';
-import { CardContent, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
 import { DEFAULT_VOLUME, GENRES, PAGE_SIZE } from '../../utils/constants';
 import { getRandom, getTextWidth } from '../../utils/functions';
 import { CLIENT_ID } from '../../privateKeys';
 import PlayControls from '../PlayControls/PlayControls';
 import Volume from '../Volume/Volume';
-import { StyledCard, StyledCardMedia, StyledTypography, StyledTitleGrid, PlayerWrapper } from './Player.styled';
+import {
+  StyledCard,
+  StyledCardMedia,
+  StyledTypography,
+  StyledTitleGrid,
+  PlayerWrapper,
+  StyledCardContent
+} from './Player.styled';
 import recordSvg from '../../resources/record.svg';
 import InfoButton from '../InfoButton/InfoButton';
 import {
@@ -21,6 +28,7 @@ import {
   changeTrackType,
   playAllowedType
 } from '../../utils/sharedPropTypes';
+import CustomSnackbar from '../Snackbar/Snackbar';
 
 class Player extends React.PureComponent {
   constructor() {
@@ -28,7 +36,8 @@ class Player extends React.PureComponent {
 
     this.state = {
       volume: DEFAULT_VOLUME,
-      playbackStarted: false
+      playbackStarted: false,
+      isSnackbarOpen: false
     };
   }
 
@@ -67,16 +76,14 @@ class Player extends React.PureComponent {
       const trackInfo = await this.getTrack(mood, trackId);
       const track = await soundcloud.stream(`/tracks/${trackInfo.id}`);
       track.on('finish', () => this.nextTrack());
-      // -Test stuff- //
       console.log('trackInfo: ', trackInfo);
-      // --- //
       await track.play();
       track.setVolume(volume);
       newTrack(track, trackInfo);
       console.log('Playback started!');
     } catch (e) {
       console.error('Playback rejected.', e);
-      // this.playSong();
+      this.setState({ isSnackbarOpen: true });
     }
   };
 
@@ -119,51 +126,60 @@ class Player extends React.PureComponent {
   };
 
   render() {
-    const { volume, playbackStarted } = this.state;
+    const { volume, playbackStarted, isSnackbarOpen } = this.state;
     const { trackInfo, playAllowed } = this.props;
     const isBGAvailable = trackInfo && trackInfo.artwork_url;
     const titleWidth = getTextWidth(trackInfo ? trackInfo.title : 0, '1.5rem');
     const usernameWidth = getTextWidth(trackInfo ? trackInfo.user.username : 0, '1rem');
     return (
-      <StyledCard>
-        <StyledCardMedia
-          stretch={isBGAvailable}
-          image={isBGAvailable ? trackInfo.artwork_url : recordSvg}
-          title="Cover image"
+      <>
+        <StyledCard>
+          <StyledCardMedia
+            stretch={isBGAvailable}
+            image={isBGAvailable ? trackInfo.artwork_url : recordSvg}
+            title="Cover image"
+          />
+          <StyledCardContent>
+            <Grid container justify="center" direction="row" alignItems="center" wrap="nowrap" spacing={2}>
+              <PlayerWrapper>
+                <Grid container item direction="column" alignItems="center">
+                  <StyledTitleGrid item applygradient={(titleWidth > 250 || usernameWidth > 250).toString()}>
+                    <StyledTypography top="true" width={titleWidth} align="center" component="h5" variant="h5">
+                      {trackInfo ? trackInfo.title : ''}
+                    </StyledTypography>
+                    <StyledTypography width={usernameWidth} align="center" variant="subtitle1" color="textSecondary">
+                      {trackInfo ? trackInfo.user.username : ''}
+                    </StyledTypography>
+                  </StyledTitleGrid>
+                  <PlayControls
+                    startPlayback={this.startPlayback}
+                    playbackStarted={playbackStarted}
+                    nextTrack={this.nextTrack}
+                    prevTrack={this.prevTrack}
+                  />
+                </Grid>
+              </PlayerWrapper>
+              <div>
+                <Grid container item direction="column" justify="center">
+                  <Grid item>
+                    <InfoButton playAllowed={playAllowed} trackInfo={trackInfo} />
+                  </Grid>
+                  <Grid item>
+                    <Volume volume={volume} changeVolume={this.changeVolume} aria-label="volume" />
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+          </StyledCardContent>
+        </StyledCard>
+        <CustomSnackbar
+          open={isSnackbarOpen}
+          onClose={() => this.setState({ isSnackbarOpen: false })}
+          message="Playback rejected due to some error. Please reload page or open console to read the error."
+          variant="error"
+          duration={10000}
         />
-        <CardContent style={{ paddingBottom: '16px' }}>
-          <Grid container justify="center" direction="row" alignItems="center" wrap="nowrap" spacing={2}>
-            <PlayerWrapper>
-              <Grid container item direction="column" alignItems="center">
-                <StyledTitleGrid item applygradient={(titleWidth > 250 || usernameWidth > 250).toString()}>
-                  <StyledTypography top="true" width={titleWidth} align="center" component="h5" variant="h5">
-                    {trackInfo ? trackInfo.title : ''}
-                  </StyledTypography>
-                  <StyledTypography width={usernameWidth} align="center" variant="subtitle1" color="textSecondary">
-                    {trackInfo ? trackInfo.user.username : ''}
-                  </StyledTypography>
-                </StyledTitleGrid>
-                <PlayControls
-                  startPlayback={this.startPlayback}
-                  playbackStarted={playbackStarted}
-                  nextTrack={this.nextTrack}
-                  prevTrack={this.prevTrack}
-                />
-              </Grid>
-            </PlayerWrapper>
-            <div>
-              <Grid container item direction="column" justify="center">
-                <Grid item>
-                  <InfoButton playAllowed={playAllowed} trackInfo={trackInfo} />
-                </Grid>
-                <Grid item>
-                  <Volume volume={volume} changeVolume={this.changeVolume} aria-label="volume" />
-                </Grid>
-              </Grid>
-            </div>
-          </Grid>
-        </CardContent>
-      </StyledCard>
+      </>
     );
   }
 }
