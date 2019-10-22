@@ -2,22 +2,30 @@
 import React from 'react';
 import './App.css';
 import { Grid, MenuItem, Checkbox, FormControlLabel } from '@material-ui/core';
+import { throttle } from 'lodash';
 import Player from './Components/Player/Player';
 import { getPosition, getSeason, getWeather, getDayTime } from './utils/getMood';
 import { API_TO_WEATHER, SYNONYMS, MOOD_MATRIX, WEATHER, DAY_TIME, SEASONS } from './utils/constants';
 import {
   StyledMoodGrid,
-  StyledCheckboxGrid,
+  StyledCheckboxItem,
   StyledTextField,
   PageWrapper,
   PageGrid,
   ArrowIconButton,
-  StyledArrowDownward
+  StyledArrowDownward,
+  MoodTypography,
+  DummyItem,
+  StyledHeaderGrid
 } from './App.styled';
 import { getRandom, capitalizeFirst } from './utils/functions';
 import CustomSnackbar from './Components/Snackbar/Snackbar';
 
 class App extends React.PureComponent {
+  resize = throttle(() => {
+    this.setState({ pageHeight: window.innerHeight });
+  }, 50);
+
   constructor() {
     super();
 
@@ -27,13 +35,19 @@ class App extends React.PureComponent {
       dayTime: undefined,
       customMood: false,
       topPage: true,
-      isSnackbarOpen: false
+      isSnackbarOpen: false,
+      pageHeight: undefined
     };
   }
 
   componentDidMount() {
     this.retrieveMoodParams();
     this.setTimeout();
+    window.addEventListener('resize', this.resize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resize);
   }
 
   setTimeout = () => {
@@ -74,7 +88,9 @@ class App extends React.PureComponent {
   };
 
   render() {
-    const { weather, dayTime, season, customMood, topPage, isSnackbarOpen } = this.state;
+    const { weather, dayTime, season, customMood, topPage, isSnackbarOpen, pageHeight } = this.state;
+    const mood = this.calculateMood(season, weather, dayTime);
+
     // textFields used to map all textFields easier as every new textField adds ton of similar code
     const textFields = [
       {
@@ -100,15 +116,19 @@ class App extends React.PureComponent {
       <>
         <PageWrapper>
           <PageGrid container direction="column" alignItems="center" position={topPage ? 0 : -1}>
-            <StyledCheckboxGrid item>
-              <FormControlLabel
-                control={<Checkbox checked={customMood} onChange={this.setCustomMood} />}
-                label="Custom Mood"
-                labelPlacement="start"
-              />
-            </StyledCheckboxGrid>
+            <StyledHeaderGrid container item>
+              <DummyItem item />
+              <MoodTypography variant="h6">{capitalizeFirst(mood)}</MoodTypography>
+              <StyledCheckboxItem item>
+                <FormControlLabel
+                  control={<Checkbox checked={customMood} onChange={this.setCustomMood} />}
+                  label="Custom Mood"
+                  labelPlacement="start"
+                />
+              </StyledCheckboxItem>
+            </StyledHeaderGrid>
             <Grid item>
-              <Player mood={this.calculateMood(season, weather, dayTime)} />
+              <Player mood={mood} />
             </Grid>
             <StyledMoodGrid item container justify="space-evenly" spacing={1}>
               {textFields.map(textField => (
@@ -134,7 +154,10 @@ class App extends React.PureComponent {
           </PageGrid>
           <PageGrid position={topPage ? 1 : 0} style={{ backgroundColor: 'cyan' }} />
         </PageWrapper>
-        <ArrowIconButton onClick={() => this.setState({ topPage: !topPage })}>
+        <ArrowIconButton
+          pageheight={pageHeight || window.innerHeight}
+          onClick={() => this.setState({ topPage: !topPage })}
+        >
           <StyledArrowDownward rotate={topPage ? 0 : 1} />
         </ArrowIconButton>
         <CustomSnackbar
