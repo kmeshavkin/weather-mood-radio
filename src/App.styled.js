@@ -11,7 +11,8 @@ export const StyledHeaderGrid = styled(Grid)`
 `;
 
 export const DummyItem = styled(Grid)`
-  width: 150px;
+  flex: 1;
+  max-width: 150px;
 `;
 
 export const StyledCheckboxItem = styled(Grid)`
@@ -34,7 +35,14 @@ export const PageGrid = styled(Grid)`
   height: 100%;
   width: 100%;
   flex-wrap: nowrap !important;
-  padding: 4px 16px;
+  padding: 0px 16px;
+  ${({ pageId }) => `
+    background:linear-gradient(
+      ${pageId * 180}deg,
+      rgba(0, 0, 0, 0.1) 0%,
+      rgba(0, 0, 0, 0) 5%,
+      rgba(0, 0, 0, 0) 100%);
+  `}
   transition: 0.5s ease-in-out;
   ${({ position }) => `transform: translateY(${Number(position) * 100}%)`}
 `;

@@ -21,7 +21,7 @@ class PlaySlider extends React.PureComponent {
     const updateSlider = setInterval(() => {
       const { holding } = this.state;
       const { track } = this.props;
-      if (track && !holding) {
+      if (track && track.isPlaying() && !holding) {
         this.setState({
           sliderPosition: (track.currentTime() / track.getDuration()) * REWIND_SLIDER_MAX,
           currentTime: Math.ceil(track.currentTime() / 1000)

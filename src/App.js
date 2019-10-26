@@ -115,7 +115,7 @@ class App extends React.PureComponent {
     return (
       <>
         <PageWrapper>
-          <PageGrid container direction="column" alignItems="center" position={topPage ? 0 : -1}>
+          <PageGrid container direction="column" alignItems="center" pageId={0} position={topPage ? 0 : -1}>
             <StyledHeaderGrid container item>
               <DummyItem item />
               <MoodTypography variant="h6">{capitalizeFirst(mood)}</MoodTypography>
@@ -152,7 +152,7 @@ class App extends React.PureComponent {
               ))}
             </StyledMoodGrid>
           </PageGrid>
-          <PageGrid position={topPage ? 1 : 0} style={{ backgroundColor: 'cyan' }} />
+          <PageGrid pageId={1} position={topPage ? 1 : 0} />
         </PageWrapper>
         <ArrowIconButton
           pageheight={pageHeight || window.innerHeight}

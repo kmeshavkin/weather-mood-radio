@@ -9,6 +9,15 @@ export const StyledCard = styled(Card)`
   justify-content: center;
 `;
 
+export const StyledOuterGrid = styled(Grid)`
+  height: 100%;
+  padding: 8px 6px 4px 12px;
+`;
+
+export const StyledGrid = styled(Grid)`
+  height: 100%;
+`;
+
 export const StyledCardMedia = styled(CardMedia)`
   width: 150px;
   min-height: 150px;
@@ -22,12 +31,12 @@ export const StyledCardMedia = styled(CardMedia)`
 `;
 
 export const StyledCardContent = styled(CardContent)`
-  padding-bottom: 16px !important;
+  padding: 0px !important;
 `;
 
 export const PlayerWrapper = styled.div`
   padding-right: 6px;
-  padding-bottom: 9px;
+  padding-bottom: 3px;
 `;
 
 export const StyledTitleGrid = styled(Grid)`
@@ -51,6 +60,10 @@ export const StyledTitleGrid = styled(Grid)`
   `}
   
 }
+`;
+
+export const VolumeGrid = styled(Grid)`
+  flex: 1;
 `;
 
 export const StyledTypography = styled(Typography)`

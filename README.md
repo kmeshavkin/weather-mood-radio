@@ -7,7 +7,6 @@
 * Choose licensing
 
 # Known bugs
-* Track slider does not switch immediately after next song starts
 
 # Features
 * Music Radio made from scratch (APIs + UI kit)

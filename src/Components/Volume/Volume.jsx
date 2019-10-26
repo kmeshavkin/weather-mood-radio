@@ -2,16 +2,16 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Grid } from '@material-ui/core';
 import { VolumeUp, VolumeDown } from '@material-ui/icons';
-import { StyledSlider } from './Volume.styled';
+import { StyledSlider, StyledGrid } from './Volume.styled';
 import { DEFAULT_VOLUME } from '../../utils/constants';
 
 const Volume = ({ volume, changeVolume }) => {
   return (
-    <Grid container item direction="column">
+    <StyledGrid container item direction="column">
       <Grid item>
         <VolumeUp />
       </Grid>
-      <Grid item>
+      <StyledGrid item>
         <StyledSlider
           orientation="vertical"
           value={volume}
@@ -19,11 +19,11 @@ const Volume = ({ volume, changeVolume }) => {
           step={0.01}
           max={1}
         />
-      </Grid>
+      </StyledGrid>
       <Grid item>
         <VolumeDown />
       </Grid>
-    </Grid>
+    </StyledGrid>
   );
 };
 

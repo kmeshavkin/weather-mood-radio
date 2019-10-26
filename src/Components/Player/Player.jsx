@@ -15,7 +15,10 @@ import {
   StyledTypography,
   StyledTitleGrid,
   PlayerWrapper,
-  StyledCardContent
+  StyledCardContent,
+  StyledGrid,
+  VolumeGrid,
+  StyledOuterGrid
 } from './Player.styled';
 import recordSvg from '../../resources/record.svg';
 import InfoButton from '../InfoButton/InfoButton';
@@ -140,7 +143,7 @@ class Player extends React.PureComponent {
             title="Cover image"
           />
           <StyledCardContent>
-            <Grid container justify="center" direction="row" alignItems="center" wrap="nowrap" spacing={2}>
+            <StyledOuterGrid container justify="center" direction="row" alignItems="center" wrap="nowrap">
               <PlayerWrapper>
                 <Grid container item direction="column" alignItems="center">
                   <StyledTitleGrid item applygradient={(titleWidth > 250 || usernameWidth > 250).toString()}>
@@ -159,17 +162,15 @@ class Player extends React.PureComponent {
                   />
                 </Grid>
               </PlayerWrapper>
-              <div>
-                <Grid container item direction="column" justify="center">
-                  <Grid item>
-                    <InfoButton playAllowed={playAllowed} trackInfo={trackInfo} />
-                  </Grid>
-                  <Grid item>
-                    <Volume volume={volume} changeVolume={this.changeVolume} aria-label="volume" />
-                  </Grid>
+              <StyledGrid container item direction="column" justify="center">
+                <Grid item>
+                  <InfoButton playAllowed={playAllowed} trackInfo={trackInfo} />
                 </Grid>
-              </div>
-            </Grid>
+                <VolumeGrid item>
+                  <Volume volume={volume} changeVolume={this.changeVolume} aria-label="volume" />
+                </VolumeGrid>
+              </StyledGrid>
+            </StyledOuterGrid>
           </StyledCardContent>
         </StyledCard>
         <CustomSnackbar
