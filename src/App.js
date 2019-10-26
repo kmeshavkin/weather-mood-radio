@@ -20,6 +20,7 @@ import {
 } from './App.styled';
 import { getRandom, capitalizeFirst } from './utils/functions';
 import CustomSnackbar from './Components/Snackbar/Snackbar';
+import InfoPage from './Components/InfoPage/InfoPage';
 
 class App extends React.PureComponent {
   resize = throttle(() => {
@@ -152,7 +153,9 @@ class App extends React.PureComponent {
               ))}
             </StyledMoodGrid>
           </PageGrid>
-          <PageGrid pageId={1} position={topPage ? 1 : 0} />
+          <PageGrid pageId={1} position={topPage ? 1 : 0}>
+            <InfoPage />
+          </PageGrid>
         </PageWrapper>
         <ArrowIconButton
           pageheight={pageHeight || window.innerHeight}

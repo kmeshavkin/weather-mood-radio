@@ -11,7 +11,7 @@ export const StyledCard = styled(Card)`
 
 export const StyledOuterGrid = styled(Grid)`
   height: 100%;
-  padding: 8px 6px 4px 12px;
+  padding: 12px 6px 8px 12px;
 `;
 
 export const StyledGrid = styled(Grid)`
