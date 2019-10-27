@@ -37,6 +37,7 @@ class App extends React.PureComponent {
       customMood: false,
       topPage: true,
       isSnackbarOpen: false,
+      wasSnackbarOpened: false,
       pageHeight: undefined
     };
   }
@@ -62,13 +63,20 @@ class App extends React.PureComponent {
   };
 
   retrieveMoodParams = async () => {
+    const { wasSnackbarOpened } = this.state;
     const position = await getPosition();
-    const season = getSeason(position);
+    const season = position ? getSeason(position.coords.latitude) : undefined;
     const weatherData = await getWeather(position);
     const weather = weatherData ? API_TO_WEATHER[weatherData.icon] : undefined;
     console.log('weather: ', weatherData, weather);
     const dayTime = weatherData ? getDayTime(weatherData.sunriseTime, weatherData.sunsetTime) : undefined;
-    this.setState({ season, weather, dayTime, isSnackbarOpen: !weatherData });
+    this.setState({
+      season,
+      weather,
+      dayTime,
+      isSnackbarOpen: !weatherData && !wasSnackbarOpened,
+      wasSnackbarOpened: true
+    });
   };
 
   calculateMood = (season = '', weather, dayTime = DAY_TIME.day) => {
@@ -116,7 +124,7 @@ class App extends React.PureComponent {
     return (
       <>
         <PageWrapper>
-          <PageGrid container direction="column" alignItems="center" pageId={0} position={topPage ? 0 : -1}>
+          <PageGrid container direction="column" alignItems="center" pageid={0} position={topPage ? 0 : -1}>
             <StyledHeaderGrid container item>
               <DummyItem item />
               <MoodTypography variant="h6">{capitalizeFirst(mood)}</MoodTypography>
@@ -138,7 +146,7 @@ class App extends React.PureComponent {
                     select={customMood}
                     disabled={!customMood}
                     label={textField.label}
-                    value={capitalizeFirst(textField.value) || 'pending...'}
+                    value={capitalizeFirst(textField.value) || (customMood ? '' : 'pending...')}
                     onChange={e => this.setState({ [textField.stateName]: e.target.value.toLowerCase() })}
                     margin="normal"
                     variant="outlined"
@@ -153,7 +161,7 @@ class App extends React.PureComponent {
               ))}
             </StyledMoodGrid>
           </PageGrid>
-          <PageGrid pageId={1} position={topPage ? 1 : 0}>
+          <PageGrid pageid={1} position={topPage ? 1 : 0}>
             <InfoPage />
           </PageGrid>
         </PageWrapper>

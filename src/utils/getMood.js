@@ -10,7 +10,7 @@ const hourInMS = 1000 * 60 * 60;
 export function getPosition() {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
-  }).catch(e => console.log('test', e));
+  }).catch(e => console.error('Failed to receive geolocation:', e));
 }
 
 /**
@@ -33,17 +33,22 @@ export async function getWeather(position) {
 
 /**
  * Takes latitude and current month and returns season
- * @param {Object} position Current position
+ * @param {number} latitude Current latitude
  * @returns {String} Current season
  */
-export function getSeason(position) {
-  if (!position) return undefined;
+export function getSeason(latitude) {
   const seasonIndex = Math.floor(((new Date().getMonth() % 11) + 1) / 3);
-  return position.coords.latitude > 0
+  return latitude > 0
     ? [SEASONS.winter, SEASONS.spring, SEASONS.summer, SEASONS.autumn][seasonIndex]
     : [SEASONS.summer, SEASONS.autumn, SEASONS.winter, SEASONS.spring][seasonIndex];
 }
 
+/**
+ * Takes sunriseTime and sunsetTime and returns current day time
+ * @param {number} sunriseTime Sunrise time in ms
+ * @param {number} sunsetTime Sunset time in ms
+ * @returns {String} Current day time
+ */
 export function getDayTime(sunriseTime, sunsetTime) {
   const currentDate = new Date().getTime();
   const sunriseDate = sunriseTime;

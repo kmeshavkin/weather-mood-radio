@@ -36,12 +36,12 @@ export const PageGrid = styled(Grid)`
   width: 100%;
   flex-wrap: nowrap !important;
   padding: 0px 16px;
-  ${({ pageId }) => `
+  ${({ pageid }) => `
     background:linear-gradient(
-      ${pageId * 180}deg,
+      ${pageid * 180}deg,
       rgba(0, 0, 0, 0.1) 0%,
-      rgba(0, 0, 0, 0) 5%,
-      rgba(0, 0, 0, 0) 100%);
+      rgba(40, 40, 255, ${pageid ? 0.02 : 0}) 5%,
+      rgba(40, 40, 255, ${pageid ? 0.02 : 0}) 100%);
   `}
   transition: 0.5s ease-in-out;
   ${({ position }) => `transform: translateY(${Number(position) * 100}%)`}
