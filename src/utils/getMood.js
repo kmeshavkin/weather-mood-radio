@@ -37,10 +37,13 @@ export async function getWeather(position) {
  * @returns {String} Current season
  */
 export function getSeason(latitude) {
-  const seasonIndex = Math.floor(((new Date().getMonth() % 11) + 1) / 3);
-  return latitude > 0
-    ? [SEASONS.winter, SEASONS.spring, SEASONS.summer, SEASONS.autumn][seasonIndex]
-    : [SEASONS.summer, SEASONS.autumn, SEASONS.winter, SEASONS.spring][seasonIndex];
+  const shiftSeasons = latitude < 0;
+  // % 12 shifts December to index 0, so 0-2 is first season, 3-5 is second and so on
+  const seasonNumber = (new Date().getMonth() + 1 + (shiftSeasons ? 6 : 0)) % 12;
+  if (seasonNumber < 3) return SEASONS.winter;
+  if (seasonNumber < 6) return SEASONS.spring;
+  if (seasonNumber < 9) return SEASONS.summer;
+  return SEASONS.autumn;
 }
 
 /**

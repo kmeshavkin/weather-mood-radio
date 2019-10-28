@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 /**
  * Returns random element from an array
  * @param {*[]} itemArray Input array
@@ -40,4 +42,46 @@ export function getTextWidth(text, fontSize) {
  */
 export function capitalizeFirst(str) {
   return str ? str.charAt(0).toUpperCase() + str.slice(1) : undefined;
+}
+
+//
+// Get window dimensions as a react hook
+// From https://stackoverflow.com/a/36862446
+//
+
+/**
+ * @typedef {Object} Dimensions
+ * @property {number} width Window width
+ * @property {number} height Window height
+ */
+
+/**
+ * Returns width and height of a window from window object
+ * @returns {Dimensions} Object with width and height from window
+ */
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+/**
+ * React hook that returns width and height of a window
+ * @returns {Dimensions} Object with width and height from window
+ */
+export default function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
 }
