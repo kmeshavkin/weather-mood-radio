@@ -7,6 +7,7 @@
 * Choose licensing
 
 # Known bugs
+* Fix Play/Pause and cover for mobile (Chrome)
 
 # Features
 * Music Radio made from scratch (APIs + UI kit)

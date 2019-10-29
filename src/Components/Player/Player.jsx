@@ -44,6 +44,29 @@ class Player extends React.PureComponent {
     };
   }
 
+  setMediaSession = (track, trackInfo) => {
+    if ('mediaSession' in navigator) {
+      // , type: 'image/png'
+      navigator.mediaSession.metadata = new window.MediaMetadata({
+        title: trackInfo.title,
+        artist: trackInfo.user.username,
+        artwork: [
+          { src: trackInfo.artwork_url, sizes: '96x96', type: 'image/png' },
+          { src: trackInfo.artwork_url, sizes: '128x128', type: 'image/png' },
+          { src: trackInfo.artwork_url, sizes: '192x192', type: 'image/png' },
+          { src: trackInfo.artwork_url, sizes: '256x256', type: 'image/png' },
+          { src: trackInfo.artwork_url, sizes: '384x384', type: 'image/png' },
+          { src: trackInfo.artwork_url, sizes: '512x512', type: 'image/png' }
+        ]
+      });
+
+      navigator.mediaSession.setActionHandler('play', this.onPlayPause);
+      navigator.mediaSession.setActionHandler('pause', this.onPlayPause);
+      navigator.mediaSession.setActionHandler('previoustrack', this.prevTrack);
+      navigator.mediaSession.setActionHandler('nexttrack', this.nextTrack);
+    }
+  };
+
   startPlayback = () => {
     soundcloud.initialize({
       client_id: CLIENT_ID
@@ -72,6 +95,15 @@ class Player extends React.PureComponent {
     }
   };
 
+  onPlayPause = () => {
+    const { track } = this.props;
+    const { playbackStarted } = this.state;
+    if (!playbackStarted) this.startPlayback();
+    else if (track.isPlaying()) track.pause();
+    else track.play();
+    this.forceUpdate();
+  };
+
   playSong = async trackId => {
     const { volume } = this.state;
     const { newTrack, mood } = this.props;
@@ -83,6 +115,7 @@ class Player extends React.PureComponent {
       await track.play();
       track.setVolume(volume);
       newTrack(track, trackInfo);
+      this.setMediaSession(track, trackInfo);
       console.log('Playback started!');
     } catch (e) {
       console.error('Playback rejected.', e);
@@ -130,7 +163,7 @@ class Player extends React.PureComponent {
 
   render() {
     const { volume, playbackStarted, isSnackbarOpen } = this.state;
-    const { trackInfo, playAllowed } = this.props;
+    const { track, trackInfo, playAllowed } = this.props;
     const isBGAvailable = trackInfo && trackInfo.artwork_url;
     const titleWidth = getTextWidth(trackInfo ? trackInfo.title : 0, '1.5rem');
     const usernameWidth = getTextWidth(trackInfo ? trackInfo.user.username : 0, '1rem');
@@ -159,6 +192,8 @@ class Player extends React.PureComponent {
                     playbackStarted={playbackStarted}
                     nextTrack={this.nextTrack}
                     prevTrack={this.prevTrack}
+                    onPlayPause={this.onPlayPause}
+                    isPlaying={track ? track.isPlaying() : false}
                   />
                 </Grid>
               </PlayerWrapper>

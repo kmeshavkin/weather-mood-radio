@@ -98,10 +98,8 @@ const InfoPage = () => {
             {getDayTime}
           </StyledSyntaxHighlighter> */}
       <BlockWrapper>
-        <Typography>Weather, Season & Day Time list + genre list</Typography>
+        <Typography>FIX TOOLTIP FOR MOBILE (enterTouchDelay?)</Typography>
         <Typography>Synonyms list?</Typography>
-        <Typography>Mood Matrix</Typography>
-        <Typography>Some code?</Typography>
         <Typography>Project highlights?</Typography>
       </BlockWrapper>
     </PageWrapper>
