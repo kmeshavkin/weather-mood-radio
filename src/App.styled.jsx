@@ -15,6 +15,13 @@ export const DummyItem = styled(Grid)`
   max-width: 150px;
 `;
 
+export const MoodTypography = styled(Typography)`
+  text-align: center;
+  line-height: 1.9 !important;
+  font-weight: 600;
+  color: lightgray;
+`;
+
 export const StyledCheckboxItem = styled(Grid)`
   width: 150px;
   align-self: flex-end;
@@ -34,9 +41,11 @@ export const PageGrid = styled(Grid)`
   position: absolute;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
   flex-wrap: nowrap !important;
   padding: 0px 16px;
   ${({ pageid }) => `
+    ${pageid ? 'overflow-y: scroll;' : ''}
     background:linear-gradient(
       ${pageid * 180}deg,
       rgba(0, 0, 0, 0.1) 0%,
@@ -56,10 +65,4 @@ export const ArrowIconButton = styled(IconButton)`
 export const StyledArrowDownward = styled(ArrowDownward)`
   transition: 0.5s cubic-bezier(0.42, 0.01, 0.58, 1.45) transform !important;
   ${({ rotate }) => `transform: rotate(${rotate * 0.5}turn)`}
-`;
-
-export const MoodTypography = styled(Typography)`
-  text-align: center;
-  font-weight: 600;
-  color: lightgray;
 `;

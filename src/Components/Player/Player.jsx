@@ -49,15 +49,15 @@ class Player extends React.PureComponent {
       // , type: 'image/png'
       navigator.mediaSession.metadata = new window.MediaMetadata({
         title: trackInfo.title,
-        artist: trackInfo.user.username,
-        artwork: [
-          { src: trackInfo.artwork_url, sizes: '96x96', type: 'image/png' },
-          { src: trackInfo.artwork_url, sizes: '128x128', type: 'image/png' },
-          { src: trackInfo.artwork_url, sizes: '192x192', type: 'image/png' },
-          { src: trackInfo.artwork_url, sizes: '256x256', type: 'image/png' },
-          { src: trackInfo.artwork_url, sizes: '384x384', type: 'image/png' },
-          { src: trackInfo.artwork_url, sizes: '512x512', type: 'image/png' }
-        ]
+        artist: trackInfo.user.username
+        // artwork: [
+        //   { src: trackInfo.artwork_url, sizes: '96x96', type: 'image/jpg' },
+        //   { src: trackInfo.artwork_url, sizes: '128x128', type: 'image/jpg' },
+        //   { src: trackInfo.artwork_url, sizes: '192x192', type: 'image/jpg' },
+        //   { src: trackInfo.artwork_url, sizes: '256x256', type: 'image/jpg' },
+        //   { src: trackInfo.artwork_url, sizes: '384x384', type: 'image/jpg' },
+        //   { src: trackInfo.artwork_url, sizes: '512x512', type: 'image/jpg' }
+        // ]
       });
 
       navigator.mediaSession.setActionHandler('play', this.onPlayPause);
@@ -118,7 +118,7 @@ class Player extends React.PureComponent {
       this.setMediaSession(track, trackInfo);
       console.log('Playback started!');
     } catch (e) {
-      console.error('Playback rejected.', e);
+      console.error('Error occurred.', e);
       this.setState({ isSnackbarOpen: true });
     }
   };
@@ -211,7 +211,7 @@ class Player extends React.PureComponent {
         <CustomSnackbar
           open={isSnackbarOpen}
           onClose={() => this.setState({ isSnackbarOpen: false })}
-          message="Playback rejected due to some error. Please reload page or open console to read the error."
+          message="Error occurred. Please reload page or open console to read the error."
           variant="error"
           duration={10000}
         />

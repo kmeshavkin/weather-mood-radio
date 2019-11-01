@@ -53,6 +53,8 @@ const HoverComponent = str => {
     <StyledTooltip
       disableFocusListener
       maxwidth={width - 40}
+      enterTouchDelay={300}
+      leaveTouchDelay={6000}
       title={
         <StyledSyntaxHighlighter language="javascript" style={vs2015}>
           {str}
@@ -70,6 +72,15 @@ const InfoPage = () => {
     <PageWrapper>
       <TitleWrapper>
         <Typography variant="h4">Weather Mood Radio</Typography>
+        <Typography variant="button">
+          <ul>
+            <li>Music Radio made from scratch (APIs + UI kit)</li>
+            <li>Javascript + React + Redux</li>
+            <li>Material-UI</li>
+            <li>API (soundcloud, darksky.net)</li>
+            <li>Responsive design</li>
+          </ul>
+        </Typography>
         <Typography variant="body2">
           Radio that picks Lo-Fi tracks from{' '}
           <Link href="https://soundcloud.com/" target="_blank" rel="noopener">
@@ -94,13 +105,17 @@ const InfoPage = () => {
           {HoverComponent(dayTimeStr)}).
         </Typography>
       </BlockWrapper>
-      {/* <StyledSyntaxHighlighter language="javascript" style={vs2015}>
-            {getDayTime}
-          </StyledSyntaxHighlighter> */}
       <BlockWrapper>
-        <Typography>FIX TOOLTIP FOR MOBILE (enterTouchDelay?)</Typography>
-        <Typography>Synonyms list?</Typography>
-        <Typography>Project highlights?</Typography>
+        <Typography>
+          In the table below you can see Mood Matrix, which determines Mood (what query will be sent to Soundcloud)
+          based on Weather, Day time and Season parameters
+        </Typography>
+        {/* // Matrix mapped below, S is current season
+            //          rain  snow  wind  fog   cloudy  clear
+            // night    r+n   s+n   S+n   S+n   S+n     S+n
+            // morning  r+m   s     S     f+m   c+m     S+m
+            // day      r+S   s+S   w+S   f+S   c+S     S
+            // evening  r+e   s     S     f+S   c+e     S+e */}
       </BlockWrapper>
     </PageWrapper>
   );

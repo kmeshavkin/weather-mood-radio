@@ -3,7 +3,7 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { Tooltip, Button, withStyles } from '@material-ui/core';
 
 export const PageWrapper = styled.div`
-  padding: 40px 32px 0 0;
+  padding-top: 40px;
 `;
 
 export const TitleWrapper = styled.div`
