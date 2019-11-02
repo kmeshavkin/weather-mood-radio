@@ -41,11 +41,12 @@ export const PageGrid = styled(Grid)`
   position: absolute;
   height: 100%;
   width: 100%;
+  display: flex;
   box-sizing: border-box;
   flex-wrap: nowrap !important;
   padding: 0px 16px;
   ${({ pageid }) => `
-    ${pageid ? 'overflow-y: scroll;' : ''}
+    ${pageid ? 'overflow-y: auto;' : ''}
     background:linear-gradient(
       ${pageid * 180}deg,
       rgba(0, 0, 0, 0.1) 0%,

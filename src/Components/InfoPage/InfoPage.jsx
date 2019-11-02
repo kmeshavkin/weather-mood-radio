@@ -1,15 +1,18 @@
 import React from 'react';
-import { Typography, Link } from '@material-ui/core';
+import { Typography, Link, Table, TableHead, TableRow, TableBody, Grid } from '@material-ui/core';
 import { vs2015 } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import {
   PageWrapper,
-  TitleWrapper,
-  BlockWrapper,
   StyledSyntaxHighlighter,
   StyledTooltip,
-  StyledButton
+  StyledButton,
+  TableHeadCell,
+  StyledCell,
+  TablePaper,
+  TableGrid
 } from './InfoPage.styled';
 import useWindowDimensions from '../../utils/functions';
+import { MOOD_MATRIX } from '../../utils/constants';
 
 const seasonStr = `
 /**
@@ -69,8 +72,8 @@ const HoverComponent = str => {
 
 const InfoPage = () => {
   return (
-    <PageWrapper>
-      <TitleWrapper>
+    <PageWrapper container>
+      <Grid item>
         <Typography variant="h4">Weather Mood Radio</Typography>
         <Typography variant="button">
           <ul>
@@ -93,8 +96,8 @@ const InfoPage = () => {
           weather, day time and season. Otherwise you can switch to Custom Mood mode to pick appropriate parameters
           instead.
         </Typography>
-      </TitleWrapper>
-      <BlockWrapper>
+      </Grid>
+      <Grid item>
         <Typography>
           If app will be able to get your geolocation, it will use{' '}
           <Link href="https://darksky.net/poweredby/" target="_blank" rel="noopener">
@@ -104,19 +107,38 @@ const InfoPage = () => {
           your latitude ({HoverComponent(seasonStr)}) and approximate day time based on sunrise and sunset time (
           {HoverComponent(dayTimeStr)}).
         </Typography>
-      </BlockWrapper>
-      <BlockWrapper>
+      </Grid>
+      <Grid item>
         <Typography>
           In the table below you can see Mood Matrix, which determines Mood (what query will be sent to Soundcloud)
-          based on Weather, Day time and Season parameters
+          based on Weather, Day time and Season parameters. First, cell is picked according to current Weather and Day
+          time, then word &quot;SEASON&quot; (if it&apos;s in this cell) replaced with current Season.
         </Typography>
-        {/* // Matrix mapped below, S is current season
-            //          rain  snow  wind  fog   cloudy  clear
-            // night    r+n   s+n   S+n   S+n   S+n     S+n
-            // morning  r+m   s     S     f+m   c+m     S+m
-            // day      r+S   s+S   w+S   f+S   c+S     S
-            // evening  r+e   s     S     f+S   c+e     S+e */}
-      </BlockWrapper>
+      </Grid>
+      <TableGrid item>
+        <TablePaper>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                {/* Get keys from first element of Matrix and add empty cell to start */}
+                {[''].concat(Object.keys(Object.values(MOOD_MATRIX)[0])).map(col => (
+                  <StyledCell key={col}>{col}</StyledCell>
+                ))}
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {Object.entries(MOOD_MATRIX).map(([key, row]) => (
+                <TableRow key={key}>
+                  <TableHeadCell key={key}>{key}</TableHeadCell>
+                  {Object.entries(row).map(([cellKey, cell]) => (
+                    <StyledCell key={key + cellKey}>{cell}</StyledCell>
+                  ))}
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TablePaper>
+      </TableGrid>
     </PageWrapper>
   );
 };

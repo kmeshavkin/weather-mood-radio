@@ -161,7 +161,7 @@ class App extends React.PureComponent {
               ))}
             </StyledMoodGrid>
           </PageGrid>
-          <PageGrid pageid={1} position={topPage ? 1 : 0}>
+          <PageGrid direction="column" alignItems="center" pageid={1} position={topPage ? 1 : 0}>
             <InfoPage />
           </PageGrid>
         </PageWrapper>

@@ -1,17 +1,13 @@
 import styled from 'styled-components';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import { Tooltip, Button, withStyles } from '@material-ui/core';
+import { Tooltip, Button, withStyles, TableCell, Paper, Grid } from '@material-ui/core';
 
-export const PageWrapper = styled.div`
+export const PageWrapper = styled(Grid)`
   padding-top: 40px;
-`;
-
-export const TitleWrapper = styled.div`
-  max-width: 600px;
-`;
-
-export const BlockWrapper = styled.div`
-  padding-top: 20px;
+  max-width: 800px;
+  div + div {
+    padding-top: 20px;
+  }
 `;
 
 export const StyledTooltip = withStyles({
@@ -35,4 +31,22 @@ export const StyledSyntaxHighlighter = styled(SyntaxHighlighter)`
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.75);
   }
   transition: 0.2s linear;
+`;
+
+export const TableGrid = styled(Grid)`
+  overflow-x: auto;
+  flex: 1;
+`;
+
+export const TablePaper = styled(Paper)`
+  min-width: 450px;
+`;
+
+export const StyledCell = styled(TableCell)`
+  padding: 4px !important;
+`;
+
+export const TableHeadCell = styled(StyledCell)`
+  padding-left: 12px !important;
+  font-weight: bold !important;
 `;
