@@ -75,6 +75,7 @@ export const StyledTypography = styled(Typography)`
 
   ${({ width }) => {
     const slideTime = (width - 250) * 0.2;
+    console.log('slideTime: ', slideTime);
     return !width || width < 250
       ? `
         width: 250px;
@@ -82,8 +83,8 @@ export const StyledTypography = styled(Typography)`
       : `
         animation: slide infinite linear ${slideTime}s;
         @keyframes slide {
-          0%, 10%, 100% { transform: translate(10px); }
-          50%, 60% { transform: translate(-${width - 240}px); }
+          0%, ${10 * (15 / slideTime)}%, 100% { transform: translate(10px); }
+          50%, ${50 + 10 * (15 / slideTime)}% { transform: translate(-${width - 240}px); }
         }
       `;
   }}

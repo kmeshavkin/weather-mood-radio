@@ -40,7 +40,8 @@ class Player extends React.PureComponent {
     this.state = {
       volume: DEFAULT_VOLUME,
       playbackStarted: false,
-      isSnackbarOpen: false
+      isSnackbarOpen: false,
+      retries: 0
     };
   }
 
@@ -75,21 +76,29 @@ class Player extends React.PureComponent {
     this.setState({ playbackStarted: true });
   };
 
-  getTrack = (searchTerm, trackId) => {
-    const { playHistory } = this.props;
+  getTrackInfo = query => {
+    const { playHistory, trackInfo } = this.props;
+    return soundcloud
+      .get('/tracks', {
+        q: query,
+        genres: GENRES,
+        limit: PAGE_SIZE
+      })
+      .then(trackList =>
+        getRandom(trackList.filter(x => !playHistory.includes(x.id) && (!trackInfo || x.id !== trackInfo.id)))
+      );
+  };
+
+  getTrack = async (searchTerm, trackId) => {
+    const { season } = this.props;
     try {
       if (trackId) {
         return soundcloud.get('/tracks', { ids: trackId }).then(track => track[0]);
       }
       const query = searchTerm || 'lo-fi';
       console.log('query: ', query);
-      return soundcloud
-        .get('/tracks', {
-          q: query,
-          genres: GENRES,
-          limit: PAGE_SIZE
-        })
-        .then(trackList => getRandom(trackList.filter(x => !playHistory.includes(x.id))));
+      const trackInfo = (await this.getTrackInfo(query)) || (await this.getTrackInfo(season));
+      return trackInfo;
     } catch (e) {
       return new Promise(() => Promise.reject(e));
     }
@@ -105,7 +114,7 @@ class Player extends React.PureComponent {
   };
 
   playSong = async trackId => {
-    const { volume } = this.state;
+    const { volume, retries } = this.state;
     const { newTrack, mood } = this.props;
     try {
       const trackInfo = await this.getTrack(mood, trackId);
@@ -118,9 +127,15 @@ class Player extends React.PureComponent {
       this.setMediaSession(track, trackInfo);
       console.log('Playback started!');
     } catch (e) {
-      console.error('Error occurred.', e);
-      this.setState({ isSnackbarOpen: true });
+      if (retries < 3) {
+        console.warn(`Retrying song: ${retries + 1}`);
+        setTimeout(() => this.setState({ retries: retries + 1 }, () => this.playSong(trackId)), 3000);
+      } else {
+        console.error('Error occurred.', e);
+        this.setState({ isSnackbarOpen: true });
+      }
     }
+    this.setState({ retries: 0 });
   };
 
   prevTrack = () => {
@@ -243,7 +258,8 @@ Player.defaultProps = {
   track: undefined,
   playHistory: [],
   currentTrackIndex: 0,
-  mood: undefined
+  mood: undefined,
+  season: undefined
 };
 
 Player.propTypes = {
@@ -256,5 +272,7 @@ Player.propTypes = {
   track: trackType,
   playAllowed: playAllowedType.isRequired,
   // Current mood, set in App.js
-  mood: PropTypes.string
+  mood: PropTypes.string,
+  // Current season for soundcloud query, used in case mood request failed
+  season: PropTypes.string
 };

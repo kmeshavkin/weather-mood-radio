@@ -5,7 +5,8 @@ export const DEFAULT_VOLUME = 0.3;
 // How much segments in rewind slider
 export const REWIND_SLIDER_MAX = 200;
 // Genres to randomly pick from
-export const GENRES = 'lofi hip-hop,lo-fi hip-hop,lofi,lo fi,chillhop';
+export const GENRES =
+  'lofi,lo fi,lo-fi,lofi hip-hop,lo fi hip-hop,lo-fi hip-hop,lofi hip hop,lo fi hip hop,lo-fi hip hop,lofi hiphop,lo fi hiphop,lo-fi hiphop,chillhop';
 
 // Weather names as constants
 export const WEATHER = {
@@ -69,7 +70,7 @@ export const MOOD_MATRIX = {
     [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.night]}`,
     [WEATHER.snow]: `${WEATHER.snow} ${[DAY_TIME.night]}`,
     [WEATHER.windy]: `SEASON ${[DAY_TIME.night]}`,
-    [WEATHER.fog]: `SEASON ${[DAY_TIME.night]}`,
+    [WEATHER.fog]: `${WEATHER.fog} ${[DAY_TIME.night]}`,
     [WEATHER.cloudy]: `SEASON ${[DAY_TIME.night]}`,
     [WEATHER.clear]: `SEASON ${[DAY_TIME.night]}`
   },
@@ -85,7 +86,7 @@ export const MOOD_MATRIX = {
     [WEATHER.rain]: `${WEATHER.rain} SEASON`,
     [WEATHER.snow]: `${WEATHER.snow} SEASON`,
     [WEATHER.windy]: `${WEATHER.windy} SEASON`,
-    [WEATHER.fog]: `${WEATHER.fog} SEASON`,
+    [WEATHER.fog]: `${WEATHER.fog}`,
     [WEATHER.cloudy]: `${WEATHER.cloudy} SEASON`,
     [WEATHER.clear]: `SEASON`
   },
@@ -93,7 +94,7 @@ export const MOOD_MATRIX = {
     [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.evening]}`,
     [WEATHER.snow]: `${WEATHER.snow}`,
     [WEATHER.windy]: `SEASON`,
-    [WEATHER.fog]: `${WEATHER.fog} SEASON`,
+    [WEATHER.fog]: `${WEATHER.fog}`,
     [WEATHER.cloudy]: `${WEATHER.cloudy} ${[DAY_TIME.evening]}`,
     [WEATHER.clear]: `SEASON ${[DAY_TIME.evening]}`
   }

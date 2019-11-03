@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-filename-extension */
 import React from 'react';
 import './App.css';
-import { Grid, MenuItem, Checkbox, FormControlLabel } from '@material-ui/core';
+import { Grid, MenuItem, Checkbox, FormControlLabel, Link } from '@material-ui/core';
 import { throttle } from 'lodash';
 import Player from './Components/Player/Player';
 import { getPosition, getSeason, getWeather, getDayTime } from './utils/getMood';
@@ -16,11 +16,15 @@ import {
   StyledArrowDownward,
   MoodTypography,
   DummyItem,
-  StyledHeaderGrid
+  StyledHeaderGrid,
+  BottomSection,
+  StyledImage
 } from './App.styled';
 import { getRandom, capitalizeFirst } from './utils/functions';
 import CustomSnackbar from './Components/Snackbar/Snackbar';
 import InfoPage from './Components/InfoPage/InfoPage';
+import soundcloudPoweredImg from './resources/soundcloudPowered.png';
+import darkSkyPoweredImg from './resources/darkSkyPowered.png';
 
 class App extends React.PureComponent {
   resize = throttle(() => {
@@ -81,7 +85,7 @@ class App extends React.PureComponent {
 
   calculateMood = (season = '', weather, dayTime = DAY_TIME.day) => {
     if (weather) {
-      const weatherSynonym = SYNONYMS[weather] || weather;
+      const weatherSynonym = SYNONYMS[weather] || [weather];
       return MOOD_MATRIX[dayTime][weather].replace(weather, getRandom(weatherSynonym)).replace('SEASON', season);
     }
     return 'lofi';
@@ -137,7 +141,7 @@ class App extends React.PureComponent {
               </StyledCheckboxItem>
             </StyledHeaderGrid>
             <Grid item>
-              <Player mood={mood} />
+              <Player mood={mood} season={season} />
             </Grid>
             <StyledMoodGrid item container justify="space-evenly" spacing={1}>
               {textFields.map(textField => (
@@ -160,12 +164,22 @@ class App extends React.PureComponent {
                 </Grid>
               ))}
             </StyledMoodGrid>
+            <DummyItem item />
+            <BottomSection item>
+              <Link href="https://soundcloud.com/" target="_blank" rel="noopener">
+                <StyledImage height={32} alt="soundcloud" src={soundcloudPoweredImg} />
+              </Link>
+              <Link href="https://darksky.net/poweredby/" target="_blank" rel="noopener">
+                <StyledImage height={48} alt="darksky" src={darkSkyPoweredImg} />
+              </Link>
+            </BottomSection>
           </PageGrid>
-          <PageGrid direction="column" alignItems="center" pageid={1} position={topPage ? 1 : 0}>
+          <PageGrid container direction="column" alignItems="center" pageid={1} position={topPage ? 1 : 0}>
             <InfoPage />
           </PageGrid>
         </PageWrapper>
         <ArrowIconButton
+          color="secondary"
           pageheight={pageHeight || window.innerHeight}
           onClick={() => this.setState({ topPage: !topPage })}
         >

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Grid, TextField, IconButton, Typography } from '@material-ui/core';
+import { Grid, TextField, Typography, Fab } from '@material-ui/core';
 import { ArrowDownward } from '@material-ui/icons';
 
 export const StyledMoodGrid = styled(Grid)`
@@ -46,7 +46,7 @@ export const PageGrid = styled(Grid)`
   flex-wrap: nowrap !important;
   padding: 0px 16px;
   ${({ pageid }) => `
-    ${pageid ? 'overflow-y: auto;' : ''}
+    overflow-y: auto;
     background:linear-gradient(
       ${pageid * 180}deg,
       rgba(0, 0, 0, 0.1) 0%,
@@ -57,8 +57,8 @@ export const PageGrid = styled(Grid)`
   ${({ position }) => `transform: translateY(${Number(position) * 100}%)`}
 `;
 
-export const ArrowIconButton = styled(IconButton)`
-  top: ${({ pageheight }) => pageheight - 54}px;
+export const ArrowIconButton = styled(Fab)`
+  top: ${({ pageheight }) => pageheight - 63}px;
   right: 6px;
   position: fixed !important;
 `;
@@ -66,4 +66,14 @@ export const ArrowIconButton = styled(IconButton)`
 export const StyledArrowDownward = styled(ArrowDownward)`
   transition: 0.5s cubic-bezier(0.42, 0.01, 0.58, 1.45) transform !important;
   ${({ rotate }) => `transform: rotate(${rotate * 0.5}turn)`}
+`;
+
+export const BottomSection = styled(Grid)`
+  display: flex;
+  align-self: start;
+  align-items: center;
+`;
+
+export const StyledImage = styled.img`
+  height: ${({ height }) => height}px;
 `;

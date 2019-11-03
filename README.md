@@ -1,9 +1,7 @@
 # TO-DO
-* Better README
+* Better info panel styling (Change soundcloud link to icon and display on top-right?)?
 * Save play history in local storage?
-* Change soundcloud link to icon and display on top-right
-* Better info panel styling?
-* Move [https://developers.soundcloud.com/docs/api/buttons-logos]("Powered by soundcloud") and ("Powered by darksky")[https://darksky.net/dev/docs/terms#attribution] somewhere on top
+* Better README
 * Choose licensing
 
 # Bugs
@@ -14,3 +12,4 @@
 * Javascript + React + Redux
 * Material-UI
 * API (soundcloud, darksky.net)
+* Responsive design

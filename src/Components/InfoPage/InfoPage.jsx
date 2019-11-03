@@ -40,12 +40,10 @@ const dayTimeStr = `
  */
 export function getDayTime(sunriseTime, sunsetTime) {
   const currentDate = new Date().getTime();
-  const sunriseDate = sunriseTime;
-  const sunsetDate = sunsetTime;
-  if (currentDate - (sunriseDate - hourInMS) < 0) return DAY_TIME.night;
-  if (currentDate - (sunriseDate + hourInMS * 3) < 0) return DAY_TIME.morning;
-  if (currentDate - (sunsetDate - hourInMS * 3) < 0) return DAY_TIME.day;
-  if (currentDate - (sunsetDate + hourInMS) < 0) return DAY_TIME.evening;
+  if (currentDate - (sunriseTime - hourInMS) < 0) return DAY_TIME.night;
+  if (currentDate - (sunriseTime + hourInMS * 3) < 0) return DAY_TIME.morning;
+  if (currentDate - (sunsetTime - hourInMS * 3) < 0) return DAY_TIME.day;
+  if (currentDate - (sunsetTime + hourInMS) < 0) return DAY_TIME.evening;
   return DAY_TIME.night;
 }
 `;
