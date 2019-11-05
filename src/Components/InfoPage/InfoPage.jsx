@@ -110,7 +110,8 @@ const InfoPage = () => {
         <Typography>
           In the table below you can see Mood Matrix, which determines Mood (what query will be sent to Soundcloud)
           based on Weather, Day time and Season parameters. First, cell is picked according to current Weather and Day
-          time, then word &quot;SEASON&quot; (if it&apos;s in this cell) replaced with current Season.
+          time, then word &quot;SEASON&quot; (if it&apos;s in this cell) replaced with current Season and some of
+          weather parameters randomly replaced with synonyms (to increase songs pool).
         </Typography>
       </Grid>
       <TableGrid item>

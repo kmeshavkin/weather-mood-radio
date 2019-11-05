@@ -8,6 +8,9 @@ export const PageWrapper = styled(Grid)`
   div + div {
     padding-top: 20px;
   }
+  & > div:last-child {
+    padding: 20px 2px 2px 2px;
+  }
 `;
 
 export const StyledTooltip = withStyles({
@@ -36,6 +39,9 @@ export const StyledSyntaxHighlighter = styled(SyntaxHighlighter)`
 export const TableGrid = styled(Grid)`
   overflow-x: auto;
   flex: 1;
+  tr:last-child td {
+    border: unset;
+  }
 `;
 
 export const TablePaper = styled(Paper)`

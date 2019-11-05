@@ -1,15 +1,12 @@
-# TO-DO
-* Better info panel styling (Change soundcloud link to icon and display on top-right?)?
-* Save play history in local storage?
-* Better README
-* Choose licensing
+# Weather Mood Radio
+Radio that picks Lo-Fi tracks from SoundCloud based on current weather, day time and season at your location.
 
-# Bugs
-* Artwork on mobile doesn't work
-
-# Features
+## Features
 * Music Radio made from scratch (APIs + UI kit)
 * Javascript + React + Redux
 * Material-UI
-* API (soundcloud, darksky.net)
+* API (soundcloud.com, darksky.net)
 * Responsive design
+
+## TO-DO
+* Better README
