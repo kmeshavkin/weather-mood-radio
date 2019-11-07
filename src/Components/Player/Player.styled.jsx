@@ -75,7 +75,6 @@ export const StyledTypography = styled(Typography)`
 
   ${({ width }) => {
     const slideTime = (width - 250) * 0.2;
-    console.log('slideTime: ', slideTime);
     return !width || width < 250
       ? `
         width: 250px;
