@@ -150,7 +150,6 @@ class Player extends React.PureComponent {
       if (currentTrackIndex === playHistory.length) playHistory.push(trackInfo.id);
       changeTrack(playHistory, currentTrackIndex - 1);
     }
-    console.log('Previous Track', playHistory, currentTrackIndex - 1);
   };
 
   nextTrack = () => {
@@ -167,7 +166,6 @@ class Player extends React.PureComponent {
       this.playSong();
     }
     changeTrack(playHistory, currentTrackIndex + 1);
-    console.log('Next Track', playHistory, currentTrackIndex + 1);
   };
 
   changeVolume = volume => {
