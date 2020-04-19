@@ -30,7 +30,7 @@ const Volume = ({ volume, changeVolume }) => {
 export default Volume;
 
 Volume.defaultProps = {
-  volume: DEFAULT_VOLUME
+  volume: DEFAULT_VOLUME,
 };
 
 Volume.propTypes = {
@@ -40,5 +40,5 @@ Volume.propTypes = {
    * Callback to change sound volume
    * @param volume Value to change volume to
    */
-  changeVolume: PropTypes.func.isRequired
+  changeVolume: PropTypes.func.isRequired,
 };

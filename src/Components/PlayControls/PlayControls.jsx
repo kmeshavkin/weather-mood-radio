@@ -36,9 +36,9 @@ class PlayControls extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   track: state.track,
-  playAllowed: state.playAllowed
+  playAllowed: state.playAllowed,
 });
 
 export default connect(mapStateToProps)(PlayControls);
@@ -54,5 +54,5 @@ PlayControls.propTypes = {
   // Callback, which when called calls previous track to play
   prevTrack: PropTypes.func.isRequired,
   // Callback, which when called calls next track to play
-  nextTrack: PropTypes.func.isRequired
+  nextTrack: PropTypes.func.isRequired,
 };

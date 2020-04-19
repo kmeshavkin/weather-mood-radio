@@ -18,7 +18,7 @@ import {
   DummyItem,
   StyledHeaderGrid,
   BottomSection,
-  StyledImage
+  StyledImage,
 } from './App.styled';
 import { getRandom, capitalizeFirst } from './utils/functions';
 import CustomSnackbar from './Components/Snackbar/Snackbar';
@@ -42,7 +42,7 @@ class App extends React.PureComponent {
       topPage: true,
       isSnackbarOpen: false,
       wasSnackbarOpened: false,
-      pageHeight: undefined
+      pageHeight: undefined,
     };
   }
 
@@ -79,7 +79,7 @@ class App extends React.PureComponent {
       weather,
       dayTime,
       isSnackbarOpen: !weatherData && !wasSnackbarOpened,
-      wasSnackbarOpened: true
+      wasSnackbarOpened: true,
     });
   };
 
@@ -110,20 +110,20 @@ class App extends React.PureComponent {
         label: 'Weather',
         value: weather,
         stateName: 'weather',
-        constants: WEATHER
+        constants: WEATHER,
       },
       {
         label: 'Day time',
         value: dayTime,
         stateName: 'dayTime',
-        constants: DAY_TIME
+        constants: DAY_TIME,
       },
       {
         label: 'Season',
         value: season,
         stateName: 'season',
-        constants: SEASONS
-      }
+        constants: SEASONS,
+      },
     ];
     return (
       <>
@@ -144,18 +144,18 @@ class App extends React.PureComponent {
               <Player mood={mood} season={season} />
             </Grid>
             <StyledMoodGrid item container justify="space-evenly" spacing={1}>
-              {textFields.map(textField => (
+              {textFields.map((textField) => (
                 <Grid key={textField.stateName} item>
                   <StyledTextField
                     select={customMood}
                     disabled={!customMood}
                     label={textField.label}
                     value={capitalizeFirst(textField.value) || (customMood ? '' : 'pending...')}
-                    onChange={e => this.setState({ [textField.stateName]: e.target.value.toLowerCase() })}
+                    onChange={(e) => this.setState({ [textField.stateName]: e.target.value.toLowerCase() })}
                     margin="normal"
                     variant="outlined"
                   >
-                    {Object.values(textField.constants).map(option => (
+                    {Object.values(textField.constants).map((option) => (
                       <MenuItem key={option} value={capitalizeFirst(option)}>
                         {capitalizeFirst(option)}
                       </MenuItem>

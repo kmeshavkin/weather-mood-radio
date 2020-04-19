@@ -13,7 +13,7 @@ class PlaySlider extends React.PureComponent {
       currentTime: 0,
       sliderPosition: 0,
       holding: false,
-      updateSlider: null
+      updateSlider: null,
     };
   }
 
@@ -24,7 +24,7 @@ class PlaySlider extends React.PureComponent {
       if (track && track.isPlaying() && !holding) {
         this.setState({
           sliderPosition: (track.currentTime() / track.getDuration()) * REWIND_SLIDER_MAX,
-          currentTime: Math.ceil(track.currentTime() / 1000)
+          currentTime: Math.ceil(track.currentTime() / 1000),
         });
       }
     }, 1000);
@@ -40,7 +40,7 @@ class PlaySlider extends React.PureComponent {
     const { track } = this.props;
     this.setState({
       sliderPosition: value,
-      currentTime: track ? Math.round(((value / REWIND_SLIDER_MAX) * track.getDuration()) / 1000) : 0
+      currentTime: track ? Math.round(((value / REWIND_SLIDER_MAX) * track.getDuration()) / 1000) : 0,
     });
   };
 
@@ -72,16 +72,16 @@ class PlaySlider extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
-  track: state.track
+const mapStateToProps = (state) => ({
+  track: state.track,
 });
 
 export default connect(mapStateToProps)(PlaySlider);
 
 PlaySlider.defaultProps = {
-  track: undefined
+  track: undefined,
 };
 
 PlaySlider.propTypes = {
-  track: trackType
+  track: trackType,
 };

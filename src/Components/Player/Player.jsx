@@ -18,7 +18,7 @@ import {
   StyledCardContent,
   StyledGrid,
   VolumeGrid,
-  StyledOuterGrid
+  StyledOuterGrid,
 } from './Player.styled';
 import recordSvg from '../../resources/record.svg';
 import InfoButton from '../InfoButton/InfoButton';
@@ -29,7 +29,7 @@ import {
   currentTrackIndexType,
   newTrackType,
   changeTrackType,
-  playAllowedType
+  playAllowedType,
 } from '../../utils/sharedPropTypes';
 import CustomSnackbar from '../Snackbar/Snackbar';
 
@@ -41,7 +41,7 @@ class Player extends React.PureComponent {
       volume: DEFAULT_VOLUME,
       playbackStarted: false,
       isSnackbarOpen: false,
-      retries: 0
+      retries: 0,
     };
   }
 
@@ -50,7 +50,7 @@ class Player extends React.PureComponent {
       // , type: 'image/png'
       navigator.mediaSession.metadata = new window.MediaMetadata({
         title: trackInfo.title,
-        artist: trackInfo.user.username
+        artist: trackInfo.user.username,
         // artwork: [
         //   { src: trackInfo.artwork_url, sizes: '96x96', type: 'image/jpg' },
         //   { src: trackInfo.artwork_url, sizes: '128x128', type: 'image/jpg' },
@@ -70,22 +70,22 @@ class Player extends React.PureComponent {
 
   startPlayback = () => {
     soundcloud.initialize({
-      client_id: CLIENT_ID
+      client_id: CLIENT_ID,
     });
     this.playSong();
     this.setState({ playbackStarted: true });
   };
 
-  getTrackInfo = query => {
+  getTrackInfo = (query) => {
     const { playHistory, trackInfo } = this.props;
     return soundcloud
       .get('/tracks', {
         q: query,
         genres: GENRES,
-        limit: PAGE_SIZE
+        limit: PAGE_SIZE,
       })
-      .then(trackList =>
-        getRandom(trackList.filter(x => !playHistory.includes(x.id) && (!trackInfo || x.id !== trackInfo.id)))
+      .then((trackList) =>
+        getRandom(trackList.filter((x) => !playHistory.includes(x.id) && (!trackInfo || x.id !== trackInfo.id)))
       );
   };
 
@@ -93,7 +93,7 @@ class Player extends React.PureComponent {
     const { season } = this.props;
     try {
       if (trackId) {
-        return soundcloud.get('/tracks', { ids: trackId }).then(track => track[0]);
+        return soundcloud.get('/tracks', { ids: trackId }).then((track) => track[0]);
       }
       const query = searchTerm || 'lo-fi';
       console.log('query: ', query);
@@ -113,7 +113,7 @@ class Player extends React.PureComponent {
     this.forceUpdate();
   };
 
-  playSong = async trackId => {
+  playSong = async (trackId) => {
     const { volume, retries } = this.state;
     const { newTrack, mood } = this.props;
     try {
@@ -143,7 +143,7 @@ class Player extends React.PureComponent {
       playHistory: [...playHistory],
       currentTrackIndex,
       trackInfo,
-      changeTrack
+      changeTrack,
     } = this.props;
     if (currentTrackIndex > 0) {
       this.playSong(playHistory[currentTrackIndex - 1]);
@@ -157,7 +157,7 @@ class Player extends React.PureComponent {
       playHistory: [...playHistory],
       currentTrackIndex,
       trackInfo,
-      changeTrack
+      changeTrack,
     } = this.props;
     if (currentTrackIndex < playHistory.length) {
       this.playSong(playHistory[currentTrackIndex + 1]);
@@ -168,7 +168,7 @@ class Player extends React.PureComponent {
     changeTrack(playHistory, currentTrackIndex + 1);
   };
 
-  changeVolume = volume => {
+  changeVolume = (volume) => {
     const { track } = this.props;
     if (track) track.setVolume(volume);
     this.setState({ volume });
@@ -233,23 +233,20 @@ class Player extends React.PureComponent {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   track: state.track,
   trackInfo: state.trackInfo,
   playHistory: state.playHistory,
   currentTrackIndex: state.currentTrackIndex,
-  playAllowed: state.playAllowed
+  playAllowed: state.playAllowed,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   newTrack: (history, trackIndex) => dispatch(newTrackAction(history, trackIndex)),
-  changeTrack: (track, trackInfo) => dispatch(changeTrackAction(track, trackInfo))
+  changeTrack: (track, trackInfo) => dispatch(changeTrackAction(track, trackInfo)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Player);
+export default connect(mapStateToProps, mapDispatchToProps)(Player);
 
 Player.defaultProps = {
   trackInfo: undefined,
@@ -257,7 +254,7 @@ Player.defaultProps = {
   playHistory: [],
   currentTrackIndex: 0,
   mood: undefined,
-  season: undefined
+  season: undefined,
 };
 
 Player.propTypes = {
@@ -272,5 +269,5 @@ Player.propTypes = {
   // Current mood, set in App.js
   mood: PropTypes.string,
   // Current season for soundcloud query, used in case mood request failed
-  season: PropTypes.string
+  season: PropTypes.string,
 };

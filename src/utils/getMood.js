@@ -10,7 +10,7 @@ const hourInMS = 1000 * 60 * 60;
 export function getPosition() {
   return new Promise((resolve, reject) => {
     navigator.geolocation.getCurrentPosition(resolve, reject);
-  }).catch(e => console.error('Failed to receive geolocation:', e));
+  }).catch((e) => console.error('Failed to receive geolocation:', e));
 }
 
 /**
@@ -27,7 +27,7 @@ export async function getWeather(position) {
   return {
     icon: weather.currently.icon,
     sunriseTime: weather.daily.data[0].sunriseTime * 1000, // * 1000 because API returns UNIX timestamp
-    sunsetTime: weather.daily.data[0].sunsetTime * 1000
+    sunsetTime: weather.daily.data[0].sunsetTime * 1000,
   };
 }
 

@@ -11,7 +11,7 @@ const CustomSnackbar = ({ open, onClose, message, variant, duration }) => {
       variant={variant}
       anchorOrigin={{
         vertical: 'bottom',
-        horizontal: 'left'
+        horizontal: 'left',
       }}
       open={open}
       autoHideDuration={duration}
@@ -28,10 +28,10 @@ const CustomSnackbar = ({ open, onClose, message, variant, duration }) => {
           <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
             <StyledCloseIcon
               style={{
-                fontSize: 20
+                fontSize: 20,
               }}
             />
-          </IconButton>
+          </IconButton>,
         ]}
       />
     </StyledSnackbar>
@@ -44,7 +44,7 @@ CustomSnackbar.defaultProps = {
   open: false,
   message: '',
   onClose: undefined,
-  duration: 6000
+  duration: 6000,
 };
 
 CustomSnackbar.propTypes = {
@@ -52,5 +52,5 @@ CustomSnackbar.propTypes = {
   message: PropTypes.string,
   onClose: PropTypes.func,
   variant: PropTypes.oneOf(['error', 'info', 'success', 'warning']).isRequired,
-  duration: PropTypes.number
+  duration: PropTypes.number,
 };

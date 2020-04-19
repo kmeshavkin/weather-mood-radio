@@ -29,7 +29,7 @@ export const trackType = PropTypes.shape({
   pause: PropTypes.func.isRequired,
   currentTime: PropTypes.func.isRequired,
   getDuration: PropTypes.func.isRequired,
-  seek: PropTypes.func.isRequired
+  seek: PropTypes.func.isRequired,
 });
 
 // Track info object with data about track retrieved from Soundcloud
@@ -38,7 +38,7 @@ export const trackInfoType = PropTypes.shape({
   artwork_url: PropTypes.string,
   title: PropTypes.string.isRequired,
   user: PropTypes.shape({ username: PropTypes.string.isRequired }),
-  permalink_url: PropTypes.string.isRequired
+  permalink_url: PropTypes.string.isRequired,
 });
 
 // Array of track ids that were played before, these ids are Soundcloud ids

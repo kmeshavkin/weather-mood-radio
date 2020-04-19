@@ -9,7 +9,7 @@ import {
   TableHeadCell,
   StyledCell,
   TablePaper,
-  TableGrid
+  TableGrid,
 } from './InfoPage.styled';
 import useWindowDimensions from '../../utils/functions';
 import { MOOD_MATRIX } from '../../utils/constants';
@@ -48,7 +48,7 @@ export function getDayTime(sunriseTime, sunsetTime) {
 }
 `;
 
-const HoverComponent = str => {
+const HoverComponent = (str) => {
   const { width } = useWindowDimensions();
   return (
     <StyledTooltip
@@ -120,7 +120,7 @@ const InfoPage = () => {
             <TableHead>
               <TableRow>
                 {/* Get keys from first element of Matrix and add empty cell to start */}
-                {[''].concat(Object.keys(Object.values(MOOD_MATRIX)[0])).map(col => (
+                {[''].concat(Object.keys(Object.values(MOOD_MATRIX)[0])).map((col) => (
                   <StyledCell key={col}>{col}</StyledCell>
                 ))}
               </TableRow>

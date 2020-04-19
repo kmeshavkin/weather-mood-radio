@@ -4,7 +4,7 @@ const initialState = {
   track: undefined,
   trackInfo: undefined,
   playAllowed: false,
-  weather: ''
+  weather: '',
 };
 
 export default (state = initialState, action) => {
@@ -14,14 +14,14 @@ export default (state = initialState, action) => {
         ...state,
         playHistory: action.history,
         currentTrackIndex: action.trackIndex,
-        playAllowed: false
+        playAllowed: false,
       };
     case 'NEW_TRACK':
       return {
         ...state,
         track: action.track,
         trackInfo: action.trackInfo,
-        playAllowed: true
+        playAllowed: true,
       };
     default:
       return state;

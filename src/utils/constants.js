@@ -15,7 +15,7 @@ export const WEATHER = {
   snow: 'snow',
   windy: 'windy',
   fog: 'fog',
-  cloudy: 'cloudy'
+  cloudy: 'cloudy',
 };
 
 // Seasons names as constants
@@ -23,7 +23,7 @@ export const SEASONS = {
   winter: 'winter',
   spring: 'spring',
   summer: 'summer',
-  autumn: 'autumn'
+  autumn: 'autumn',
 };
 
 // Day time names as constants
@@ -31,7 +31,7 @@ export const DAY_TIME = {
   night: 'night',
   morning: 'morning',
   day: 'day',
-  evening: 'evening'
+  evening: 'evening',
 };
 
 // Convert weather from darksky.net to more convenient name
@@ -48,7 +48,7 @@ export const API_TO_WEATHER = {
   'partly-cloudy-night': WEATHER.cloudy,
   hail: WEATHER.rain,
   thunderstorm: WEATHER.rain,
-  tornado: WEATHER.windy
+  tornado: WEATHER.windy,
 };
 
 // Synonyms for the one category to randomly pick from
@@ -56,7 +56,7 @@ export const SYNONYMS = {
   rain: ['rainy', 'raining'],
   snow: ['snowy', 'snowing', 'cold'],
   fog: ['fog', 'foggy'],
-  cloudy: ['cloudy', 'hazy']
+  cloudy: ['cloudy', 'hazy'],
 };
 
 // Matrix mapped below, S is current season
@@ -72,7 +72,7 @@ export const MOOD_MATRIX = {
     [WEATHER.windy]: `SEASON ${[DAY_TIME.night]}`,
     [WEATHER.fog]: `${WEATHER.fog} ${[DAY_TIME.night]}`,
     [WEATHER.cloudy]: `SEASON ${[DAY_TIME.night]}`,
-    [WEATHER.clear]: `SEASON ${[DAY_TIME.night]}`
+    [WEATHER.clear]: `SEASON ${[DAY_TIME.night]}`,
   },
   [DAY_TIME.morning]: {
     [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.morning]}`,
@@ -80,7 +80,7 @@ export const MOOD_MATRIX = {
     [WEATHER.windy]: `SEASON`,
     [WEATHER.fog]: `${WEATHER.fog} ${[DAY_TIME.morning]}`,
     [WEATHER.cloudy]: `${WEATHER.cloudy} ${[DAY_TIME.morning]}`,
-    [WEATHER.clear]: `SEASON ${[DAY_TIME.morning]}`
+    [WEATHER.clear]: `SEASON ${[DAY_TIME.morning]}`,
   },
   [DAY_TIME.day]: {
     [WEATHER.rain]: `${WEATHER.rain} SEASON`,
@@ -88,7 +88,7 @@ export const MOOD_MATRIX = {
     [WEATHER.windy]: `${WEATHER.windy} SEASON`,
     [WEATHER.fog]: `${WEATHER.fog}`,
     [WEATHER.cloudy]: `${WEATHER.cloudy} SEASON`,
-    [WEATHER.clear]: `SEASON`
+    [WEATHER.clear]: `SEASON`,
   },
   [DAY_TIME.evening]: {
     [WEATHER.rain]: `${WEATHER.rain} ${[DAY_TIME.evening]}`,
@@ -96,6 +96,6 @@ export const MOOD_MATRIX = {
     [WEATHER.windy]: `SEASON`,
     [WEATHER.fog]: `${WEATHER.fog}`,
     [WEATHER.cloudy]: `${WEATHER.cloudy} ${[DAY_TIME.evening]}`,
-    [WEATHER.clear]: `SEASON ${[DAY_TIME.evening]}`
-  }
+    [WEATHER.clear]: `SEASON ${[DAY_TIME.evening]}`,
+  },
 };

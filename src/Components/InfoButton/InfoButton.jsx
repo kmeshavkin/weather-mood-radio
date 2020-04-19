@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconButton, Popover, Typography, Link, Grid } from '@material-ui/core';
 import { Info } from '@material-ui/icons';
-import { StyledGrid , StyledImage } from './InfoButton.styled';
+import { StyledGrid, StyledImage } from './InfoButton.styled';
 import { trackInfoType, playAllowedType } from '../../utils/sharedPropTypes';
 
 import soundcloudImg from '../../resources/soundcloud.png';
@@ -10,7 +10,7 @@ class InfoButton extends React.PureComponent {
   constructor() {
     super();
     this.state = {
-      anchorEl: null
+      anchorEl: null,
     };
   }
 
@@ -19,7 +19,11 @@ class InfoButton extends React.PureComponent {
     const { trackInfo, playAllowed } = this.props;
     return (
       <>
-        <IconButton onClick={event => this.setState({ anchorEl: event.currentTarget })} aria-label="info" size="small">
+        <IconButton
+          onClick={(event) => this.setState({ anchorEl: event.currentTarget })}
+          aria-label="info"
+          size="small"
+        >
           <Info fontSize="small" />
         </IconButton>
         <Popover
@@ -39,8 +43,8 @@ class InfoButton extends React.PureComponent {
                   </Link>
                 </>
               ) : (
-                ''
-              )}
+                  ''
+                )}
               <Typography variant="body2">Made by Konstantin Meshavkin, visit my github:</Typography>
               <Link href="https://github.com/kmeshavkin" target="_blank" rel="noopener">
                 <Typography variant="body2">https://github.com/kmeshavkin</Typography>
@@ -56,10 +60,10 @@ class InfoButton extends React.PureComponent {
 export default InfoButton;
 
 InfoButton.defaultProps = {
-  trackInfo: undefined
+  trackInfo: undefined,
 };
 
 InfoButton.propTypes = {
   trackInfo: trackInfoType,
-  playAllowed: playAllowedType.isRequired
+  playAllowed: playAllowedType.isRequired,
 };
