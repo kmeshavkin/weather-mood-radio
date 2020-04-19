@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import soundcloud from 'soundcloud';
 import { Grid } from '@material-ui/core';
+import faker from 'faker';
 import { newTrack as newTrackAction, changeTrack as changeTrackAction } from '../../store/actions';
 import { DEFAULT_VOLUME, GENRES, PAGE_SIZE } from '../../utils/constants';
 import { getRandom, getTextWidth } from '../../utils/functions';
@@ -32,6 +33,46 @@ import {
   playAllowedType,
 } from '../../utils/sharedPropTypes';
 import CustomSnackbar from '../Snackbar/Snackbar';
+
+/* Create dummy items when error occured */
+const dummyTrack = (nextTrack) => {
+  const randomLength = Math.random() * 100000 + 100000;
+  let currentTime = 0;
+  let isPlaying = true;
+
+  return {
+    isPlaying: () => isPlaying,
+    getDuration: () => randomLength,
+    currentTime: () => {
+      if (currentTime + 500 >= randomLength) nextTrack();
+      else currentTime += 500;
+      return currentTime;
+    },
+    setVolume: () => { },
+    seek: (time) => {
+      currentTime = time;
+    },
+    play: () => {
+      isPlaying = true;
+    },
+    pause: () => {
+      isPlaying = false;
+    },
+  };
+};
+
+const dummyTrackInfo = () => {
+  return {
+    id: Math.floor(Math.random() * 100000),
+    title: faker.lorem.words(),
+    user: {
+      username: faker.internet.userName(),
+    },
+    artwork_url: faker.image.imageUrl(200, 200, 'abstract', true),
+    permalink_url: '#',
+  };
+};
+/* --- */
 
 class Player extends React.PureComponent {
   constructor() {
@@ -133,6 +174,9 @@ class Player extends React.PureComponent {
       } else {
         console.error('Error occurred.', e);
         this.setState({ isSnackbarOpen: true });
+
+        const newDummyTrack = dummyTrack(this.nextTrack);
+        setTimeout(() => newTrack(newDummyTrack, dummyTrackInfo()), 1000);
       }
     }
     this.setState({ retries: 0 });
@@ -224,9 +268,9 @@ class Player extends React.PureComponent {
         <CustomSnackbar
           open={isSnackbarOpen}
           onClose={() => this.setState({ isSnackbarOpen: false })}
-          message="Error occurred. Please reload page or open console to read the error."
+          message="Error occurred. This likely happened because soundcloud API has reached maximum requests for this key for month. Player will still operate, but with dummy data (to be able to showcase most of the features, except playing dynamic mood music)."
           variant="error"
-          duration={10000}
+          duration={20000}
         />
       </>
     );

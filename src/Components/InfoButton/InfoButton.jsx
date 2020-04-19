@@ -45,7 +45,7 @@ class InfoButton extends React.PureComponent {
               ) : (
                   ''
                 )}
-              <Typography variant="body2">Made by Konstantin Meshavkin, visit my github:</Typography>
+              <Typography variant="body2">Made by Konstantin Meshavkin:</Typography>
               <Link href="https://github.com/kmeshavkin" target="_blank" rel="noopener">
                 <Typography variant="body2">https://github.com/kmeshavkin</Typography>
               </Link>
