@@ -11,7 +11,3 @@ Radio that picks Lo-Fi tracks from SoundCloud based on current weather, day time
 - Responsive design
 
 If you want to check my other works, you can visit my portfolio: [https://kmeshavkin.github.io/](https://kmeshavkin.github.io/)
-
-## TO-DO
-
-- Better README
