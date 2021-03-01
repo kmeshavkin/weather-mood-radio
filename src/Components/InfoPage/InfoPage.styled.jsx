@@ -17,8 +17,8 @@ export const StyledTooltip = withStyles({
   tooltip: ({ maxwidth }) => ({
     padding: 0,
     maxWidth: maxwidth,
-    margin: 0
-  })
+    margin: 0,
+  }),
 })(Tooltip);
 
 export const StyledButton = styled(Button)`

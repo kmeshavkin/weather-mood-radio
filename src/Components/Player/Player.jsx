@@ -48,7 +48,7 @@ const dummyTrack = (nextTrack) => {
       else currentTime += 500;
       return currentTime;
     },
-    setVolume: () => { },
+    setVolume: () => {},
     seek: (time) => {
       currentTime = time;
     },

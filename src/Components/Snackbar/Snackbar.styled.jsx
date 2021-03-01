@@ -4,7 +4,7 @@ import {
   Error as ErrorIcon,
   Info as InfoIcon,
   Warning as WarningIcon,
-  Close as CloseIcon
+  Close as CloseIcon,
 } from '@material-ui/icons';
 import { Snackbar } from '@material-ui/core';
 import { amber, green, red, blue } from '@material-ui/core/colors';
@@ -13,7 +13,7 @@ const variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,
   error: ErrorIcon,
-  info: InfoIcon
+  info: InfoIcon,
 };
 
 function pickColor(variant) {
@@ -31,7 +31,7 @@ function pickColor(variant) {
   }
 }
 
-export const getStyledIcon = variant => styled(variantIcon[variant])`
+export const getStyledIcon = (variant) => styled(variantIcon[variant])`
   font-size: 20px !important;
   opacity: 0.9;
   margin-right: 6px;
