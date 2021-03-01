@@ -21,7 +21,7 @@ export function getPosition() {
 export async function getWeather(position) {
   if (!position) return undefined;
   const weatherPromise = await fetch(
-    `https://cors-anywhere.herokuapp.com/https://api.darksky.net/forecast/${DARK_SKY_KEY}/${position.coords.latitude},${position.coords.longitude}`
+    `https://secret-ocean-49799.herokuapp.com/https://api.darksky.net/forecast/${DARK_SKY_KEY}/${position.coords.latitude},${position.coords.longitude}`
   );
   const weather = await weatherPromise.json();
   return {
