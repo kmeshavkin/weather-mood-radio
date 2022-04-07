@@ -141,7 +141,7 @@ class Player extends React.PureComponent {
       const trackInfo = (await this.getTrackInfo(query)) || (await this.getTrackInfo(season));
       return trackInfo;
     } catch (e) {
-      return new Promise(() => Promise.reject(e));
+      throw new Error(e);
     }
   };
 
@@ -170,7 +170,7 @@ class Player extends React.PureComponent {
     } catch (e) {
       if (retries < 3) {
         console.warn(`Retrying song: ${retries + 1}`);
-        setTimeout(() => this.setState({ retries: retries + 1 }, () => this.playSong(trackId)), 3000);
+        setTimeout(() => this.setState({ retries: retries + 1 }, () => this.playSong(trackId)), 1000);
       } else {
         console.error('Error occurred.', e);
         this.setState({ isSnackbarOpen: true });
